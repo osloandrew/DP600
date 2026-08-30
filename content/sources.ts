@@ -4,4 +4,5 @@ export const sources: Record<string, Source> = {
   onelake: { id: 'onelake', title: 'OneLake, the OneDrive for data', publisher: 'Microsoft Learn', url: 'https://learn.microsoft.com/fabric/onelake/onelake-overview', accessed: '31 Aug 2026', appliesTo: ['onelake', 'lakehouse', 'warehouse'] },
   eventhouse: { id: 'eventhouse', title: 'Eventhouse overview', publisher: 'Microsoft Learn', url: 'https://learn.microsoft.com/fabric/real-time-intelligence/eventhouse', accessed: '31 Aug 2026', appliesTo: ['eventhouse'] },
   'semantic-models': { id: 'semantic-models', title: 'Power BI semantic models', publisher: 'Microsoft Learn', url: 'https://learn.microsoft.com/power-bi/connect-data/service-datasets-understand', accessed: '31 Aug 2026', appliesTo: ['semantic-model', 'report'] },
+  'fabric-storage-options': { id: 'fabric-storage-options', title: 'Data storage options in Microsoft Fabric', publisher: 'Microsoft Learn', url: 'https://learn.microsoft.com/fabric/fundamentals/store-data', accessed: '31 Aug 2026', appliesTo: ['lakehouse', 'warehouse', 'eventhouse'] },
 };

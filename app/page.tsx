@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpen, Boxes, ChevronRight, CircleHelp, Datab
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { DataStoreLab } from '@/app/data-store-lab';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -32,6 +33,7 @@ function SystemNode({ concept, selected, active, visited, onSelect }: {
 }
 
 export default function Home() {
+  const [route, setRoute] = useState('explore');
   const [selectedId, setSelectedId] = useState<ConceptId>('onelake');
   const [mode, setMode] = useState<TraceMode>('explore');
   const [step, setStep] = useState(-1);
@@ -45,6 +47,13 @@ export default function Home() {
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setVisitedIds(readProgress().visitedConceptIds as ConceptId[]));
     return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    const syncRoute = () => setRoute(window.location.hash.replace(/^#\/?/, '') || 'explore');
+    syncRoute();
+    window.addEventListener('hashchange', syncRoute);
+    return () => window.removeEventListener('hashchange', syncRoute);
   }, []);
 
   const selectConcept = (id: ConceptId) => {
@@ -74,6 +83,8 @@ export default function Home() {
   const source = sources[selected.sourceIds[0]];
   const SelectedIcon = iconById[selected.id];
 
+  if (route === 'lab/data-stores') return <DataStoreLab />;
+
   return (
     <div className="app-frame">
       <header className="topbar">
@@ -96,7 +107,7 @@ export default function Home() {
           <p className="eyebrow">System</p>
           <nav className="rail-links" aria-label="System views">
             <a className="active" href="#explore"><Network />Fabric Atlas</a>
-            <a href="#labs"><Boxes />Data Store Lab <span>Soon</span></a>
+            <a href="#/lab/data-stores"><Boxes />Data Store Lab</a>
             <a href="#labs"><GitBranch />Schema Lab <span>Soon</span></a>
           </nav>
           <p className="eyebrow rail-section">Overlays</p>
