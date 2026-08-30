@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { DataStoreLab } from '@/app/data-store-lab';
+import { SchemaLab } from '@/app/schema-lab';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -84,6 +85,7 @@ export default function Home() {
   const SelectedIcon = iconById[selected.id];
 
   if (route === 'lab/data-stores') return <DataStoreLab />;
+  if (route === 'lab/schema') return <SchemaLab />;
 
   return (
     <div className="app-frame">
@@ -108,7 +110,7 @@ export default function Home() {
           <nav className="rail-links" aria-label="System views">
             <a className="active" href="#explore"><Network />Fabric Atlas</a>
             <a href="#/lab/data-stores"><Boxes />Data Store Lab</a>
-            <a href="#labs"><GitBranch />Schema Lab <span>Soon</span></a>
+            <a href="#/lab/schema"><GitBranch />Schema Lab</a>
           </nav>
           <p className="eyebrow rail-section">Overlays</p>
           <div className="rail-actions">
