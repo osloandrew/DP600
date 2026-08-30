@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { DataStoreLab } from '@/app/data-store-lab';
 import { SchemaLab } from '@/app/schema-lab';
 import { RelationshipLab } from '@/app/relationship-lab';
+import { DaxMicroscope } from '@/app/dax-microscope';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -88,6 +89,7 @@ export default function Home() {
   if (route === 'lab/data-stores') return <DataStoreLab />;
   if (route === 'lab/schema') return <SchemaLab />;
   if (route === 'lab/relationships') return <RelationshipLab />;
+  if (route === 'lab/dax') return <DaxMicroscope />;
 
   return (
     <div className="app-frame">
@@ -114,6 +116,7 @@ export default function Home() {
             <a href="#/lab/data-stores"><Boxes />Data Store Lab</a>
             <a href="#/lab/schema"><GitBranch />Schema Lab</a>
             <a href="#/lab/relationships"><Network />Relationship Lab</a>
+            <a href="#/lab/dax"><FileChartColumn />DAX Microscope</a>
           </nav>
           <p className="eyebrow rail-section">Overlays</p>
           <div className="rail-actions">
