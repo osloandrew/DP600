@@ -134,7 +134,7 @@ export default function Home() {
 
           <div className={`atlas-canvas mode-${mode}`}>
             <div className="canvas-grid" aria-label="Simplified Microsoft Fabric architecture">
-              <div className="stage-label label-sources">Source data</div><div className="stage-label label-storage">Unified storage</div><div className="stage-label label-experience">Analysis</div>
+              <div className="stage-label label-sources">Source data</div><div className="stage-label label-storage">Unified storage</div>
               <div className="node-slot slot-sources"><SystemNode concept={concepts.sources} selected={selectedId === 'sources'} active={activeId === 'sources'} visited={visitedIds.includes('sources')} onSelect={() => selectConcept('sources')} /></div>
               <div className={`flow-line line-source ${mode === 'data' && step >= 1 ? 'is-traced' : ''}`} aria-hidden="true" />
               <div className="node-slot slot-onelake"><SystemNode concept={concepts.onelake} selected={selectedId === 'onelake'} active={activeId === 'onelake'} visited={visitedIds.includes('onelake')} onSelect={() => selectConcept('onelake')} /></div>
@@ -144,11 +144,14 @@ export default function Home() {
               <div className="storage-row">
                 {(['lakehouse', 'warehouse', 'eventhouse'] as ConceptId[]).map((id) => <SystemNode key={id} concept={concepts[id]} selected={selectedId === id} active={activeId === id} visited={visitedIds.includes(id)} onSelect={() => selectConcept(id)} />)}
               </div>
-              <div className={`flow-line line-model ${(mode === 'data' && step >= 3) || (mode === 'query' && step >= 2) ? 'is-traced' : ''}`} aria-hidden="true" />
+              <div className="analysis-bridge" aria-hidden="true">
+                <div className="stage-label label-experience">Analysis</div>
+                <div className={`flow-line line-model ${(mode === 'data' && step >= 3) || (mode === 'query' && step >= 2) ? 'is-traced' : ''}`} />
+              </div>
               <div className="analysis-row">
-                <SystemNode concept={concepts['semantic-model']} selected={selectedId === 'semantic-model'} active={activeId === 'semantic-model'} visited={visitedIds.includes('semantic-model')} onSelect={() => selectConcept('semantic-model')} />
+                <div className="analysis-model-slot"><SystemNode concept={concepts['semantic-model']} selected={selectedId === 'semantic-model'} active={activeId === 'semantic-model'} visited={visitedIds.includes('semantic-model')} onSelect={() => selectConcept('semantic-model')} /></div>
                 <div className={`horizontal-link ${mode === 'data' && step >= 4 || mode === 'query' && step >= 1 ? 'is-traced' : ''}`} aria-hidden="true"><span /></div>
-                <SystemNode concept={concepts.report} selected={selectedId === 'report'} active={activeId === 'report'} visited={visitedIds.includes('report')} onSelect={() => selectConcept('report')} />
+                <div className="analysis-report-slot"><SystemNode concept={concepts.report} selected={selectedId === 'report'} active={activeId === 'report'} visited={visitedIds.includes('report')} onSelect={() => selectConcept('report')} /></div>
               </div>
             </div>
             <div className="canvas-legend" aria-label="Diagram legend">
