@@ -1,0 +1,38 @@
+# Fabric Explorer
+
+Fabric Explorer is an interactive learning environment for understanding Microsoft Fabric analytics and the current DP-600 exam scope. It teaches through explorable systems: select an object, manipulate a path, observe the consequence, and inspect why it happened.
+
+It is not affiliated with Microsoft, a replacement for official documentation, an exam dump, a question bank, or a conventional learning-management system.
+
+## Current build
+
+The first product slice establishes the visual language and core architecture:
+
+- responsive application shell and inspector
+- a selectable Fabric Atlas built around Aurora Outfitters
+- learner-controlled data-flow and query-path traces
+- central concept, exam, and documentation registries
+- local exploration persistence
+- deterministic trace tests
+
+## Development
+
+Requires Node.js 22.13 or later.
+
+```sh
+npm install
+npm run dev
+```
+
+Quality checks:
+
+```sh
+npm run typecheck
+npm test
+npm run lint
+npm run build
+```
+
+## Content model
+
+Technical concepts live in `content/concepts.ts`, the exam blueprint metadata in `content/exam.ts`, and documentation provenance in `content/sources.ts`. Simulation rules belong in `engine/` so they can be tested independently of presentation.
