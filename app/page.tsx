@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, BookOpen, Boxes, Braces, CalendarRange, ChevronRight, CircleHelp, Database, FileChartColumn, GitBranch, HardDrive, Layers3, Menu, Network, RefreshCw, RotateCcw, Search, ServerCog, SlidersHorizontal, Sparkles, Waves, Wrench, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Boxes, Braces, CalendarRange, ChevronRight, CircleHelp, Database, FileChartColumn, Gauge, GitBranch, HardDrive, Layers3, Menu, Network, RefreshCw, RotateCcw, Search, ServerCog, ShieldCheck, SlidersHorizontal, Sparkles, Waves, Wrench, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,8 @@ import { QueryRosetta } from '@/app/query-rosetta';
 import { ScdTimeMachine } from '@/app/scd-time-machine';
 import { StorageModeLab } from '@/app/storage-mode-lab';
 import { IncrementalRefreshLab } from '@/app/incremental-refresh-lab';
+import { SecurityLens } from '@/app/security-lens';
+import { PerformanceLab } from '@/app/performance-lab';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -104,6 +106,8 @@ export default function Home() {
   if (route === 'lab/scd') return <ScdTimeMachine />;
   if (route === 'lab/storage-modes') return <StorageModeLab />;
   if (route === 'lab/incremental-refresh') return <IncrementalRefreshLab />;
+  if (route === 'lab/security') return <SecurityLens />;
+  if (route === 'lab/performance') return <PerformanceLab />;
 
   return (
     <div className="app-frame">
@@ -137,6 +141,8 @@ export default function Home() {
             <a href="#/lab/direct-lake"><HardDrive />Direct Lake Engine</a>
             <a href="#/lab/storage-modes"><SlidersHorizontal />Storage Modes</a>
             <a href="#/lab/incremental-refresh"><RefreshCw />Incremental Refresh</a>
+            <a href="#/lab/security"><ShieldCheck />Security Lens</a>
+            <a href="#/lab/performance"><Gauge />Performance Lab</a>
           </nav>
           <p className="eyebrow rail-section">Overlays</p>
           <div className="rail-actions">

@@ -19,6 +19,8 @@ The first product slice establishes the visual language and core architecture:
 - an SCD Time Machine showing overwrite versus surrogate-key versioning across historical facts
 - a Storage Mode Lab where Import, DirectQuery, Dual, and Direct Lake reroute the same report request
 - an Incremental Refresh Time Machine exposing rolling windows, partition processing, and late-arriving changes
+- a Security Lens separating workspace, item, semantic-model, row, column, object, and OneLake controls
+- a deterministic Performance Lab connecting model, DAX, relationship, and visual changes to simulated engine work
 - central concept, exam, and documentation registries
 - local exploration persistence
 - deterministic trace tests
