@@ -14,6 +14,9 @@ The first product slice establishes the visual language and core architecture:
 - a Data Store Lab where workload requirements shift Lakehouse, Warehouse, and Eventhouse fit
 - a Direct Lake Engine Room for column loading, framing, and SQL-endpoint fallback behavior
 - an Exam Map connecting the current official objective areas to built and planned experiences
+- a reversible Transformation Workbench where operation order changes visible table results
+- a Query Rosetta comparing visual queries, T-SQL, KQL, and DAX by execution layer and purpose
+- an SCD Time Machine showing overwrite versus surrogate-key versioning across historical facts
 - central concept, exam, and documentation registries
 - local exploration persistence
 - deterministic trace tests

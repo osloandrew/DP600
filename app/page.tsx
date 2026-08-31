@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, BookOpen, Boxes, ChevronRight, CircleHelp, Database, FileChartColumn, GitBranch, HardDrive, Layers3, Menu, Network, RotateCcw, Search, ServerCog, Sparkles, Waves, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Boxes, Braces, CalendarRange, ChevronRight, CircleHelp, Database, FileChartColumn, GitBranch, HardDrive, Layers3, Menu, Network, RotateCcw, Search, ServerCog, Sparkles, Waves, Wrench, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,9 @@ import { RelationshipLab } from '@/app/relationship-lab';
 import { DaxMicroscope } from '@/app/dax-microscope';
 import { DirectLakeLab } from '@/app/direct-lake-lab';
 import { ExamMap } from '@/app/exam-map';
+import { TransformationWorkbench } from '@/app/transformation-workbench';
+import { QueryRosetta } from '@/app/query-rosetta';
+import { ScdTimeMachine } from '@/app/scd-time-machine';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -94,6 +97,9 @@ export default function Home() {
   if (route === 'lab/dax') return <DaxMicroscope />;
   if (route === 'lab/direct-lake') return <DirectLakeLab />;
   if (route === 'exam' || route === 'map') return <ExamMap />;
+  if (route === 'lab/transformation') return <TransformationWorkbench />;
+  if (route === 'lab/query') return <QueryRosetta />;
+  if (route === 'lab/scd') return <ScdTimeMachine />;
 
   return (
     <div className="app-frame">
@@ -118,6 +124,9 @@ export default function Home() {
           <nav className="rail-links" aria-label="System views">
             <a className="active" href="#explore"><Network />Fabric Atlas</a>
             <a href="#/lab/data-stores"><Boxes />Data Store Lab</a>
+            <a href="#/lab/transformation"><Wrench />Transformation</a>
+            <a href="#/lab/query"><Braces />Query Rosetta</a>
+            <a href="#/lab/scd"><CalendarRange />SCD Time Machine</a>
             <a href="#/lab/schema"><GitBranch />Schema Lab</a>
             <a href="#/lab/relationships"><Network />Relationship Lab</a>
             <a href="#/lab/dax"><FileChartColumn />DAX Microscope</a>
