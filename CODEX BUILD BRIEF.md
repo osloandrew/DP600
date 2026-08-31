@@ -5,32 +5,42 @@
 
 Build an interactive GitHub Pages web application for learning the material covered by Microsoft’s DP-600 certification exam.
 
-This must **not** become a conventional certification-prep website.
+This must **not** become a conventional certification-prep website, but it also must **not** assume that unguided exploration is sufficient for a beginner.
+
+The product is now best understood as a **guided field trip through a realistic Microsoft Fabric environment, with a sandbox always available beside it**.
 
 Do not build:
 
 - a quiz homepage
-- flashcards
-- a bank of multiple-choice questions
-- a sequence of lessons followed by tests
+- flashcards as the primary learning mechanism
+- a giant bank of decontextualized multiple-choice questions
+- a conventional LMS made of chapters, completion gates, and end-of-unit tests
 - a prettier copy of Microsoft Learn
 - a collection of static articles
-- a dashboard covered in progress percentages
+- a dashboard covered in fake mastery percentages
 - a gamified streak/XP/achievement system
 - a set of decorative diagrams where clicking merely opens text
 - a Power BI or Microsoft Fabric clone
 
-The product should instead function as an **interactive exploratory model of Microsoft Fabric analytics**.
+The application should combine four complementary modes:
 
-The central learning loop is:
+1. **Guided Field Trips** — realistic Aurora Outfitters situations with explicit orientation, worked examples, scaffolded assignments, and debriefs.
+2. **Explore Freely** — the original interactive atlas/sandbox where the learner can inspect and manipulate the system in any order.
+3. **Foundation Bridge** — concise prerequisite explanations for a learner who is new to Power BI, BI concepts, semantic modeling, and data analysis.
+4. **Exam Prep** — explicit DP-600 transfer practice after concepts have been taught, including scenario-based questions, case-style tasks, review of weak objectives, and an optional exam-date sprint.
 
-**See a system → manipulate something → observe the consequence → inspect why it happened → follow a connection into another concept.**
+The primary learning loop is now:
 
-The user should gradually construct an interconnected mental model of Fabric rather than memorize isolated certification facts.
+**Orient → encounter a realistic problem → watch a worked example → do a guided assignment → solve a variation → explain what happened → connect it to DP-600 exam language → revisit later.**
+
+Free exploration remains essential, but it is no longer the only or default path for a novice learner.
+
+The learner should gradually construct an interconnected mental model of Fabric, understand what the concepts look like in real work, and become able to apply that model under exam conditions.
 
 The closest metaphors are:
 
-- interactive museum
+- guided technical field trip
+- interactive museum with a tour guide
 - systems laboratory
 - explorable explanation
 - technical atlas
@@ -38,9 +48,9 @@ The closest metaphors are:
 - model inspector
 - sandbox
 
-The working product name can be **Fabric Explorer** or **DP-600 Explorer**. Keep naming easy to change.
+The working product name can remain **Fabric Explorer** or **DP-600 Explorer**. Keep naming easy to change.
 
-Do not spend significant effort on branding yet.
+Do not spend significant effort on branding while instructional structure is still being improved.
 
 ---
 
@@ -48,13 +58,17 @@ Do not spend significant effort on branding yet.
 
 The application has one primary job:
 
-> Make difficult DP-600 concepts understandable by turning their rules, architectures, dependencies, and tradeoffs into visible systems the learner can manipulate.
+> Make difficult DP-600 concepts understandable and usable by showing why they exist, what they look like in realistic work, how they behave, and how the same understanding is assessed on the exam.
+
+The target learner may be technically capable but still be new to Power BI, semantic modeling, Microsoft Fabric, and formal data-analysis concepts. Do not assume that terms such as grain, dimension, fact, filter context, semantic model, partition, Delta table, endpoint, cardinality, or query engine already have an intuitive meaning.
 
 The application should be useful when the learner thinks:
 
 - “I keep confusing lakehouse and warehouse.”
 - “I know what Direct Lake is called, but I do not really understand what it does.”
 - “I can read CALCULATE documentation, but filter context still feels abstract.”
+- “What would somebody actually be doing at work when they use this?”
+- “What problem existed before this feature was introduced?”
 - “Why is this many-to-many relationship dangerous?”
 - “What actually changes when I use bidirectional filtering?”
 - “Where does RLS operate?”
@@ -66,10 +80,18 @@ The application should be useful when the learner thinks:
 - “Why would I choose Eventhouse here?”
 - “When am I querying with SQL versus KQL versus DAX?”
 - “How do all these Fabric objects fit together?”
+- “How could Microsoft phrase this as a DP-600 scenario?”
 
 The ideal outcome is not simply that the user remembers an answer.
 
-The ideal outcome is that the user can **predict what the system will do**.
+The learner should progress through four levels of understanding:
+
+1. **I know what problem this solves.**
+2. **I can see why it behaves that way.**
+3. **I can recognize when I would use it in realistic work.**
+4. **I can apply the idea to a new work or exam scenario without being shown the solution first.**
+
+The learner should eventually be able to **predict what the system will do and justify why**.
 
 ---
 
@@ -262,7 +284,7 @@ The entire application should feel as though it contains one explorable Fabric w
 
 Use one coherent fictional organization and one coherent set of datasets throughout the website.
 
-Create an original fictional company, for example:
+Use the existing fictional company:
 
 **Aurora Outfitters**
 
@@ -307,36 +329,84 @@ Do not use a completely different toy dataset for every lab.
 
 Repeated entities should become familiar.
 
-If the learner sees `FactSales`, `DimProduct`, and `DimRegion` in Schema Lab, those same tables should appear later in Relationship Lab, DAX Microscope, Direct Lake, Security Lens, and Performance Lab.
+If the learner sees `FactSales`, `DimProduct`, and `DimRegion` in Schema Lab, those same tables should appear later in Relationship Lab, DAX Microscope, Direct Lake, Security Lens, Performance Lab, guided assignments, and exam-prep scenarios.
 
-This continuity matters.
+This continuity matters. It reduces incidental cognitive load and lets new concepts attach to an already familiar mental model.
 
-It reduces incidental cognitive load and makes the site feel like a coherent world.
+## Aurora must become a workplace, not merely a dataset
+
+Create recurring fictional people and business needs so technical features have a reason to exist.
+
+Examples:
+
+- **Marta — Retail Director:** needs daily sales and margin by region.
+- **Jonas — Norway Sales Manager:** should see Norway but not Sweden.
+- **Priya — Data Engineer:** ingests transaction and telemetry data.
+- **Elena — BI Analyst:** owns the semantic model and reports.
+- **Oskar — Finance Analyst:** needs detailed historical reporting.
+- **Leila — Platform Admin:** manages access, workspaces, deployment, and governance.
+
+These people should appear consistently across the site. Do not introduce dozens of characters; the goal is contextual continuity, not storytelling for its own sake.
+
+A technical concept should normally enter the experience because Aurora has a concrete need.
+
+Example:
+
+> Marta needs a report showing monthly revenue by category and region. Aurora has 180 million order lines, executives do not need transaction-level detail, and yesterday's orders can still change for 48 hours.
+
+That situation can naturally introduce:
+
+- star schema
+- aggregations
+- incremental refresh
+- semantic-model performance
+
+The learner should encounter the technology as the solution to a recognizable problem rather than as vocabulary floating in isolation.
 
 ---
 
 # 5. Pedagogical philosophy
 
-Every major interaction must expose a rule or causal relationship.
+Every major interaction must expose a rule or causal relationship, but **interaction alone is not sufficient instruction for a novice**.
 
-Before implementing an interaction, answer:
+The website must provide enough context for the learner to know:
+
+- where they are in the overall Fabric system
+- what business or analytical problem is being solved
+- what prior concepts are needed
+- what to pay attention to in the interaction
+- what general rule should be extracted afterward
+- how the same idea may appear in DP-600 wording
+
+Before implementing an interaction, answer both questions:
 
 > What understanding becomes visible because the learner can interact with this?
 
-If there is no strong answer, do not add the interaction.
+and
+
+> What context does a beginner need in order to notice the important part of the interaction?
+
+If there is no strong answer to both, redesign it.
 
 Bad interaction:
 
 - click a warehouse icon
 - modal appears containing three paragraphs about warehouses
 
+Also bad:
+
+- present Lakehouse, Warehouse, and Eventhouse with many controls
+- assume a beginner already understands why those choices matter
+
 Better interaction:
 
-- put a workload beside lakehouse, warehouse, and Eventhouse
-- switch its requirements
-- show which architecture characteristics become relevant
-- allow the learner to move the workload
-- visibly change available query engines, latency characteristics, table representation, and downstream connections
+1. Aurora has a stated workload.
+2. The learner is told which properties matter: data shape, latency, workload, and preferred query language.
+3. A worked example demonstrates one decision.
+4. The learner changes one requirement and predicts what should change.
+5. The architecture responds visibly.
+6. The Inspector names the underlying principle.
+7. Exam Lens shows how Microsoft may describe the same decision.
 
 Bad interaction:
 
@@ -348,36 +418,47 @@ Better interaction:
 - query path illuminates
 - changing storage mode causes the path to visibly reroute
 - labels explain which engine now executes which part
+- the learner predicts the route before replaying it on a later attempt
 
-The site should teach through **model behavior** rather than decorative motion.
+The site should teach through **context + model behavior + guided practice + later retrieval**, not decorative motion or passive reading.
 
 ---
 
 # 6. Learning principles to encode into the UI
 
-## 6.1 Recognition before recall
+## 6.1 Build understanding before retrieval
 
-The site should normally let users inspect, compare, manipulate, and recognize patterns rather than force retrieval from memory.
+Initial instruction should emphasize recognition, inspection, worked examples, and visible cause-and-effect.
 
-Do not turn every topic into “What is X?”
+Do not ask a learner to retrieve terminology or solve a configuration problem before the site has provided enough context to understand what is being asked.
 
-Instead show X in context.
+Examples during initial learning:
 
-Examples:
-
-Instead of asking what a fact table is, show a model and let the learner inspect its grain.
+Instead of asking what a fact table is, show a realistic operational table, identify its grain, and visibly reorganize it into a model.
 
 Instead of asking whether RLS restricts rows, change the active user and visibly remove rows.
 
-Instead of asking which storage mode performs queries against the source, show query arrows reroute when DirectQuery is selected.
+Instead of asking which storage mode reaches the source, show the query arrows reroute when DirectQuery is selected.
 
 Instead of asking what `ALL()` does, show filters disappear from the current evaluation context.
 
-This follows the usability principle of minimizing memory burden by making relevant objects and actions visible. citeturn523929search1
+**After** the learner has seen and manipulated the concept, introduce retrieval:
+
+- “Predict which rows will remain before you run this step.”
+- “Which layer will this query reach?”
+- “Explain why this table is a dimension rather than a fact.”
+- “Choose the strongest store for this altered workload.”
+- “Which requirement in this scenario tells you RLS is relevant?”
+
+Questions should emerge from the system, not replace the system.
 
 ## 6.2 Progressive disclosure
 
-Every concept needs at least two levels:
+Every concept needs at least three practical depth levels:
+
+**Foundation**
+
+What prerequisite idea must be understood first?
 
 **Simple view**
 
@@ -385,13 +466,19 @@ The smallest mental model sufficient to understand the concept.
 
 **Inspect internals**
 
-More implementation detail, terminology, edge cases, code, or exam-specific nuance.
+Implementation detail, terminology, edge cases, code, or exam-specific nuance.
 
 Do not display every caveat in the first frame.
 
 For example, Direct Lake initially shows:
 
 **Delta tables → OneLake → semantic model → report**
+
+Foundation may first explain:
+
+- what a semantic model is
+- what it means to import/copy data versus query shared storage
+- what a column-oriented analytical store is conceptually
 
 An expandable deeper view can then show:
 
@@ -404,7 +491,7 @@ An expandable deeper view can then show:
 - Direct Lake on SQL endpoint
 - DirectLakeBehavior
 
-Progressive disclosure should keep complex interfaces learnable without withholding advanced information. citeturn523929search0
+Progressive disclosure should reduce cognitive load without hiding the route to advanced material.
 
 ## 6.3 Learner-controlled pacing
 
@@ -434,7 +521,7 @@ This is especially important for:
 - query execution
 - Direct Lake framing
 
-Learner control and segmentation are preferable to forcing users through transient animation at a fixed pace. citeturn941093search0turn941093search2
+The learner must never be forced to understand an important transition before it disappears.
 
 ## 6.4 One visual idea at a time
 
@@ -446,7 +533,11 @@ When demonstrating relationship propagation, the security layer does not also ne
 
 When demonstrating Direct Lake, deployment lineage does not need to glow.
 
-Interactive visualizations can themselves create unnecessary cognitive load if too many perceptually rich cues compete simultaneously. citeturn941093search5
+Guided Field Trips should explicitly state **what to watch** before a complex transition begins.
+
+Example:
+
+> Watch the arrows between `DimRegion` and `FactSales`. The important question is which direction the filter can travel.
 
 ## 6.5 Reversibility
 
@@ -460,26 +551,151 @@ The learner should feel safe experimenting.
 
 Do not make the user afraid to “break” the simulation.
 
+## 6.6 Worked examples and guidance fading
+
+For unfamiliar topics, begin with a complete worked example.
+
+The worked example should expose expert decision-making rather than simply perform steps automatically.
+
+For each meaningful choice, explain:
+
+- what requirement matters
+- what options exist
+- why one option fits better
+- what consequence follows
+
+Then fade guidance across subsequent tasks.
+
+Recommended progression:
+
+**Watch me**
+
+The site performs the task and explains every decision.
+
+**Do it with me**
+
+The learner performs steps with prompts and contextual hints.
+
+**You try**
+
+The learner receives the realistic requirement but not the procedure.
+
+**New situation**
+
+One or two important conditions change so the learner must transfer the rule rather than repeat clicks from memory.
+
+Do not require every concept to use all four stages if that would be artificial, but difficult core topics should.
+
+## 6.7 Concrete example first, abstraction second
+
+Technical vocabulary should normally attach to a concrete Aurora situation.
+
+Teaching order:
+
+**real situation → visible behavior → name the concept → extract the general rule → compare with a neighboring concept**
+
+Do not leave the learner remembering only Aurora-specific details.
+
+Every major worked example should end with a short **General rule** statement.
+
+Example:
+
+> **General rule:** A dimension describes business entities used to filter and group. A fact table records measurable events at a defined grain.
+
+Then show a second small example or contrast where appropriate.
+
+## 6.8 Reinforcement and spaced retrieval
+
+Understanding during a lab is not enough.
+
+Important concepts should return later in short, contextual prompts.
+
+Examples:
+
+- “Yesterday you configured RLS. Predict what Jonas can see before revealing the result.”
+- “You compared Warehouse and Eventhouse earlier. Aurora now needs high-volume telemetry analysis. Which properties matter?”
+- “This DAX expression uses an iterator. Which visual state should appear next?”
+
+Do not implement a flashcard deck.
+
+Reinforcement should be embedded in realistic mini-scenarios and tied to concepts the learner has already encountered.
+
+Track evidence such as:
+
+- saw worked example
+- completed with guidance
+- completed independently
+- answered a later retrieval prompt
+- revisited after delay
+
+Do not translate those states into a fabricated probability of passing.
+
+## 6.9 Predictability and low ambiguity
+
+The interface should make the learner's current task and next available action obvious.
+
+Every guided experience should answer:
+
+- Where am I?
+- Why am I here?
+- What am I trying to accomplish?
+- What should I pay attention to?
+- What happens after this step?
+- Can I leave the tour and explore freely?
+
+Avoid unexplained branching choices when the learner lacks enough knowledge to choose meaningfully.
+
+Offer a recommended route while preserving autonomy.
+
+## 6.10 Explicit exam transfer
+
+After a concept has been taught, expose the certification layer explicitly.
+
+Use an **Exam Lens** that shows:
+
+- the current DP-600 objective
+- terminology Microsoft is likely to use
+- the clues in a scenario that point toward the concept
+- common neighboring concepts that could be plausible distractors
+- one or more realistic application tasks
+
+Do not show the exam lens before foundational explanation if doing so would add noise.
+
+The purpose is to bridge durable understanding into exam performance, not to replace understanding with trivia.
+
 ---
 
 # 7. Overall information architecture
 
-Implement approximately these top-level experiences.
+The site should support a novice-friendly recommended path without removing free exploration.
 
-Do not expose twenty equal navigation links.
+Primary top-level experiences:
 
-Use a compact application shell with:
+- **Field Trips** — guided, realistic learning journeys; default learning mode
+- **Explore** — free-form Fabric Atlas and labs
+- **Foundations** — prerequisite bridge for BI/Fabric/data concepts
+- **Map** — spatial knowledge graph and system orientation
+- **Exam Prep** — scenario practice, objective review, and official-exam orientation
+- **Search**
 
-- Explore
-- Labs
-- Map
-- Exam coverage
-- Search
+Do not expose twenty equal navigation links as the first decision a beginner must make.
+
+The existing detailed lab list can remain available inside **Explore** and on desktop context rails. In **Field Trips**, replace the wall of lab names with a small ordered journey.
 
 Suggested routes:
 
 ```text
 #/
+#/journeys
+#/journey/from-question-to-report
+#/journey/organize-the-data
+#/journey/build-the-model
+#/journey/control-access
+#/journey/make-it-fast
+#/journey/ship-changes
+#/foundations
+#/foundations/tables-and-keys
+#/foundations/analytics-stack
 #/explore
 #/atlas
 #/labs
@@ -500,6 +716,9 @@ Suggested routes:
 #/lab/lifecycle
 #/lab/lineage
 #/exam
+#/exam/prep
+#/exam/sprint
+#/exam/environment
 #/glossary
 ```
 
@@ -509,27 +728,44 @@ Use Pages-safe routing.
 
 A hash-based router is acceptable and preferable to broken deep links on a static GitHub Pages project deployment.
 
-Examples:
+Important guided-journey state should be shareable without encoding every animation step.
 
-```text
-/#/atlas
-/#/lab/direct-lake
-/#/lab/dax
-```
-
-Deep links should be shareable.
+The learner must always be able to switch from a guided assignment to **Explore this freely** and later return to the journey at the same point.
 
 ---
 
 # 8. Homepage
 
-The homepage should immediately communicate that this is an explorable system.
+The homepage should immediately communicate both the Fabric system and the recommended learning path.
 
 Do not begin with a giant marketing hero and several paragraphs.
 
 Do not begin with “Choose a course.”
 
-The dominant visual on desktop should be a simplified Fabric system.
+For a new or early-stage learner, the primary call to action should be a guided journey rather than “Free exploration.”
+
+Recommended structure:
+
+**Primary card**
+
+**Continue the field trip**
+
+Example subtitle:
+
+> Aurora's retail director needs a trustworthy regional sales report. Follow the data from the source to the report and learn why each Fabric layer exists.
+
+Actions:
+
+**Continue journey**
+**What will I learn?**
+
+**Secondary action**
+
+**Explore freely**
+
+> Select any object in the Fabric system and inspect how it works.
+
+The dominant visual on desktop should remain a simplified Fabric system because spatial orientation is valuable.
 
 Example:
 
@@ -549,44 +785,28 @@ Databases    Files    APIs    Streams
               REPORTS
 ```
 
-This diagram should be visually sophisticated, but initially understandable in seconds.
-
-Around it or above it should be a short instruction:
-
-**Explore the system**
-
-Subtext:
-
-**Select an object, follow a data path, or open a lab.**
-
-Clicking an object opens an inspector rather than navigating instantly away.
-
-Example inspector for Lakehouse:
-
-**Lakehouse**
-
-- Stores files and Delta tables.
-- Supports Spark workloads.
-- Exposes a SQL analytics endpoint.
-- Good when analytics and data engineering need to meet.
-
-Then provide meaningful actions:
-
-**Open Lakehouse**
-**Compare with Warehouse**
-**Trace sales data through it**
-**See DP-600 objectives**
-
-Those actions should open real interactions, not articles.
-
-The homepage should also contain a restrained “continue exploring” area using local state.
+The learner should be able to see their current guided location on this diagram.
 
 Example:
 
-**Continue**
-Direct Lake · last explored yesterday
+**You are here: Semantic model**
 
-Do not show streaks.
+Clicking an object in Explore mode opens an inspector rather than navigating instantly away.
+
+In Field Trip mode, clicking an unrelated object should offer:
+
+**Inspect without leaving the trip**
+**Open in Explore mode**
+
+The homepage should also surface a compact **Foundation check** when prerequisite concepts have not yet been encountered.
+
+Example:
+
+> New to semantic models? Spend 8–12 minutes on the foundation bridge first.
+
+Do not force the learner through it if they already understand the concept.
+
+If an exam date is configured and close, surface a restrained **Exam Sprint** card showing today's recommended work. Do not use countdown panic language or red warning styling.
 
 ---
 
@@ -628,29 +848,57 @@ Never simply shrink the desktop UI until text becomes microscopic.
 
 # 10. The Inspector
 
-The right-side Inspector is a key reusable component.
+The right-side Inspector is a key reusable component and should become one of the main sources of beginner context.
 
 Selecting almost any visual object should populate it.
 
-Use a consistent hierarchy.
+Use a consistent hierarchy, but show only the sections relevant to the current state.
 
-Possible inspector sections:
+Possible sections:
 
 **What is this?**
 
 One or two direct sentences.
 
+**Why does this exist?**
+
+The problem or need this object solves.
+
+**Where are we?**
+
+Its location in the broader Fabric/data path.
+
+**Before this makes sense**
+
+One or two prerequisite concepts. These should open concise inline explainers rather than forcing a full navigation change.
+
 **What is happening?**
 
-Dynamic description of the current state.
+Dynamic description of the current simulation state.
 
 **Why?**
 
 Explanation of the rule causing it.
 
+**What this looks like at work**
+
+A realistic Aurora task or role using the feature.
+
+**Reality view**
+
+A current, original educational mock-up or appropriately sourced visual showing where the concept appears in the real Fabric/Power BI experience. Do not copy the Microsoft product UI pixel-for-pixel.
+
 **Try**
 
 One or two suggested manipulations.
+
+**Predict first**
+
+When the learner has already been taught the concept, ask for a prediction before revealing the next system state.
+
+**Commonly confused with**
+
+One or two neighboring concepts and the discriminating difference.
 
 **Compare**
 
@@ -660,6 +908,14 @@ Contextual comparison link.
 
 Which current DP-600 objective(s) this teaches.
 
+**Exam wording**
+
+Terms or clues likely to appear in scenario-based exam language.
+
+**What you actually need to remember**
+
+A short durable rule after the conceptual explanation.
+
 **Go deeper**
 
 Optional implementation detail.
@@ -668,9 +924,7 @@ Optional implementation detail.
 
 Microsoft documentation title and verification date.
 
-Do not show every section if unnecessary.
-
-Keep the top of the inspector concise.
+Keep the top of the inspector concise. Progressive disclosure is critical; this richer structure must not become a 1,500-word sidebar.
 
 ---
 
@@ -780,43 +1034,67 @@ The active concept must remain obvious.
 
 ---
 
-# 13. Exam Coverage mode
+# 13. Exam Coverage and Exam Prep
 
-This is where the official certification outline becomes explicit.
-
-Do not make this the main learning interface.
+The official certification outline should be explicit, but it should not become the primary conceptual navigation model.
 
 Provide three current domains with official weight ranges.
 
-Selecting a domain highlights all labs and concepts covering it.
+Selecting a domain highlights all labs, field-trip stops, foundation concepts, and reinforcement tasks covering it.
 
 Example:
 
 **Prepare data — 45–50%**
 
-Then map its objectives to actual interactive experiences:
+Map its objectives to learning experiences:
 
 ```text
-Choose data stores       → Data Store Lab
+Choose data stores       → Data Store Lab + guided workload assignment
 Discover data            → OneLake / Real-Time Hub Explorer
-Transform data           → Transformation Workbench
-Star schema              → Schema Lab
+Transform data           → Transformation Workbench + cleanup assignment
+Star schema              → Schema Lab + modeling field trip
 Merge / join             → Transformation Workbench
-SQL                      → Query Lab
-KQL                      → Query Lab
-DAX                      → Query Lab + DAX Microscope
+SQL                      → Query Rosetta
+KQL                      → Query Rosetta / Eventhouse scenario
+DAX                      → Query Rosetta + DAX Microscope
 ```
 
-Coverage states can be:
+Coverage state should become richer than simply “clicked.”
 
-- not explored
-- viewed
-- manipulated
-- revisited
+Suggested evidence states:
 
-Never label someone “mastered” solely because they clicked an interaction.
+- unseen
+- orientation viewed
+- worked example completed
+- guided assignment completed
+- independent variation completed
+- retrieval revisited
 
-Do not calculate a fake exam-readiness percentage.
+Do not label a concept “mastered” solely because one activity succeeded.
+
+Do not calculate a fake probability of passing.
+
+## Exam Prep is a legitimate product mode
+
+The application may and should contain explicit assessment after teaching has occurred.
+
+Exam Prep can include:
+
+- realistic single-question scenarios
+- case-style requirement analysis
+- ordering/build-sequence tasks
+- matching/classification tasks
+- visual configuration tasks
+- short timed sets
+- objective-focused review
+- explanations of why plausible alternatives do not fit
+- direct remediation links back to the exact lab or foundation concept
+
+Do not build an exam dump or giant trivia bank.
+
+The purpose is **transfer**: can the learner recognize and apply the same concept when the friendly interactive representation is removed or the scenario wording changes?
+
+Also provide prominent links to Microsoft's official DP-600 Practice Assessment and Exam Sandbox rather than pretending this site replaces them.
 
 ---
 
@@ -2424,15 +2702,19 @@ No surprise destructive state.
 
 ---
 
-# 41. Break It mode
+# 41. Break It / Counterfactual mode
 
-Every major lab should eventually support some form of free experimentation.
+Every major lab should eventually support free experimentation and deliberate counterfactuals.
 
-Do not call it a test.
+The goal is not merely to let the learner create invalid states. It is to answer:
 
-Button:
+> What problem appears if I remove or change this design choice?
+
+Button labels can include:
 
 **Break it**
+**What if I remove this?**
+**Compare failure mode**
 
 Example Relationship Lab mutations:
 
@@ -2449,15 +2731,21 @@ Example Storage Lab:
 
 Example Security:
 
-- give Build permission
+- remove RLS
+- give broader item permission
 - remove workspace role
-- alter RLS role
+- alter the user's region role
 
 Example Data Lab:
 
 - retain duplicates
 - convert type incorrectly
 - join on a nonunique key
+
+Example foundations:
+
+- remove the date dimension and show what analytical behavior becomes harder
+- flatten dimensions back into a repeated wide fact-like table and expose the consequences
 
 As conditions deteriorate, show consequences.
 
@@ -2476,6 +2764,12 @@ Possible indicators:
 **Norway role can now see Sweden rows**
 
 These warnings are learning feedback, not scoring.
+
+A counterfactual should finish with a concise causal statement:
+
+> This is why the original design choice exists.
+
+Only block states that make the simulation impossible to interpret.
 
 ---
 
@@ -3686,139 +3980,173 @@ If documentation changes later, content should be editable without refactoring t
 
 ---
 
-# 75. First implementation scope
+# 75. Current implementation priority: add the instructional spine before more breadth
 
-Do **not** try to build all labs immediately.
+The application is no longer at the “prove the visual concept” stage. The repository already contains a substantial set of interactive labs and a strong visual language.
 
-The first implementation should establish the design language and simulation architecture.
+Therefore, **do not prioritize building another major lab simply because it is listed in the blueprint**.
 
-Build these first:
+The highest-value work now is to retrofit the existing experiences so a true beginner can learn from them and then transfer that learning to the exam.
 
-### 1. Application shell
+Before expanding breadth, implement across existing flagship labs:
 
-Functional:
+1. beginner orientation
+2. prerequisite/foundation links
+3. realistic Aurora workplace context
+4. worked examples
+5. guided assignments
+6. independent variations
+7. debrief/general rule
+8. Exam Lens
+9. later reinforcement prompts
+10. reality orientation to the real Fabric/Power BI product
 
-- routing
-- top nav
-- inspector
-- responsive behavior
-- global styling
-- basic local progress state
-
-### 2. Fabric Atlas
-
-Functional simplified architecture.
-
-Select nodes.
-
-Inspector updates.
-
-Trace one sales-data path.
-
-Support Data Flow and Query Path views.
-
-### 3. Data Store Lab
-
-Functional Lakehouse/Warehouse/Eventhouse comparison.
-
-Changing workload characteristics changes the explanation and architecture fit.
-
-### 4. Schema Lab
-
-Functional small source table.
-
-Allow fields to move into dimensions/fact.
-
-Show grain.
-
-Show relationships.
-
-Provide reset.
-
-### 5. Relationship Lab
-
-Functional filter propagation.
-
-Single/both direction toggle.
-
-Many-to-many bridge scenario.
-
-### 6. DAX Microscope prototype
-
-Implement only:
-
-- SUM
-- CALCULATE
-- SUMX
-- ALL
-
-But implement them extremely well visually.
-
-### 7. Direct Lake prototype
-
-Implement:
-
-- Direct Lake on OneLake path
-- column/cache visualization
-- first/second query
-- change data
-- framing refresh
-- SQL endpoint variant
-- one deterministic fallback scenario
-
-### 8. Exam Map
-
-Map official current objectives to built and planned labs.
-
-This is enough to validate the core product.
+The existing visual and interaction work should be preserved unless it actively conflicts with this instructional structure.
 
 ---
 
-# 76. Phase 2
+# 76. Next phase: Foundation Bridge and Guided Field Trips
 
-Once Phase 1 is solid:
+Build the instructional infrastructure before adding broad new technical content.
 
-- Transformation Workbench
-- Query Rosetta
-- SCD Time Machine
-- Storage Mode Lab expansion
-- Incremental Refresh
-- Security Lens
-- Performance Lab
+Priority order:
+
+### 1. Foundation Bridge
+
+Add concise prerequisite modules for:
+
+- rows, columns, tables, and data types
+- keys and uniqueness
+- joins and relationships
+- operational data versus analytical data
+- fact, dimension, grain, and star schema
+- transformation versus querying versus calculation
+- what Power Query, SQL, KQL, and DAX broadly do
+- what a semantic model is
+- report → semantic model → storage/source
+- refresh, cache, and live/source-query concepts
+- batch versus streaming
+- workspace versus Fabric item
+- how Power BI fits inside Microsoft Fabric
+
+These are not a separate DP-600 domain. They are prerequisite bridges into the official scope.
+
+### 2. Guided Journey infrastructure
+
+Create a reusable journey shell with:
+
+- orientation
+- stated business mission
+- “what to watch” cue
+- worked example state
+- guided task state
+- independent variation state
+- debrief
+- general rule
+- exam lens
+- leave-to-explore and return-to-journey behavior
+
+### 3. First complete field trip
+
+Build one end-to-end journey before spreading the pattern everywhere:
+
+**From business question to trusted report**
+
+Suggested route:
+
+Sources
+→ OneLake/store decision
+→ transformation
+→ star schema
+→ semantic model
+→ measure
+→ report
+→ security/performance follow-up
+
+Use the same Aurora objects already present in the site.
+
+### 4. Reality View pattern
+
+Create a reusable way to show what a concept resembles in real Fabric/Power BI usage without cloning Microsoft's UI.
+
+### 5. Assignment and reinforcement state
+
+Add content/state structures for:
+
+- worked example completed
+- guided assignment completed
+- independent variation completed
+- reinforcement due/revisited
+
+Keep this local and lightweight.
 
 ---
 
-# 77. Phase 3
+# 77. Following phase: Exam Prep and sprint support
 
-Then:
+Once at least one field trip and the Foundation Bridge are working well, build explicit exam preparation.
+
+Priority features:
+
+- Exam Lens inside labs
+- scenario-based practice tied to objectives
+- explanations for all plausible alternatives
+- case-style requirement extraction
+- short timed sets
+- direct remediation links into labs
+- official Practice Assessment link
+- official Exam Sandbox link
+- exam-environment orientation
+- optional exam-date setting
+- Exam Sprint recommendations based on objective weight, prior exposure, and reinforcement evidence
+
+After this is functional, return to missing technical breadth:
 
 - Governance
 - Lifecycle
 - PBIP
 - XMLA
 - Lineage
-- calculation groups
-- field parameters
-- composite models
 - large semantic models
-- reusable assets
 - richer Real-Time Hub/Eventhouse content
+- any DP-600 objective that remains insufficiently taught
+
+Do not delay high-value exam transfer work merely to finish every planned exploratory lab.
 
 ---
 
-# 78. Do not use quizzes as scaffolding
+# 78. Assessment is allowed after teaching; quiz-first design is not
 
-Even during development, do not use quiz cards as placeholders.
+Do not use quiz cards as placeholders for missing instruction.
 
-If a lab is not ready, show:
+Do not make a quiz engine the homepage or product identity.
 
-**Coming later**
+Do not use decontextualized questions to teach concepts the learner has never been shown.
 
-with the concept map.
+However, **explicit retrieval and exam-style assessment are now required parts of the product once a concept has been taught**.
 
-Do not fill the gap with multiple-choice questions.
+Good assessment forms include:
 
-A future optional exam-practice mode could exist, but it is not the product's identity and should not influence the initial architecture.
+- predict the next system state before revealing it
+- identify which requirement matters in an Aurora scenario
+- choose a design and then watch its consequence
+- explain why one option fits better than a neighboring option
+- complete a small configuration independently
+- solve a realistic DP-600-style scenario
+- analyze a short case file and separate relevant from irrelevant details
+
+Multiple choice is acceptable when it authentically resembles certification practice, especially in Exam Prep mode.
+
+When multiple choice is used:
+
+- every option must be plausible
+- explanations must address why each option does or does not satisfy the scenario
+- remediation must link back to the exact interactive concept
+- avoid trivia whose only value is memorizing wording
+
+The correct product distinction is:
+
+> **Questions are not the primary teaching interface. They are a reinforcement and transfer interface after teaching.**
 
 ---
 
@@ -3867,34 +4195,55 @@ not:
 
 **Your score**
 
-Show concepts spatially.
+Show concepts spatially and show meaningful learning evidence rather than a single mastery percentage.
 
-Example:
+Possible states:
 
 ```text
-OneLake                  explored
-Lakehouse                explored
-Warehouse                explored
-Eventhouse               unseen
+OneLake
+  orientation viewed
+  guided assignment completed
 
-Star schema              manipulated
-Relationships            manipulated
-DAX filter context       explored
-Calculation groups       unseen
+Star schema
+  worked example completed
+  independent variation completed
+  retrieval revisited
 
-Direct Lake              manipulated
-Incremental refresh      unseen
+DAX filter context
+  worked example completed
+  guided assignment completed
+  independent variation not yet completed
+
+Direct Lake
+  explored freely
+  exam transfer not yet attempted
 ```
 
 Allow:
 
-**Continue exploring**
+**Continue field trip**
+
+**Review due concepts**
+
+**Show foundations**
 
 **Show unexplored**
 
 **Show DP-600 objective coverage**
 
+**Open Exam Prep**
+
 Do not claim likelihood of passing.
+
+Do not turn progress into guilt, streak maintenance, or completion pressure.
+
+If an exam date is configured, distinguish:
+
+- exam objectives not yet encountered
+- concepts taught but not yet independently applied
+- concepts due for a short revisit
+
+Use this to prioritize study, not to create a pseudo-scientific readiness score.
 
 ---
 
@@ -3916,9 +4265,9 @@ Use optional depth.
 
 ---
 
-# 82. Contextual recommendations
+# 82. Contextual recommendations and recommended route
 
-At the end or side of an interaction, recommend only highly related paths.
+Free exploration should recommend only highly related concepts.
 
 After Direct Lake:
 
@@ -3933,6 +4282,19 @@ After many-to-many:
 - Bridge tables
 - Star schema
 - Filter direction
+
+Guided Field Trips are different: they may have an explicit **Next assignment** because the learner has chosen a structured route.
+
+Example:
+
+**Next field-trip stop**
+
+> Marta's report works, but Jonas should only see Norway. Move to Security Lens and configure the access rule.
+
+Always distinguish these two experiences:
+
+- **Recommended next step in the current guided journey**
+- **Related concepts for free exploration**
 
 Do not show generic “Next lesson.”
 
@@ -4311,14 +4673,22 @@ README should explain:
 
 **What this is**
 
-An interactive DP-600 learning environment.
+An interactive DP-600 learning environment built around guided realistic scenarios and explorable Fabric systems.
+
+**Learning modes**
+
+- Guided Field Trips
+- Foundation Bridge
+- Explore Freely
+- Exam Prep / optional Exam Sprint
 
 **What it is not**
 
 Not affiliated with Microsoft.
 Not a replacement for official documentation.
 Not an exam dump.
-Not a question bank.
+Not a giant question bank.
+Not a conventional LMS.
 
 **Architecture**
 
@@ -4337,10 +4707,15 @@ concepts
 exam objectives
 sources
 labs
+journeys
+assignments
+reinforcement
 
 **Deployment**
 
 GitHub Pages via Actions.
+
+The README should describe the product accurately but should not duplicate the extensive pedagogical rationale in this build brief.
 
 ---
 
@@ -4395,76 +4770,69 @@ Community explanations may inspire teaching techniques, but technical truth shou
 
 ---
 
-# 102. Phase 1 design acceptance criteria
+# 102. Design acceptance criteria for the next usable learning release
 
-The first usable version succeeds only if all of the following are true.
+The next release succeeds only if the site is not merely interactive, but genuinely teachable to a novice and useful for DP-600 preparation.
 
 ## Homepage
 
-A new learner can understand within seconds that the page depicts a Fabric analytics system.
+A new learner can understand within seconds that:
 
-They can select at least:
+- the diagram represents a Fabric analytics system
+- there is a recommended guided route
+- free exploration remains available
+- foundational help exists if terminology is unfamiliar
+- exam preparation exists separately from initial teaching
 
-- Lakehouse
-- Warehouse
-- Eventhouse
-- OneLake
-- Semantic model
+## Foundation Bridge
 
-Selecting them changes visible state and Inspector content.
+A learner unfamiliar with BI/data-modeling terminology can obtain concise contextual explanations for at least:
 
-## Atlas
+- table/row/column
+- key
+- relationship/join
+- fact/dimension/grain
+- transformation/query/calculation
+- semantic model
+- report/storage/source path
 
-A learner can trace:
+These explanations connect directly into real labs.
 
-**source → storage → semantic model → report**
+## First Guided Field Trip
 
-They can switch to query path.
+At least one end-to-end Aurora journey contains:
 
-## Data stores
+- realistic business mission
+- orientation in the Fabric system
+- prerequisite links
+- worked example
+- guided assignment
+- independent variation
+- debrief/general rule
+- exam lens
+- ability to leave and return
 
-A learner can change workload properties and observe why a storage choice becomes more or less suitable.
+## Existing flagship labs
 
-## Schema
+At minimum Atlas, Data Store, Schema/Relationship, DAX, Storage/Direct Lake, Security, Incremental Refresh, and Performance should each contain clear workplace context and “why this exists” explanations.
 
-A learner can manipulate table structure and visibly build a star schema.
+## Reality orientation
 
-They can inspect grain.
+At least several foundational concepts show what the concept resembles in the real Fabric/Power BI environment through an original educational mock-up or properly sourced current visual.
 
-## Relationships
+## Reinforcement
 
-A learner can apply a filter and watch it propagate.
+The application can bring back a previously learned concept in a short contextual retrieval prompt without turning into flashcards.
 
-They can change direction.
+## Exam Prep
 
-They can inspect a bridge-table scenario.
+The learner can:
 
-## DAX
-
-A learner can step through at least:
-
-- SUM
-- CALCULATE
-- SUMX
-- ALL
-
-Rows and filter state visibly correspond to the calculation.
-
-## Direct Lake
-
-A learner can distinguish:
-
-- Import
-- DirectQuery
-- Direct Lake
-
-and can visually understand the Direct Lake query path.
-
-They can see the difference between Direct Lake on OneLake and the SQL-endpoint variant in the curated scenario.
-
-## Exam coverage
-
-Every implemented lab maps to current DP-600 objectives.
+- see current DP-600 objective mapping
+- attempt at least several realistic scenario questions/tasks
+- inspect explanations for alternatives
+- jump directly to remediation
+- access links to Microsoft's official Practice Assessment and Exam Sandbox
 
 ## Accessibility
 
@@ -4487,130 +4855,154 @@ Production GitHub Pages build succeeds.
 
 # 103. What quality means
 
-Do not judge success by number of pages.
+Do not judge success by number of pages or labs.
 
-Five excellent interactive systems are better than fifty shallow cards.
+Five excellent instructional systems are better than fifty shallow cards.
 
-A lab is “good” when the learner can say:
+A concept experience is “good” when the learner can eventually say:
 
-> I can see why that happens now.
+> I know what problem this solves.
+
+> I can see why it behaves that way.
+
+> I recognize what this looks like in real work.
+
+> I can apply it when the scenario changes.
 
 A lab is weak when the only thing the learner can say is:
 
 > I clicked through information.
 
-Prioritize conceptual clarity over breadth during early development.
+An exam-prep interaction is weak when the learner can only say:
+
+> I memorized which option was marked correct.
+
+Prioritize conceptual clarity, contextual transfer, and reinforcement over breadth.
 
 ---
 
 # 104. Immediate Codex work order
 
+The repository is already substantially built. **Do not restart it and do not treat this as a greenfield scaffold task.**
+
 Start now in this order.
 
-## Step 1: inspect the repository
+## Step 1: inspect the existing repository and preserve working interactions
 
 Before changing anything:
 
-- inspect existing files
-- inspect package.json if present
-- inspect current build tooling
-- inspect existing GitHub Actions
-- inspect Pages configuration assumptions
-- inspect current styling conventions
+- inspect existing routes and labs
+- inspect content and exam registries
+- inspect local progress state
+- inspect the Aurora data model
+- inspect the current Atlas/Inspector patterns
+- run existing tests
+- inspect responsive and accessibility behavior
 
-Do not destroy an existing project structure without reason.
+Identify which parts of this revised brief are already implemented and which are not.
 
-If the repository is empty/new, initialize the recommended Vite + React + TypeScript project.
+Do not regenerate existing successful visual systems merely to fit a new abstraction.
 
-## Step 2: establish application foundation
+## Step 2: create the instructional content model
 
-Implement:
+Add minimal data structures for:
 
-- TypeScript strict mode
-- Vite
-- routing
-- CSS design tokens
-- responsive AppShell
-- Inspector
-- minimal source/content registries
-- local persistence utility
-- test infrastructure
+- foundation concepts
+- guided journeys
+- journey stops
+- worked examples
+- assignments
+- hints/scaffolding levels
+- exam lens metadata
+- reinforcement state
 
-## Step 3: add real DP-600 content structure
+Keep them content-driven and testable.
 
-Create:
+Do not build a huge generic course engine.
 
-- current exam metadata
-- objective IDs
-- initial concept registry
-- source registry
-- first shared Aurora dataset
+## Step 3: implement the Foundation Bridge
 
-Do not fill the UI with placeholder lorem ipsum.
+Start with the smallest set necessary to make existing labs understandable to a beginner.
 
-Use real concept names from the start.
+Use concise interactive/visual explanations, not long articles.
 
-## Step 4: build the Fabric Atlas
+## Step 4: retrofit the Fabric Atlas homepage experience
 
-This is the first real product surface.
+Preserve the existing excellent Atlas visual.
 
-Required nodes:
+Change the default learning affordance from **Free exploration** to a strong guided-field-trip entry point.
 
-- Sources
-- OneLake
-- Lakehouse
-- Warehouse
-- Eventhouse
-- Semantic model
-- Report
+Keep **Explore freely** as a visible secondary action.
 
-Required interactions:
+Add current-location indication when a learner is on a field trip.
 
-- node selection
-- Inspector
-- data flow
-- query path
-- reset
-- responsive layout
-- keyboard selection
+## Step 5: build one complete end-to-end guided field trip
 
-Make this polished enough to establish the design language.
+Use Aurora Outfitters and existing labs.
 
-## Step 5: build Data Store Lab
+Recommended first journey:
 
-Implement meaningful workload manipulation.
+**From business question to trusted report**
 
-Avoid answer-checking.
+Do not create duplicate simplified versions of every lab. Reuse existing interactive components inside the guided shell where practical.
 
-## Step 6: build Schema Lab
+## Step 6: retrofit the Inspector
 
-Use Aurora data.
+Add support for:
 
-Allow actual structural manipulation.
+- why this exists
+- prerequisites
+- workplace context
+- commonly confused with
+- exam wording
+- what to remember
+- reality view
 
-Show grain and relationships.
+Use progressive disclosure so the inspector remains calm.
 
-## Step 7: build Relationship Lab
+## Step 7: add guided → independent practice transitions
 
-Reuse resulting conceptual star schema.
+Pick several high-value topics:
 
-Implement deterministic filter propagation.
+- store selection
+- star schema / grain
+- filter propagation
+- DAX context
+- storage modes / Direct Lake
+- RLS
 
-## Step 8: build DAX Microscope
+Give each at least one worked example and one altered independent scenario.
 
-Build a small explicit simulation engine rather than fake animations.
+## Step 8: add reinforcement state and prompts
 
-Each visual state must correspond to a deterministic evaluation step.
+Create deterministic local revisit scheduling sufficient for an exam-prep sprint.
 
-## Step 9: build Direct Lake Engine Room
+Do not build a general spaced-repetition platform.
 
-Use current documented behavior.
+## Step 9: build Exam Prep
 
-Do not generalize beyond what the documentation supports.
+Implement a small high-quality set first.
 
-## Step 10: build Exam Map
+Include:
 
-Render objective-to-concept/lab mappings from data.
+- scenario questions
+- case-style requirement extraction
+- explanation of alternatives
+- remediation deep links
+- official Practice Assessment and Exam Sandbox links
+
+## Step 10: add optional Exam Sprint
+
+Let the learner set an exam date.
+
+Prioritize recommendations based on:
+
+- official domain weights
+- objectives not yet encountered
+- concepts without independent application
+- concepts due for reinforcement
+
+Do not claim a pass probability.
 
 ## Step 11: test and deploy
 
@@ -4623,7 +5015,7 @@ Run:
 - accessibility checks
 - production build
 
-Configure GitHub Pages Actions workflow.
+Preserve GitHub Pages compatibility.
 
 ---
 
@@ -4683,32 +5075,54 @@ The following are non-negotiable product requirements:
 
 - GitHub Pages compatible
 - static client-side app
-- DP-600 current scope
+- current DP-600 scope
 - interactive learning through visuals
+- guided-first path for a novice learner
+- free exploration always available as a secondary mode
+- explicit prerequisite/foundation support
+- realistic Aurora workplace context
+- worked examples and guidance fading
+- retrieval/reinforcement after initial understanding
+- explicit exam-prep mode
+- optional exam-date sprint without fake readiness scoring
 - not quiz-centric
-- no flashcards
+- no flashcards as the primary learning mechanism
 - no fake gamification
-- free exploration
 - one coherent conceptual Fabric world
 - progressive disclosure
 - cause-and-effect interactions
 - strong accessibility
+- predictable navigation and low ambiguity
 - responsive design
 - source-grounded technical behavior
 
 Do not replace this with a conventional LMS because it is easier to implement.
 
+Do not revert to pure sandbox-first design simply because the visual interactions already exist.
+
 ---
 
-# 109. North-star example
+# 109. North-star example: guided Direct Lake field trip
 
-Imagine the learner opens the application because they still do not understand Direct Lake.
+The learner reaches Direct Lake through a realistic problem rather than searching for an unfamiliar term in isolation.
 
-They search:
+Aurora situation:
 
-**Direct Lake**
+> Marta's executive sales report needs fresh data over very large Delta tables in OneLake. The team wants interactive analytics without a traditional full import refresh path.
 
-They arrive at the Engine Room.
+Before entering the engine room, the site shows:
+
+**Where are we?**
+
+Source/storage → semantic model → report
+
+**Before this makes sense**
+
+- semantic model
+- Import versus source-query behavior
+- OneLake / Delta table basics
+
+The learner watches a worked example.
 
 They see:
 
@@ -4726,57 +5140,55 @@ They run a query.
 
 Only required columns visibly move into the model's in-memory query representation.
 
+The guide says:
+
+> Watch which columns are needed. Direct Lake does not need to copy the whole model through a traditional Import refresh before this query can run.
+
 They run another query.
 
 Some columns are reused.
 
-They switch to Direct Lake on SQL endpoint.
-
-They deliberately introduce a curated fallback condition.
+Then the learner receives a guided variation using the SQL analytics endpoint version and observes a curated fallback condition.
 
 The query path reroutes through DirectQuery.
 
-They select **Why?**
+The learner selects **Why?**
 
-The Inspector explains the current documented behavior.
+The Inspector explains the documented behavior.
 
-They select **Compare with Import**.
+Then:
 
-The screen splits.
+**General rule**
 
-Import shows a refresh/copy path.
+The site states the durable principle in concise language.
 
-Direct Lake shows the OneLake-backed path.
+Then:
 
-They click **Semantic model** in the diagram.
+**Exam Lens**
 
-The Map shows:
+The learner receives a scenario with the visual diagram hidden and must identify which requirement distinguishes Direct Lake from Import or DirectQuery.
 
-Direct Lake
-→ storage modes
-→ semantic models
-→ performance
-→ OneLake
+If the answer is weak, remediation opens the exact engine-room state rather than a generic article.
 
-They open Storage Modes.
-
-No question was asked.
-
-No point was awarded.
-
-No flashcard appeared.
-
-But the user now has a much stronger mental model.
-
-That is the product.
+Free exploration remains available throughout.
 
 ---
 
-# 110. Second north-star example
+# 110. Second north-star example: DAX from report need to filter context
 
-The learner cannot understand why `CALCULATE` feels so different from `SUM`.
+The learner should not encounter `CALCULATE` as unexplained syntax.
 
-Open DAX Microscope.
+Aurora situation:
+
+> Marta's report already shows total sales. She now wants a measure for Bike sales that must still respect the report's active Region filter.
+
+Foundation bridge, if needed:
+
+- what a measure is
+- what filtering a report means
+- how a dimension filters a fact table
+
+Worked example opens DAX Microscope.
 
 The screen displays:
 
@@ -4795,8 +5207,6 @@ CALCULATE(
 ```
 
 Press **Step**.
-
-Screen says:
 
 **Existing filter context**
 
@@ -4824,56 +5234,53 @@ The contributing Revenue cells highlight.
 
 Result appears.
 
-Then the user chooses:
+The site then asks a guided prediction:
 
-**Remove product filters with ALL**
+> If we remove product filters with `ALL(DimProduct)`, which filter should remain?
 
-The category filter visibly disappears.
+The learner predicts, runs the step, and observes the result.
 
-The fact table expands.
+Then the site gives a new scenario with a different category and region but no step-by-step prompts.
 
-Result changes.
+Finally:
 
-Again:
+**General rule**
 
-No quiz.
+Summarize what CALCULATE changes and what it leaves in the surrounding context for this scenario.
 
-The mechanism became visible.
+**Exam Lens**
 
-That is the standard every abstract concept should aim for.
+Present a compact scenario that requires recognizing filter-context behavior without relying on the animation.
 
 ---
 
-# 111. Third north-star example
+# 111. Third north-star example: why bridge tables exist
 
-The learner sees “many-to-many” in the study guide but does not understand why bridge tables exist.
+Aurora situation:
 
-Relationship Lab begins with:
+> Some Aurora corporate customers can use several purchasing accounts, and some accounts are shared by several customer entities. Finance needs balances by customer without inventing duplicate balances.
+
+Before the relationship diagram appears, the learner is reminded:
+
+- what “one” and “many” mean
+- why dimension keys are usually unique
+- what filter propagation means
+
+The site first shows the awkward direct many-to-many model and lets the learner inspect the ambiguity.
+
+Then a worked example introduces:
 
 ```text
 Customer
+CustomerAccountBridge
 Account
-Balance
+FactBalance
 ```
-
-Customer and Account are many-to-many.
-
-A direct relationship creates an unclear model.
-
-The learner selects:
-
-**Introduce bridge**
-
-A `CustomerAccount` bridge appears.
-
-Relationships redraw.
-
-Select Customer 101.
 
 The filter path:
 
 Customer
-→ CustomerAccount
+→ CustomerAccountBridge
 → Account
 → FactBalance
 
@@ -4881,17 +5288,25 @@ lights up.
 
 The table rows update.
 
-The learner can now **see the bridge carrying the filtering relationship**.
+The learner can now **see the bridge carrying the relationship between two sets of entities**.
 
-Only after that should the Inspector provide the terminology.
+Next assignment:
 
-That is the teaching order:
+A second many-to-many situation uses products and promotions. The learner must decide whether a bridge is appropriate without being told the table name.
 
-**experience → observe → name → inspect nuance**
+Then:
 
-not:
+**General rule**
 
-**definition → memorization → quiz**
+Name the pattern and explain the purpose.
+
+**Commonly confused with**
+
+Contrast with a direct many-to-many relationship and with relating two fact tables.
+
+**Exam Lens**
+
+Give a scenario where the key clue is that multiple entities on both sides must be associated without duplicating facts.
 
 ---
 
@@ -4909,6 +5324,16 @@ choose the clearer interactive explanation.
 
 Whenever choosing between:
 
+**unguided choice**
+
+and
+
+**a recommended path for a beginner who lacks enough context to choose meaningfully**
+
+provide the recommended path while preserving the ability to explore freely.
+
+Whenever choosing between:
+
 **a clever animation**
 
 and
@@ -4919,12 +5344,411 @@ choose the causal visualization.
 
 Whenever choosing between:
 
+**an abstract definition**
+
+and
+
+**a realistic situation that makes the definition necessary**
+
+start with the realistic situation, then name the abstraction.
+
+Whenever choosing between:
+
 **exam trivia**
 
 and
 
-**a durable mental model that also answers the exam question**
+**a durable mental model that can also solve the exam question**
 
 choose the durable mental model.
 
-Build the site so that DP-600 feels like one understandable system rather than a certification syllabus.
+But after the mental model is built, **require the learner to retrieve, predict, explain, and apply it without all of the original scaffolding**.
+
+The final experience should feel like:
+
+> A knowledgeable guide takes the learner through a real Fabric environment, explains why each system exists, lets them manipulate it, gradually hands over responsibility, and then shows how the same decisions appear on DP-600.
+
+Build the site so that DP-600 feels like one understandable system, one realistic workplace, and one set of transferable decisions rather than a certification syllabus.
+
+---
+
+# 113. Foundation Bridge: detailed scope
+
+The Foundation Bridge exists because DP-600 assumes a level of Power BI/Fabric/data-modeling familiarity that a beginner may not yet have.
+
+It must remain concise, visual, and contextual. Do not create a separate introductory textbook.
+
+Each foundation concept should contain:
+
+- **Plain meaning** — one direct sentence
+- **Concrete Aurora example**
+- **Visual representation**
+- **Why it matters later**
+- **Related DP-600 labs**
+- **Check understanding** — one prediction or classification after the explanation
+
+Recommended foundation modules:
+
+## Data basics
+
+- row
+- column
+- table
+- data type
+- null / missing value
+- unique value
+- primary/business key concept
+
+## Relational basics
+
+- join
+- relationship
+- one-to-many
+- many-to-many
+- filter direction
+
+## Analytical-model basics
+
+- operational table versus analytical model
+- fact table
+- dimension table
+- grain
+- star schema
+- measure versus descriptive attribute
+
+## Query/calculation basics
+
+- transform data
+- query data
+- calculate over a semantic model
+- Power Query concept
+- SQL concept
+- KQL concept
+- DAX concept
+
+## Fabric/Power BI stack basics
+
+- source
+- ingestion
+- OneLake
+- data store
+- semantic model
+- report
+- workspace
+- item
+- refresh
+- query
+- cache
+- batch data
+- streaming data
+
+Every advanced lab should declare which foundation concepts it assumes.
+
+If an assumption has not been encountered, offer a small inline bridge rather than blocking access.
+
+---
+
+# 114. Guided Field Trip architecture
+
+A Guided Field Trip is a structured path through existing interactive systems.
+
+It must not duplicate those systems into static lesson pages.
+
+Recommended journey-stop schema:
+
+```ts
+type JourneyStop = {
+  id: string;
+  journeyId: string;
+  title: string;
+  mission: string;
+  roleContext?: string;
+  conceptIds: string[];
+  objectiveIds: string[];
+  prerequisiteConceptIds: string[];
+  labRoute: string;
+  scenarioId: string;
+  watchFor: string[];
+  workedExampleId?: string;
+  guidedAssignmentId?: string;
+  independentAssignmentId?: string;
+  examLensIds?: string[];
+  reinforcementConceptIds?: string[];
+};
+```
+
+The journey shell should preserve:
+
+- current mission
+- current stop
+- system location
+- progress through the current stop
+- return point after free exploration
+
+Suggested first journey sequence:
+
+## Journey 1 — From business question to report
+
+1. Marta asks a business question.
+2. Locate the source data.
+3. Choose how and where data should live.
+4. Clean and shape the data.
+5. Build a star schema.
+6. Create/understand the semantic model.
+7. Add a simple measure.
+8. Trace the report query.
+9. Add a security requirement.
+10. Diagnose one performance problem.
+
+This journey should intentionally revisit concepts across layers rather than treating each lab as a silo.
+
+---
+
+# 115. Reality View: connect abstractions to the real product
+
+The learner needs to recognize what concepts look like when opening Microsoft Fabric or Power BI in real circumstances.
+
+For major concepts, provide a **Reality View**.
+
+Possible content:
+
+- original educational mock-up inspired by current product structure
+- simplified screenshot-style representation created by the project
+- current screenshot from official Microsoft documentation when licensing/source treatment is appropriate
+
+Never imply that a conceptual mock-up is a literal screenshot.
+
+Label clearly:
+
+**Conceptual view**
+
+or
+
+**Real-product orientation**
+
+Useful Reality Views include:
+
+- Fabric workspace and items
+- Lakehouse tables/files
+- Warehouse object list
+- semantic-model Model view
+- relationship properties
+- DAX measure editor context
+- incremental refresh configuration
+- RLS role configuration
+- deployment pipeline stages
+- OneLake Catalog / Real-Time Hub orientation
+
+The purpose is recognition and transfer, not UI memorization.
+
+Because Microsoft interfaces change, Reality View content should include a verification date and remain replaceable independently from simulation logic.
+
+---
+
+# 116. Assignment design
+
+Assignments should feel like small pieces of real analytical work.
+
+Avoid prompts such as:
+
+> Which of the following is a warehouse?
+
+Prefer:
+
+> Aurora's finance team has structured sales tables, relies heavily on T-SQL, and needs governed enterprise BI. Compare the available stores and choose where you would begin. Then inspect what changes if the workload becomes high-volume telemetry.
+
+Each assignment should contain:
+
+- **Mission**
+- **Relevant requirements**
+- **Workspace/system state**
+- **Available actions**
+- **Success condition based on system behavior**
+- **Debrief**
+
+Guided assignments may identify which requirement to inspect.
+
+Independent assignments should not tell the learner which feature to choose.
+
+Exam-transfer assignments should contain realistic irrelevant details so the learner practices selecting the information that matters, but do not use trick wording for its own sake.
+
+---
+
+# 117. Reinforcement engine
+
+Build a lightweight reinforcement system around concept evidence, not cards.
+
+Possible local state:
+
+```ts
+type LearningEvidence = {
+  conceptId: string;
+  orientationViewedAt?: string;
+  workedExampleAt?: string;
+  guidedSuccessAt?: string;
+  independentSuccessAt?: string;
+  lastRetrievalAt?: string;
+  nextSuggestedReviewAt?: string;
+  retrievalAttempts?: number;
+};
+```
+
+Scheduling can be intentionally simple.
+
+Do not attempt to implement a full FSRS/Anki clone unless separately requested.
+
+Useful revisit intervals during an exam sprint might be approximately:
+
+- later the same day for a difficult new concept
+- next day
+- several days later
+
+The exact scheduling algorithm is less important than ensuring that important material returns after the original visual support is no longer fresh.
+
+Reinforcement prompts should vary the scenario, wording, or representation when possible.
+
+---
+
+# 118. Exam Prep mode
+
+Exam Prep should be visually and conceptually separate from initial teaching.
+
+The user should be able to choose:
+
+- **Objective review**
+- **Scenario practice**
+- **Case files**
+- **Quick retrieval**
+- **Timed set**
+- **Official exam resources**
+
+## Scenario practice
+
+Use one clear decision or small set of related decisions.
+
+After submission:
+
+- explain the decisive requirement
+- explain why the chosen answer fits or does not fit
+- explain why plausible alternatives fail
+- link to the exact lab state that demonstrates the rule
+
+## Case files
+
+Use a longer Aurora-style scenario with sections such as:
+
+- current environment
+- business requirements
+- technical requirements
+- constraints
+
+Then ask several related questions.
+
+The learner should practice identifying which facts matter for which decision.
+
+Do not make cases long merely to create difficulty.
+
+## Timed sets
+
+Keep sets short enough to be useful during a nine-day sprint.
+
+The site may display elapsed time and pacing information, but should not use alarming countdown styling.
+
+## Official resources
+
+Provide direct access to:
+
+- Microsoft DP-600 certification page
+- official Practice Assessment
+- official Exam Sandbox
+- current study guide
+
+These links should live in centrally maintainable source metadata.
+
+---
+
+# 119. Exam Sprint
+
+Exam Sprint is an optional planning layer activated when the user enters an exam date.
+
+It is not a separate curriculum.
+
+The sprint should prioritize:
+
+1. official DP-600 domain weighting
+2. objectives not yet encountered
+3. prerequisite gaps blocking major objectives
+4. concepts only seen passively but not independently applied
+5. concepts due for reinforcement
+6. realistic exam transfer practice
+
+A daily recommendation should stay small and actionable.
+
+Example:
+
+**Today's sprint**
+
+1. Foundation repair — grain and fact/dimension, 15 min
+2. Guided assignment — star schema, 20 min
+3. Independent variation — relationships, 15 min
+4. Retrieval — yesterday's storage modes, 8 min
+5. Exam scenario set — Prepare data, 20 min
+
+Do not estimate a probability of passing.
+
+Do not use “behind,” “failure risk,” or other anxiety-inducing language.
+
+Use:
+
+- **Not covered yet**
+- **Needs independent practice**
+- **Due for review**
+- **Strong recent evidence**
+
+The user can always ignore the recommendation and study another concept.
+
+---
+
+# 120. Exam environment orientation
+
+Create a concise exam-orientation page that reduces uncertainty about the testing experience.
+
+It should link to the official Microsoft Exam Sandbox rather than recreating the exam UI.
+
+Cover current, source-verified information such as:
+
+- common Microsoft certification question formats
+- case-study behavior
+- section navigation constraints when applicable
+- potential labs when applicable
+- time management
+- availability of Microsoft Learn during eligible role-based certification exams, when current policy supports it
+
+Because exam policies change, every statement here must be sourced and verified near the exam date.
+
+Add a practical **Learn lookup strategy** section:
+
+- use Learn for a narrow detail you already know how to name
+- do not rely on searching documentation for every question
+- practice recognizing the concept family first
+- learn useful search anchors rather than memorizing URLs
+
+---
+
+# 121. Product-development decision rule for the current deadline
+
+When the learner's exam is close, development priorities change.
+
+Until the immediate exam-preparation need has passed, prefer changes that improve learning from **already built material** over changes that merely increase feature count.
+
+Current order of value:
+
+1. make the existing concept understandable to a beginner
+2. put it in realistic context
+3. provide a worked example
+4. provide a guided and independent assignment
+5. connect it explicitly to current DP-600 wording
+6. bring it back later for retrieval
+7. only then add another major lab if coverage genuinely requires it
+
+This deadline-sensitive prioritization is temporary product strategy, not a permanent ban on expanding the site.
