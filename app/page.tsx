@@ -17,6 +17,7 @@ import { StorageModeLab } from '@/app/storage-mode-lab';
 import { IncrementalRefreshLab } from '@/app/incremental-refresh-lab';
 import { SecurityLens } from '@/app/security-lens';
 import { PerformanceLab } from '@/app/performance-lab';
+import { FieldParameterExplorer } from '@/app/field-parameter-explorer';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -108,6 +109,7 @@ export default function Home() {
   if (route === 'lab/incremental-refresh') return <IncrementalRefreshLab />;
   if (route === 'lab/security') return <SecurityLens />;
   if (route === 'lab/performance') return <PerformanceLab />;
+  if (route === 'lab/field-parameters') return <FieldParameterExplorer />;
 
   return (
     <div className="app-frame">
@@ -143,6 +145,7 @@ export default function Home() {
             <a href="#/lab/incremental-refresh"><RefreshCw />Incremental Refresh</a>
             <a href="#/lab/security"><ShieldCheck />Security Lens</a>
             <a href="#/lab/performance"><Gauge />Performance Lab</a>
+            <a href="#/lab/field-parameters"><SlidersHorizontal />Field Parameters</a>
           </nav>
           <p className="eyebrow rail-section">Overlays</p>
           <div className="rail-actions">

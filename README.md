@@ -21,6 +21,7 @@ The first product slice establishes the visual language and core architecture:
 - an Incremental Refresh Time Machine exposing rolling windows, partition processing, and late-arriving changes
 - a Security Lens separating workspace, item, semantic-model, row, column, object, and OneLake controls
 - a deterministic Performance Lab connecting model, DAX, relationship, and visual changes to simulated engine work
+- a Field Parameter Explorer that swaps report dimensions and explicit measures without replacing the visual
 - central concept, exam, and documentation registries
 - local exploration persistence
 - deterministic trace tests
