@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, BookOpen, Boxes, Braces, CalendarRange, ChevronRight, CircleHelp, Database, FileChartColumn, GitBranch, HardDrive, Layers3, Menu, Network, RotateCcw, Search, ServerCog, Sparkles, Waves, Wrench, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Boxes, Braces, CalendarRange, ChevronRight, CircleHelp, Database, FileChartColumn, GitBranch, HardDrive, Layers3, Menu, Network, RefreshCw, RotateCcw, Search, ServerCog, SlidersHorizontal, Sparkles, Waves, Wrench, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,8 @@ import { ExamMap } from '@/app/exam-map';
 import { TransformationWorkbench } from '@/app/transformation-workbench';
 import { QueryRosetta } from '@/app/query-rosetta';
 import { ScdTimeMachine } from '@/app/scd-time-machine';
+import { StorageModeLab } from '@/app/storage-mode-lab';
+import { IncrementalRefreshLab } from '@/app/incremental-refresh-lab';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -100,6 +102,8 @@ export default function Home() {
   if (route === 'lab/transformation') return <TransformationWorkbench />;
   if (route === 'lab/query') return <QueryRosetta />;
   if (route === 'lab/scd') return <ScdTimeMachine />;
+  if (route === 'lab/storage-modes') return <StorageModeLab />;
+  if (route === 'lab/incremental-refresh') return <IncrementalRefreshLab />;
 
   return (
     <div className="app-frame">
@@ -131,6 +135,8 @@ export default function Home() {
             <a href="#/lab/relationships"><Network />Relationship Lab</a>
             <a href="#/lab/dax"><FileChartColumn />DAX Microscope</a>
             <a href="#/lab/direct-lake"><HardDrive />Direct Lake Engine</a>
+            <a href="#/lab/storage-modes"><SlidersHorizontal />Storage Modes</a>
+            <a href="#/lab/incremental-refresh"><RefreshCw />Incremental Refresh</a>
           </nav>
           <p className="eyebrow rail-section">Overlays</p>
           <div className="rail-actions">

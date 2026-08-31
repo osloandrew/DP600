@@ -17,6 +17,8 @@ The first product slice establishes the visual language and core architecture:
 - a reversible Transformation Workbench where operation order changes visible table results
 - a Query Rosetta comparing visual queries, T-SQL, KQL, and DAX by execution layer and purpose
 - an SCD Time Machine showing overwrite versus surrogate-key versioning across historical facts
+- a Storage Mode Lab where Import, DirectQuery, Dual, and Direct Lake reroute the same report request
+- an Incremental Refresh Time Machine exposing rolling windows, partition processing, and late-arriving changes
 - central concept, exam, and documentation registries
 - local exploration persistence
 - deterministic trace tests
