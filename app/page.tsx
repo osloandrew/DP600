@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, BookOpen, Boxes, ChevronRight, CircleHelp, Database, FileChartColumn, GitBranch, Layers3, Menu, Network, RotateCcw, Search, ServerCog, Sparkles, Waves, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Boxes, ChevronRight, CircleHelp, Database, FileChartColumn, GitBranch, HardDrive, Layers3, Menu, Network, RotateCcw, Search, ServerCog, Sparkles, Waves, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,8 @@ import { DataStoreLab } from '@/app/data-store-lab';
 import { SchemaLab } from '@/app/schema-lab';
 import { RelationshipLab } from '@/app/relationship-lab';
 import { DaxMicroscope } from '@/app/dax-microscope';
+import { DirectLakeLab } from '@/app/direct-lake-lab';
+import { ExamMap } from '@/app/exam-map';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -90,6 +92,8 @@ export default function Home() {
   if (route === 'lab/schema') return <SchemaLab />;
   if (route === 'lab/relationships') return <RelationshipLab />;
   if (route === 'lab/dax') return <DaxMicroscope />;
+  if (route === 'lab/direct-lake') return <DirectLakeLab />;
+  if (route === 'exam' || route === 'map') return <ExamMap />;
 
   return (
     <div className="app-frame">
@@ -117,6 +121,7 @@ export default function Home() {
             <a href="#/lab/schema"><GitBranch />Schema Lab</a>
             <a href="#/lab/relationships"><Network />Relationship Lab</a>
             <a href="#/lab/dax"><FileChartColumn />DAX Microscope</a>
+            <a href="#/lab/direct-lake"><HardDrive />Direct Lake Engine</a>
           </nav>
           <p className="eyebrow rail-section">Overlays</p>
           <div className="rail-actions">

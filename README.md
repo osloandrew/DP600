@@ -12,6 +12,8 @@ The first product slice establishes the visual language and core architecture:
 - a selectable Fabric Atlas built around Aurora Outfitters
 - learner-controlled data-flow and query-path traces
 - a Data Store Lab where workload requirements shift Lakehouse, Warehouse, and Eventhouse fit
+- a Direct Lake Engine Room for column loading, framing, and SQL-endpoint fallback behavior
+- an Exam Map connecting the current official objective areas to built and planned experiences
 - central concept, exam, and documentation registries
 - local exploration persistence
 - deterministic trace tests
