@@ -22,6 +22,8 @@ The first product slice establishes the visual language and core architecture:
 - a Security Lens separating workspace, item, semantic-model, row, column, object, and OneLake controls
 - a deterministic Performance Lab connecting model, DAX, relationship, and visual changes to simulated engine work
 - a Field Parameter Explorer that swaps report dimensions and explicit measures without replacing the visual
+- a Calculation Group Lab collapsing repeated time-intelligence measures into reusable calculation items
+- a Composite Model Lab exposing cache, DirectQuery, Dual, and limited cross-source relationships
 - central concept, exam, and documentation registries
 - local exploration persistence
 - deterministic trace tests

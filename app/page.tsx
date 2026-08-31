@@ -18,6 +18,8 @@ import { IncrementalRefreshLab } from '@/app/incremental-refresh-lab';
 import { SecurityLens } from '@/app/security-lens';
 import { PerformanceLab } from '@/app/performance-lab';
 import { FieldParameterExplorer } from '@/app/field-parameter-explorer';
+import { CalculationGroupLab } from '@/app/calculation-group-lab';
+import { CompositeModelLab } from '@/app/composite-model-lab';
 import { concepts, type Concept, type ConceptId } from '@/content/concepts';
 import { exam } from '@/content/exam';
 import { sources } from '@/content/sources';
@@ -110,6 +112,8 @@ export default function Home() {
   if (route === 'lab/security') return <SecurityLens />;
   if (route === 'lab/performance') return <PerformanceLab />;
   if (route === 'lab/field-parameters') return <FieldParameterExplorer />;
+  if (route === 'lab/calculation-groups') return <CalculationGroupLab />;
+  if (route === 'lab/composite-models') return <CompositeModelLab />;
 
   return (
     <div className="app-frame">
@@ -146,6 +150,8 @@ export default function Home() {
             <a href="#/lab/security"><ShieldCheck />Security Lens</a>
             <a href="#/lab/performance"><Gauge />Performance Lab</a>
             <a href="#/lab/field-parameters"><SlidersHorizontal />Field Parameters</a>
+            <a href="#/lab/calculation-groups"><Braces />Calculation Groups</a>
+            <a href="#/lab/composite-models"><Network />Composite Models</a>
           </nav>
           <p className="eyebrow rail-section">Overlays</p>
           <div className="rail-actions">
