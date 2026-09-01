@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { foundations } from './foundations';
 import { journeys, journeyStops } from './journeys';
+import { journeyPractice } from './journey-practice';
 
 describe('journey registry', () => {
   it('resolves every journey stop id to a defined stop', () => {
@@ -36,5 +37,15 @@ describe('journey registry', () => {
   it('has no orphaned stops outside a journey’s stopIds', () => {
     const referenced = new Set(Object.values(journeys).flatMap((journey) => journey.stopIds));
     for (const stopId of Object.keys(journeyStops)) expect(referenced.has(stopId)).toBe(true);
+  });
+
+  it('gives every stop a worked example, guided assignment, and independent variation', () => {
+    for (const stopId of Object.keys(journeyStops)) {
+      const practice = journeyPractice[stopId];
+      expect(practice).toBeDefined();
+      expect(practice.workedExample.instruction.length).toBeGreaterThan(0);
+      expect(practice.guided.choices.some((choice) => choice.id === practice.guided.answerId)).toBe(true);
+      expect(practice.independent.choices.some((choice) => choice.id === practice.independent.answerId)).toBe(true);
+    }
   });
 });

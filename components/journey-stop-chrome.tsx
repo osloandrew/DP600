@@ -5,12 +5,15 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { FoundationInline } from '@/components/foundation-inline';
+import { JourneyPractice } from '@/components/journey-practice';
 import type { Journey, JourneyStop } from '@/content/journeys';
+import { journeyPractice } from '@/content/journey-practice';
 import { nextStopId, previousStopId } from '@/engine/journeys/progress';
-import { recordJourneyStop } from '@/lib/progress';
+import { readJourneyPractice, recordJourneyPractice, recordJourneyStop, type JourneyPracticeProgress } from '@/lib/progress';
 
 export function JourneyStopChrome({ journey, stop, children }: { journey: Journey; stop: JourneyStop; children: ReactNode }) {
   const [showDebrief, setShowDebrief] = useState(false);
+  const [practiceProgress, setPracticeProgress] = useState<JourneyPracticeProgress>(() => readJourneyPractice(journey.id, stop.id));
   const index = journey.stopIds.indexOf(stop.id);
   const next = nextStopId(journey.id, stop.id);
   const previous = previousStopId(journey.id, stop.id);
@@ -25,6 +28,11 @@ export function JourneyStopChrome({ journey, stop, children }: { journey: Journe
     recordJourneyStop(journey.id, stop.id, true);
     if (next) goToStop(next); else window.location.hash = '#/journeys';
   };
+  const completePractice = (step: keyof JourneyPracticeProgress) => {
+    recordJourneyPractice(journey.id, stop.id, step);
+    setPracticeProgress((current) => ({ ...current, [step]: true }));
+  };
+  const practiceComplete = practiceProgress.workedExample && practiceProgress.guidedComplete && practiceProgress.independentComplete;
 
   return (
     <div className="journey-chrome">
@@ -49,9 +57,11 @@ export function JourneyStopChrome({ journey, stop, children }: { journey: Journe
 
       <div className="journey-embedded-lab">{children}</div>
 
+      <JourneyPractice practice={journeyPractice[stop.id]} progress={practiceProgress} onComplete={completePractice} />
+
       <footer className="journey-debrief-bar">
         {!showDebrief ? (
-          <Button size="lg" onClick={() => setShowDebrief(true)}>Ready to continue<ArrowRight /></Button>
+          <Button size="lg" onClick={() => setShowDebrief(true)} disabled={!practiceComplete}>{practiceComplete ? 'Review the debrief' : 'Complete the practice first'}<ArrowRight /></Button>
         ) : (
           <div className="journey-debrief">
             <div className="journey-debrief-section"><h2>General rule</h2><p>{stop.generalRule}</p></div>

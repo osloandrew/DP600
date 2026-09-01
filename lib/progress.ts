@@ -1,10 +1,12 @@
 const STORAGE_KEY = 'fabric-explorer-progress-v2';
 export type JourneyProgress = { currentStopId: string; completedStopIds: string[] };
+export type JourneyPracticeProgress = { workedExample: boolean; guidedComplete: boolean; independentComplete: boolean };
 export type UserProgress = {
   version: 2;
   visitedConceptIds: string[];
   lastLocation: string;
   journeyProgress: Record<string, JourneyProgress>;
+  journeyPractice?: Record<string, JourneyPracticeProgress>;
   foundationVisits: string[];
 };
 const emptyProgress: UserProgress = { version: 2, visitedConceptIds: [], lastLocation: '#explore', journeyProgress: {}, foundationVisits: [] };
@@ -41,5 +43,23 @@ export function recordJourneyStop(journeyId: string, stopId: string, completed: 
     ...current,
     journeyProgress: { ...current.journeyProgress, [journeyId]: { currentStopId: stopId, completedStopIds } },
     lastLocation: `#/journey/${journeyId}/${stopId}`,
+  });
+}
+
+export function readJourneyPractice(journeyId: string, stopId: string): JourneyPracticeProgress {
+  return readProgress().journeyPractice?.[`${journeyId}/${stopId}`] ?? { workedExample: false, guidedComplete: false, independentComplete: false };
+}
+
+export function recordJourneyPractice(
+  journeyId: string,
+  stopId: string,
+  step: keyof JourneyPracticeProgress,
+): UserProgress {
+  const current = readProgress();
+  const key = `${journeyId}/${stopId}`;
+  const existing = current.journeyPractice?.[key] ?? { workedExample: false, guidedComplete: false, independentComplete: false };
+  return writeProgress({
+    ...current,
+    journeyPractice: { ...current.journeyPractice, [key]: { ...existing, [step]: true } },
   });
 }
