@@ -38,7 +38,7 @@ export function HomePage() {
         </a>
         <span />
         <nav className="topnav" aria-label="Primary navigation">
-          <a className="active" href="#/">Home</a><a href="#/journeys"><Compass aria-hidden="true" />Field Trips</a><a href="#/foundations">Foundations</a><a href="#map">Map</a><a href="#exam">Exam</a>
+          <a className="active" href="#/">Home</a><a href="#/journeys"><Compass aria-hidden="true" />Field Trips</a><a href="#/foundations">Foundations</a><a href="#map">Map</a><a href="#exam">Exam</a><a href="#/exam/sprint">Sprint</a>
         </nav>
         <span />
       </header>

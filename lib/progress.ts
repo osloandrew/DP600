@@ -7,6 +7,7 @@ export type UserProgress = {
   lastLocation: string;
   journeyProgress: Record<string, JourneyProgress>;
   journeyPractice?: Record<string, JourneyPracticeProgress>;
+  examDate?: string;
   foundationVisits: string[];
 };
 const emptyProgress: UserProgress = { version: 2, visitedConceptIds: [], lastLocation: '#explore', journeyProgress: {}, foundationVisits: [] };
@@ -62,4 +63,13 @@ export function recordJourneyPractice(
     ...current,
     journeyPractice: { ...current.journeyPractice, [key]: { ...existing, [step]: true } },
   });
+}
+
+export function readExamDate(): string | undefined {
+  return readProgress().examDate;
+}
+
+export function recordExamDate(examDate: string | undefined): UserProgress {
+  const current = readProgress();
+  return writeProgress({ ...current, examDate });
 }
