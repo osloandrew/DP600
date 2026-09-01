@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, BookOpen, Boxes, Braces, CalendarRange, ChevronRight, CircleHelp, Compass, Database, FileChartColumn, Gauge, GitBranch, HardDrive, Layers3, Menu, Network, RefreshCw, RotateCcw, Search, ServerCog, ShieldCheck, SlidersHorizontal, Sparkles, Waves, Wrench, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Boxes, Braces, CalendarRange, ChevronRight, CircleHelp, Compass, Database, FileChartColumn, Gauge, GitBranch, GraduationCap, HardDrive, Layers3, Map as MapIcon, Menu, Network, RefreshCw, RotateCcw, Search, ServerCog, ShieldCheck, SlidersHorizontal, Sparkles, Waves, Wrench, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -86,14 +86,23 @@ export function FabricAtlas() {
           <Search aria-hidden="true" /><span>Search concepts</span><kbd>⌘ K</kbd>
         </button>
         <nav className="topnav" aria-label="Primary navigation">
-          <a className="active" href="#explore">Explore</a><a href="#/journeys"><Compass aria-hidden="true" />Field Trips</a><a href="#/foundations">Foundations</a><a href="#map">Map</a><a href="#exam">Exam</a>
+          <a className="active" href="#explore">Explore</a><a href="#/journeys"><Compass aria-hidden="true" />Field Trips</a><a href="#/foundations">Foundations</a><a href="#/map">Map</a><a href="#/exam">Exam</a><a href="#/exam/sprint">Sprint</a>
         </nav>
         <Button className="mobile-menu" variant="outline" size="icon-lg" onClick={() => setRailOpen(true)} aria-label="Open navigation"><Menu /></Button>
       </header>
 
       <main className="workspace">
         <aside className={`context-rail ${railOpen ? 'is-open' : ''}`} aria-label="Explore navigation">
-          <div className="rail-mobile-head"><strong>Explore</strong><Button variant="ghost" size="icon" onClick={() => setRailOpen(false)} aria-label="Close navigation"><X /></Button></div>
+          <div className="rail-mobile-head"><strong>Menu</strong><Button variant="ghost" size="icon" onClick={() => setRailOpen(false)} aria-label="Close navigation"><X /></Button></div>
+          <p className="eyebrow rail-mobile-only">Site</p>
+          <nav className="rail-links rail-mobile-only" aria-label="Primary navigation">
+            <a href="#/"><Sparkles />Home</a>
+            <a href="#/journeys"><Compass />Field Trips</a>
+            <a href="#/foundations"><BookOpen />Foundations</a>
+            <a href="#/map"><MapIcon />Map</a>
+            <a href="#/exam"><GraduationCap />Exam</a>
+            <a href="#/exam/sprint"><CalendarRange />Sprint</a>
+          </nav>
           <p className="eyebrow">System</p>
           <nav className="rail-links" aria-label="System views">
             <a className="active" href="#explore"><Network />Fabric Atlas</a>

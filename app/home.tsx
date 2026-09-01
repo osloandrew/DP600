@@ -1,6 +1,7 @@
 'use client';
 
-import { ArrowRight, Compass, Map as MapIcon, Sparkles } from 'lucide-react';
+import { ArrowRight, Compass, Map as MapIcon, Menu, Sparkles, X } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { journeys, journeyStops } from '@/content/journeys';
 import { firstStopId } from '@/engine/journeys/progress';
@@ -22,6 +23,7 @@ const stopDiagramNode: Record<string, string> = {
 };
 
 export function HomePage() {
+  const [navOpen, setNavOpen] = useState(false);
   const progress = readJourneyProgress(journey.id);
   const started = Boolean(progress);
   const resumeStopId = progress?.currentStopId ?? firstStopId(journey.id);
@@ -38,10 +40,24 @@ export function HomePage() {
         </a>
         <span />
         <nav className="topnav" aria-label="Primary navigation">
-          <a className="active" href="#/">Home</a><a href="#/journeys"><Compass aria-hidden="true" />Field Trips</a><a href="#/foundations">Foundations</a><a href="#map">Map</a><a href="#exam">Exam</a><a href="#/exam/sprint">Sprint</a>
+          <a className="active" href="#/">Home</a><a href="#/journeys"><Compass aria-hidden="true" />Field Trips</a><a href="#/foundations">Foundations</a><a href="#/map">Map</a><a href="#/exam">Exam</a><a href="#/exam/sprint">Sprint</a>
         </nav>
-        <span />
+        <Button className="mobile-menu" variant="outline" size="icon-lg" onClick={() => setNavOpen(true)} aria-label="Open navigation"><Menu /></Button>
       </header>
+      {navOpen ? (
+        <div className="nav-drawer" aria-label="Primary navigation">
+          <div className="nav-drawer-head"><strong>Menu</strong><Button variant="ghost" size="icon" onClick={() => setNavOpen(false)} aria-label="Close navigation"><X /></Button></div>
+          <nav aria-label="Primary navigation">
+            <a className="active" href="#/" onClick={() => setNavOpen(false)}>Home</a>
+            <a href="#/journeys" onClick={() => setNavOpen(false)}><Compass aria-hidden="true" />Field Trips</a>
+            <a href="#/foundations" onClick={() => setNavOpen(false)}>Foundations</a>
+            <a href="#/map" onClick={() => setNavOpen(false)}>Map</a>
+            <a href="#/exam" onClick={() => setNavOpen(false)}>Exam</a>
+            <a href="#/exam/sprint" onClick={() => setNavOpen(false)}>Sprint</a>
+          </nav>
+        </div>
+      ) : null}
+      {navOpen ? <button className="scrim" aria-label="Close navigation" onClick={() => setNavOpen(false)} /> : null}
       <main className="home-main">
         <section className="home-hero">
           <div className="home-cards">
