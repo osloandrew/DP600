@@ -1,6 +1,6 @@
 import type { FoundationConceptId } from '@/content/foundations';
 
-export type JourneyId = 'from-question-to-report';
+export type JourneyId = 'from-question-to-report' | 'scaling-the-model';
 
 export type JourneyStop = {
   id: string;
@@ -33,6 +33,15 @@ export const journeys: Record<JourneyId, Journey> = {
     stopIds: [
       'question-orientation', 'choose-store', 'clean-and-shape', 'build-star-schema',
       'model-relationships', 'add-a-measure', 'trace-the-query', 'control-access', 'diagnose-performance',
+    ],
+  },
+  'scaling-the-model': {
+    id: 'scaling-the-model',
+    title: "Scaling Aurora's model for production",
+    subtitle: "Marta's report works. Now make it survive a changing customer, real data volume, repetitive measures, flexible readers, and an outside data source.",
+    missionSummary: "The first report is live, but production reality is messier. You'll keep history honest when a customer moves, scale the model onto Direct Lake, collapse repetitive time-intelligence measures into a calculation group, let report readers swap fields on the fly, and blend in Finance's external planning data without losing control of the model.",
+    stopIds: [
+      'version-history', 'scale-with-direct-lake', 'reusable-time-intelligence', 'flexible-report-views', 'blend-external-data',
     ],
   },
 };
@@ -171,6 +180,81 @@ export const journeyStops: Record<string, JourneyStop> = {
       objectiveIds: ['MODEL.OPTIMIZE.QUERY', 'MODEL.OPTIMIZE.DAX'],
       scenario: 'A scenario describes a slow report and several candidate causes; the exam wants you to identify the root modeling decision responsible, not just recommend "optimize the report."',
       wording: 'Watch for "high-cardinality column," "calculated column," "iterator," and "aggregation table" as the actual levers.',
+    },
+  },
+  'version-history': {
+    id: 'version-history', journeyId: 'scaling-the-model',
+    title: 'Keep history honest when a customer moves',
+    roleContext: 'Elena — BI Analyst',
+    mission: 'Customer 812, Ava, moves from Oslo to Bergen on 1 June. Marta’s February report should still say Oslo; a July report should say Bergen. Decide how DimCustomer should handle the change, then process it and compare both months.',
+    watchFor: ['What happens to the February sale once a Type 1 overwrite processes the move.', 'How many DimCustomer rows exist for Ava after a Type 2 change, and what makes each one distinct.'],
+    prerequisiteFoundationIds: ['keys-and-uniqueness'],
+    labHref: '#/lab/scd', labTitle: 'SCD Time Machine',
+    generalRule: 'Type 1 overwrites a dimension member and rewrites history under the current value; Type 2 preserves history by inserting a new version with its own surrogate key while the business key stays the same.',
+    examLens: {
+      objectiveIds: ['PREPARE.TRANSFORM.SCD'],
+      scenario: 'A scenario requires historical reports to keep showing the value that was true at the time of the transaction. That is a Type 2 requirement — a Type 1 overwrite would silently corrupt the historical view.',
+      wording: 'Watch for "preserve history," "point-in-time," and "as of the transaction date" — they signal Type 2, not Type 1.',
+    },
+  },
+  'scale-with-direct-lake': {
+    id: 'scale-with-direct-lake', journeyId: 'scaling-the-model',
+    title: 'Scale onto Direct Lake',
+    roleContext: 'Priya — Data Engineer',
+    mission: 'FactSales has grown too large for a comfortable full Import refresh. Move the model onto Direct Lake, run a couple of report queries, then change the underlying Delta data and see what "framing" means before you refresh it.',
+    watchFor: ['How many columns load into memory the first time you run a query, versus the second.', 'What the data version and frame version show after you change the Delta data but before you refresh framing.'],
+    prerequisiteFoundationIds: ['refresh-cache-live-query'],
+    labHref: '#/lab/direct-lake', labTitle: 'Direct Lake Engine Room',
+    generalRule: 'Direct Lake loads only the Delta columns a query actually needs into an in-memory cache, and a framing operation is what advances the model to new data — changing files in OneLake alone does not move the frame forward.',
+    examLens: {
+      objectiveIds: ['MODEL.OPTIMIZE.DIRECT_LAKE'],
+      scenario: 'A scenario describes changed OneLake data that a Direct Lake report does not yet reflect. The fix is triggering a frame refresh, not assuming Direct Lake re-reads files live on every request.',
+      wording: 'Watch for "changed Delta files," "still shows old values," and "framing" pointing at the reframe step, not a fallback problem.',
+    },
+  },
+  'reusable-time-intelligence': {
+    id: 'reusable-time-intelligence', journeyId: 'scaling-the-model',
+    title: 'Collapse repetitive time-intelligence measures',
+    roleContext: 'Elena — BI Analyst',
+    mission: 'Marta now wants Year-to-Date and Prior-Year versions of Sales, Margin, and Orders. See what twelve separately authored measures would take, then collapse them into one calculation group with reusable calculation items.',
+    watchFor: ['How the same calculation item’s expression stays identical while the base measure underneath it changes.', 'What SELECTEDMEASURE() is standing in for once the calculation group is introduced.'],
+    prerequisiteFoundationIds: ['transform-query-calculate'],
+    labHref: '#/lab/calculation-groups', labTitle: 'Calculation Group Lab',
+    generalRule: 'A calculation group applies one authored calculation item to whichever explicit measure is currently selected, so adding a new base measure never requires writing new time-intelligence DAX for it.',
+    examLens: {
+      objectiveIds: ['MODEL.DESIGN.DAX'],
+      scenario: 'A scenario describes many base measures each needing the same handful of variants — YTD, Prior-Year, and so on — and asks how to avoid duplicating DAX for every combination. That is the calculation-group pattern, built around SELECTEDMEASURE().',
+      wording: 'Watch for "repeated variants across many measures" and "SELECTEDMEASURE" as the calculation-group signal.',
+    },
+  },
+  'flexible-report-views': {
+    id: 'flexible-report-views', journeyId: 'scaling-the-model',
+    title: 'Let report readers swap fields on the fly',
+    roleContext: 'Marta — Retail Director',
+    mission: 'Marta wants to flip one chart between Category, Brand, Region, or Store, and between Revenue, Margin, or Orders, without asking Elena to build a new page each time. Try both parameters and read what actually changed in the visual’s field wells.',
+    watchFor: ['Whether changing a field parameter changes the chart type, or only which fields feed it.', 'What NAMEOF is doing inside the Axis and Measure parameter definitions.'],
+    prerequisiteFoundationIds: ['tables-rows-columns'],
+    labHref: '#/lab/field-parameters', labTitle: 'Field Parameter Explorer',
+    generalRule: 'A field parameter is a small table of field references a report reader can pick from; selecting one swaps which column or measure occupies a visual’s field well, not the values inside that field.',
+    examLens: {
+      objectiveIds: ['MODEL.CONFIGURE.FIELD_PARAMETERS'],
+      scenario: 'A scenario needs a report reader to switch which dimension or measure a visual uses, without duplicating the report or filtering values inside one fixed field. That distinction points at a field parameter, not an ordinary slicer.',
+      wording: 'Watch for "switch which field a visual uses," which is a field parameter, versus "filter which values appear," which is an ordinary slicer.',
+    },
+  },
+  'blend-external-data': {
+    id: 'blend-external-data', journeyId: 'scaling-the-model',
+    title: 'Blend in an outside data source',
+    roleContext: 'Priya — Data Engineer',
+    mission: 'Finance keeps sales targets in a spreadsheet imported locally, while FactSales stays in DirectQuery against the Warehouse. Run a query that only touches DimProduct, then one that compares sales to target, and see which source groups actually get touched each time.',
+    watchFor: ['Which storage mode DimProduct needs before a relationship between an Import table and a DirectQuery fact table behaves normally.', 'Why the model cache and the Warehouse can both be queried for the same visual.'],
+    prerequisiteFoundationIds: ['refresh-cache-live-query'],
+    labHref: '#/lab/composite-models', labTitle: 'Composite Model Lab',
+    generalRule: 'A composite model can mix Import, DirectQuery, and Direct Lake tables from different source groups in one model, but a relationship crossing an Import table and a DirectQuery table stays limited unless the Import-side table uses Dual storage mode.',
+    examLens: {
+      objectiveIds: ['MODEL.DESIGN.RELATIONSHIPS'],
+      scenario: 'A scenario combines a locally imported spreadsheet with a live DirectQuery fact table and reports an unexpected relationship limitation. The fix is switching the shared dimension to Dual mode, not abandoning the composite model.',
+      wording: 'Watch for "limited relationship," "different source groups," and "Dual" appearing together — that combination is the composite-model tell.',
     },
   },
 };

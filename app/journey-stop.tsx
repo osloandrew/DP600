@@ -1,11 +1,16 @@
 'use client';
 
 import { JourneyStopChrome } from '@/components/journey-stop-chrome';
+import { CalculationGroupLab } from '@/app/calculation-group-lab';
+import { CompositeModelLab } from '@/app/composite-model-lab';
 import { DataStoreLab } from '@/app/data-store-lab';
 import { DaxMicroscope } from '@/app/dax-microscope';
+import { DirectLakeLab } from '@/app/direct-lake-lab';
 import { FabricAtlas } from '@/app/fabric-atlas';
+import { FieldParameterExplorer } from '@/app/field-parameter-explorer';
 import { PerformanceLab } from '@/app/performance-lab';
 import { RelationshipLab } from '@/app/relationship-lab';
+import { ScdTimeMachine } from '@/app/scd-time-machine';
 import { SchemaLab } from '@/app/schema-lab';
 import { SecurityLens } from '@/app/security-lens';
 import { StorageModeLab } from '@/app/storage-mode-lab';
@@ -22,6 +27,11 @@ const labComponents: Record<string, () => React.JSX.Element> = {
   '#/lab/storage-modes': StorageModeLab,
   '#/lab/security': SecurityLens,
   '#/lab/performance': PerformanceLab,
+  '#/lab/scd': ScdTimeMachine,
+  '#/lab/direct-lake': DirectLakeLab,
+  '#/lab/calculation-groups': CalculationGroupLab,
+  '#/lab/field-parameters': FieldParameterExplorer,
+  '#/lab/composite-models': CompositeModelLab,
 };
 
 export function JourneyStopPage() {
