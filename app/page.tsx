@@ -8,6 +8,7 @@ import { RelationshipLab } from '@/app/relationship-lab';
 import { DaxMicroscope } from '@/app/dax-microscope';
 import { DirectLakeLab } from '@/app/direct-lake-lab';
 import { ExamMap } from '@/app/exam-map';
+import { ExamPrep } from '@/app/exam-prep';
 import { FabricAtlas } from '@/app/fabric-atlas';
 import { FoundationBridge } from '@/app/foundation-bridge';
 import { HomePage } from '@/app/home';
@@ -42,7 +43,8 @@ export default function Home() {
   if (route === 'lab/relationships') return <RelationshipLab />;
   if (route === 'lab/dax') return <DaxMicroscope />;
   if (route === 'lab/direct-lake') return <DirectLakeLab />;
-  if (route === 'exam' || route === 'map') return <ExamMap />;
+  if (route === 'exam') return <ExamPrep />;
+  if (route === 'map') return <ExamMap />;
   if (route === 'lab/transformation') return <TransformationWorkbench />;
   if (route === 'lab/query') return <QueryRosetta />;
   if (route === 'lab/scd') return <ScdTimeMachine />;
