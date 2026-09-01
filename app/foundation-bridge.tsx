@@ -48,6 +48,7 @@ export function FoundationBridge() {
                         <p className="foundation-meaning">{foundation.plainMeaning}</p>
                         <p><strong>Aurora example. </strong>{foundation.auroraExample}</p>
                         <p><strong>Why it matters later. </strong>{foundation.whyItMattersLater}</p>
+                        {foundation.realityNote ? <p><strong>In the real product. </strong>{foundation.realityNote}</p> : null}
                         <div className="foundation-check">
                           <p>{foundation.check.prompt}</p>
                           {revealedId === id ? <p className="foundation-reveal">{foundation.check.reveal}</p> : (

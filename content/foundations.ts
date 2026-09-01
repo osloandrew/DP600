@@ -15,6 +15,7 @@ export type FoundationConcept = {
   whyItMattersLater: string;
   relatedLabs: { label: string; href: string }[];
   check: { prompt: string; reveal: string };
+  realityNote?: string;
 };
 
 export const foundationModules: { id: FoundationModuleId; title: string; description: string }[] = [
@@ -33,6 +34,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'Every Fabric store, transformation step, and semantic-model table is built from this same shape.',
     relatedLabs: [{ label: 'Schema Lab', href: '#/lab/schema' }, { label: 'Transformation Workbench', href: '#/lab/transformation' }],
     check: { prompt: "Aurora's Orders table has 40,000 rows and 8 columns. If you add a Discount column, what changes?", reveal: "The column count becomes 9. The row count is unaffected — adding a column doesn't add records." },
+    realityNote: 'Open Power Query Editor or a Fabric Lakehouse table, and you see exactly this shape: a grid of rows under named column headers, with a row count reported in the status bar.',
   },
   'data-types-and-nulls': {
     id: 'data-types-and-nulls', moduleId: 'data-basics', title: 'Data types and null values',
@@ -41,6 +43,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'Wrong types and unhandled nulls break joins, aggregations, and comparisons throughout Prepare-data work.',
     relatedLabs: [{ label: 'Transformation Workbench', href: '#/lab/transformation' }],
     check: { prompt: 'An order’s Region column is blank. Is that the same as Region = "Unknown"?', reveal: 'No. A null means no value was recorded at all; "Unknown" is an actual text value. Treating them the same can hide a data-quality problem.' },
+    realityNote: "Power Query Editor prints a data-type glyph (ABC, #, a calendar icon) in every column header, and a missing value shows as the literal word null in the preview grid rather than an empty cell.",
   },
   'keys-and-uniqueness': {
     id: 'keys-and-uniqueness', moduleId: 'data-basics', title: 'Keys and uniqueness',
@@ -49,6 +52,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'Relationships and the "one" side of a one-to-many link require a unique key — this becomes essential in Schema and Relationship Lab.',
     relatedLabs: [{ label: 'Schema Lab', href: '#/lab/schema' }, { label: 'Relationship Lab', href: '#/lab/relationships' }],
     check: { prompt: "Could OrderDate be a good primary key for Aurora's Orders table?", reveal: "No — many orders share the same date, so OrderDate isn't unique. OrderID is the primary key." },
+    realityNote: "A Fabric Warehouse table's properties expose primary- and foreign-key constraints directly; in a semantic model, the 'one' side of a relationship in Model view must be a unique column, and Power BI will refuse to draw the relationship otherwise.",
   },
   'joins-and-relationships': {
     id: 'joins-and-relationships', moduleId: 'relational-basics', title: 'Joins and relationships',
@@ -57,6 +61,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'Semantic models use relationships instead of one-off joins so every report can reuse the same connection.',
     relatedLabs: [{ label: 'Query Rosetta', href: '#/lab/query' }, { label: 'Relationship Lab', href: '#/lab/relationships' }],
     check: { prompt: 'Why build a relationship in the semantic model instead of joining tables in every query?', reveal: "A relationship is defined once and reused by every measure and report — you don't need to rewrite the join logic each time." },
+    realityNote: "Power Query's Merge Queries dialog performs a one-off join by matching columns and a join kind (inner, left outer, and so on). Power BI Desktop's Model view instead draws a standing relationship as a line between two tables, reused by every visual.",
   },
   cardinality: {
     id: 'cardinality', moduleId: 'relational-basics', title: 'One-to-many vs many-to-many',
@@ -65,6 +70,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'Most star-schema relationships are one-to-many; many-to-many needs special handling like a bridge table.',
     relatedLabs: [{ label: 'Relationship Lab', href: '#/lab/relationships' }],
     check: { prompt: 'Aurora customers can hold several purchasing accounts, and some accounts are shared by several customers. Is Customer-to-Account one-to-many?', reveal: "No — it's many-to-many on both sides, which is why Aurora needs a bridge table between Customer and Account." },
+    realityNote: "Double-click a relationship line in Power BI Desktop's Model view to open 'Edit relationship' — its cardinality dropdown shows one-to-many, many-to-one, one-to-one, or many-to-many, with a small '1' and '*' glyph next to each table.",
   },
   'filter-direction': {
     id: 'filter-direction', moduleId: 'relational-basics', title: 'Filter direction',
@@ -73,6 +79,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'Filter direction is the core idea behind RLS, CALCULATE, and bidirectional relationships.',
     relatedLabs: [{ label: 'Relationship Lab', href: '#/lab/relationships' }, { label: 'DAX Microscope', href: '#/lab/dax' }],
     check: { prompt: 'If DimRegion filters FactSales by default, can filtering FactSales narrow down DimRegion too?', reveal: 'Not unless the relationship is set to filter both directions. By default the filter travels one way: from the "one" side to the "many" side.' },
+    realityNote: "The same 'Edit relationship' dialog in Power BI Desktop has a 'Cross filter direction' setting of Single or Both — that setting is this exact concept, not a separate feature.",
   },
   'operational-vs-analytical': {
     id: 'operational-vs-analytical', moduleId: 'analytical-model-basics', title: 'Operational data vs analytical model',
@@ -105,6 +112,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: "Star schemas are the default target shape for Fabric semantic models and the exam's modeling questions.",
     relatedLabs: [{ label: 'Schema Lab', href: '#/lab/schema' }, { label: 'Relationship Lab', href: '#/lab/relationships' }],
     check: { prompt: 'A wide table repeats CustomerCity on every order row. What does turning it into a star schema fix?', reveal: 'It moves CustomerCity into DimCustomer once, instead of repeating it on every order row — reducing repetition and making filtering by city consistent.' },
+    realityNote: "Arrange tables in Power BI Desktop's Model view with dimensions around a central fact table, and the diagram you get is the same star shape Microsoft's own modeling documentation uses.",
   },
   'transform-query-calculate': {
     id: 'transform-query-calculate', moduleId: 'query-basics', title: 'Transform, query, and calculate',
@@ -113,6 +121,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'DP-600 tests all three separately: Power Query/dataflows, SQL/KQL querying, and DAX calculation.',
     relatedLabs: [{ label: 'Transformation Workbench', href: '#/lab/transformation' }, { label: 'Query Rosetta', href: '#/lab/query' }],
     check: { prompt: 'Removing duplicate OrderIDs — is that a transformation or a calculation?', reveal: 'A transformation. It changes the stored data itself, rather than deriving a new value at query or report time.' },
+    realityNote: 'These map to three separate, literal surfaces in the product: Power Query Editor (Transform Data) for transforming, a Warehouse or Lakehouse SQL endpoint for querying, and the DAX formula bar for calculating a measure.',
   },
   'sql-kql-dax-overview': {
     id: 'sql-kql-dax-overview', moduleId: 'query-basics', title: 'SQL, KQL, and DAX at a glance',
@@ -121,6 +130,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'The exam expects you to recognize which layer a scenario is describing, not just which language looks familiar.',
     relatedLabs: [{ label: 'Query Rosetta', href: '#/lab/query' }],
     check: { prompt: 'A requirement mentions analyzing time-windowed telemetry events. Which language is it pointing to?', reveal: "KQL — telemetry and event analysis over an Eventhouse is KQL's purpose, not SQL's or DAX's." },
+    realityNote: "Fabric's item icons make this visible in the workspace list itself: a Warehouse opens a T-SQL query editor, an Eventhouse opens a KQL queryset, and a semantic model's 'New measure' button opens the DAX formula bar.",
   },
   'source-to-report-path': {
     id: 'source-to-report-path', moduleId: 'fabric-stack-basics', title: 'Source → OneLake → store → model → report',
@@ -129,6 +139,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'This is the backbone of the Fabric Atlas and the first field-trip stop — every lab is a close-up of one segment of this path.',
     relatedLabs: [{ label: 'Fabric Atlas', href: '#explore' }],
     check: { prompt: 'Does a report normally query the source database directly?', reveal: 'Not normally — a report queries the semantic model, which is built on data that moved through a Fabric store. Direct Lake and DirectQuery change how that connection happens, but the report itself still targets the model.' },
+    realityNote: "A Fabric workspace lists exactly these stages as separate item types, each with its own icon: a Lakehouse or Warehouse, a semantic model, and a report — reflecting the same path this foundation describes.",
   },
   'workspace-and-items': {
     id: 'workspace-and-items', moduleId: 'fabric-stack-basics', title: 'Workspace and Fabric items',
@@ -137,6 +148,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'Workspace roles are the outermost layer of Fabric security, covered directly in Security Lens.',
     relatedLabs: [{ label: 'Security Lens', href: '#/lab/security' }],
     check: { prompt: 'Jonas has a role in Aurora’s "Sales Analytics" workspace. Does that automatically give him access to every item inside it?', reveal: 'It depends on the role and item-level permissions — workspace access is the outer layer, but individual items can still carry their own permission settings.' },
+    realityNote: "The Fabric portal's left-hand Workspaces pane lists workspaces by name; opening one shows a flat list of items with type icons, and its 'Manage access' panel is exactly where workspace roles are assigned.",
   },
   'refresh-cache-live-query': {
     id: 'refresh-cache-live-query', moduleId: 'fabric-stack-basics', title: 'Refresh, cache, and live query',
@@ -145,6 +157,7 @@ export const foundations: Record<FoundationConceptId, FoundationConcept> = {
     whyItMattersLater: 'This distinction is the entire subject of the Storage Mode Lab and Direct Lake Engine Room.',
     relatedLabs: [{ label: 'Storage Mode Lab', href: '#/lab/storage-modes' }, { label: 'Direct Lake Engine Room', href: '#/lab/direct-lake' }],
     check: { prompt: 'A DirectQuery report shows revenue as of two minutes ago without anyone clicking refresh. Why?', reveal: "DirectQuery doesn't rely on a scheduled refresh — it queries the source live each time the report needs data." },
+    realityNote: "A semantic model's settings in the Power BI service show a 'Scheduled refresh' section for Import mode, while a DirectQuery or Direct Lake model instead shows a storage-mode badge next to the dataset name.",
   },
 };
 

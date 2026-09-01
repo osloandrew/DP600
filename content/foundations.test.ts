@@ -31,4 +31,9 @@ describe('foundation registry', () => {
       expect(foundationOrder.some((id) => foundations[id].moduleId === mod.id)).toBe(true);
     }
   });
+
+  it('gives several concepts a reality-orientation note', () => {
+    const withRealityNote = foundationOrder.filter((id) => (foundations[id].realityNote?.length ?? 0) > 0);
+    expect(withRealityNote.length).toBeGreaterThanOrEqual(5);
+  });
 });
