@@ -13,7 +13,7 @@
       "Use realistic Aurora Outfitters work scenarios and assess transfer or judgment rather than isolated trivia whenever possible.",
       "Avoid trick questions, double negatives, subjective wording, and distractors that are wrong only because of an unstated assumption.",
       "Keep terminology aligned with current Microsoft Fabric and DP-600 documentation.",
-      "sourceId must match a key in content/sources.ts. Add or update that source registry when a question needs a new authoritative Microsoft Learn source.",
+      "sourceId MUST be copied exactly from allowedSourceIds below. Never invent, rename, or infer a sourceId. You are only editing this JSON and cannot update content/sources.ts; an unlisted sourceId will fail CI. If no allowed source supports the answer, do not create or verify that question.",
       "objectiveIds must use the domain prefixes MAINTAIN, PREPARE, or MODEL and identify the smallest applicable DP-600 objectives.",
       "remediation.href must be an internal hash route beginning with # and should lead to the closest relevant lesson or lab.",
       "Set verifiedDate to the ISO date YYYY-MM-DD on which the answer was checked against the cited source.",
@@ -28,27 +28,14 @@
       "4": "Advanced: reason through interacting Fabric behaviors, lifecycle constraints, security effects, fallback behavior, or non-obvious tradeoffs. Do not make a question advanced merely by using obscure terminology."
     },
     "allowedValues": {
-      "difficulty": [
-        1,
-        2,
-        3,
-        4
-      ],
+      "difficulty": [1, 2, 3, 4],
       "domain": [
         "Maintain a data analytics solution",
         "Prepare data",
         "Implement and manage semantic models"
       ],
-      "skill": [
-        "recall",
-        "interpret",
-        "apply",
-        "troubleshoot",
-        "evaluate"
-      ],
-      "format": [
-        "single-choice"
-      ],
+      "skill": ["recall", "interpret", "apply", "troubleshoot", "evaluate"],
+      "format": ["single-choice"],
       "scenarioType": [
         "design",
         "security",
@@ -58,12 +45,63 @@
         "performance",
         "operations"
       ],
-      "status": [
-        "draft",
-        "reviewed",
-        "verified"
-      ]
+      "status": ["draft", "reviewed", "verified"]
     },
+    "allowedSourceIds": [
+      "calculation-groups",
+      "composite-model-guidance",
+      "composite-models",
+      "dax-filtering",
+      "dax-information-functions",
+      "dax-iterators",
+      "dax-variables",
+      "dax-window",
+      "dimensional-modeling-facts",
+      "dimensional-modeling-load",
+      "direct-lake-how",
+      "direct-lake-security",
+      "dp600-certification",
+      "dp600-guide",
+      "dynamic-format-strings",
+      "eventhouse",
+      "eventhouse-onelake",
+      "fabric-cicd",
+      "fabric-endorsement",
+      "fabric-git-integration",
+      "fabric-information-protection",
+      "fabric-lineage",
+      "fabric-permission-model",
+      "fabric-storage-options",
+      "field-parameters",
+      "incremental-refresh",
+      "kql-query",
+      "kql-reference",
+      "large-semantic-models",
+      "onelake",
+      "onelake-catalog",
+      "onelake-security",
+      "onelake-shortcuts",
+      "optimize-semantic-model",
+      "performance-analyzer",
+      "powerbi-pbids",
+      "powerbi-pbip",
+      "powerbi-report-templates",
+      "practice-assessments",
+      "prepare-transform-data",
+      "query-warehouse",
+      "realtime-hub",
+      "semantic-model-modes",
+      "semantic-model-ols",
+      "semantic-model-permissions",
+      "semantic-model-security",
+      "semantic-model-storage-modes",
+      "semantic-models",
+      "shared-semantic-models",
+      "sql-query-editor",
+      "star-schema-guidance",
+      "visual-query-editor",
+      "xmla-endpoint"
+    ],
     "coverageGuidance": [
       "Maintain a reasonable spread across all four difficulty values; keep at least two verified questions at each difficulty.",
       "Approximate the DP-600 blueprint over a larger bank: Maintain 25-30%, Prepare 45-50%, and Semantic models 25-30%.",
@@ -89,19 +127,13 @@
       "remediation",
       "difficulty"
     ],
-    "requiredOptionFields": [
-      "id",
-      "label",
-      "explanation"
-    ]
+    "requiredOptionFields": ["id", "label", "explanation"]
   },
   "questions": [
     {
       "id": "warehouse-for-relational-reporting",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.STORE_SELECTION"
-      ],
+      "objectiveIds": ["PREPARE.GET.STORE_SELECTION"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -144,9 +176,7 @@
     {
       "id": "region-row-security",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.SECURITY.ROW"
-      ],
+      "objectiveIds": ["MAINTAIN.SECURITY.ROW"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "security",
@@ -189,10 +219,7 @@
     {
       "id": "direct-lake-onelake",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.STORAGE",
-        "MODEL.OPTIMIZE.DIRECT_LAKE"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.STORAGE", "MODEL.OPTIMIZE.DIRECT_LAKE"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -235,9 +262,7 @@
     {
       "id": "bridge-for-shared-accounts",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.RELATIONSHIPS"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.RELATIONSHIPS"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -280,9 +305,7 @@
     {
       "id": "transform-duplicate-order-lines",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.DATA_QUALITY"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.DATA_QUALITY"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -325,9 +348,7 @@
     {
       "id": "schema-loyalty-rate-placement",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -370,10 +391,7 @@
     {
       "id": "query-engine-for-warehouse-table",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.SQL",
-        "PREPARE.QUERY.KQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.SQL", "PREPARE.QUERY.KQL"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "query",
@@ -416,9 +434,7 @@
     {
       "id": "direct-lake-endpoint-security-fallback",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.DIRECT_LAKE"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.DIRECT_LAKE"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "security",
@@ -461,9 +477,7 @@
     {
       "id": "incremental-refresh-late-arrivals",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.INCREMENTAL_REFRESH"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.INCREMENTAL_REFRESH"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -506,9 +520,7 @@
     {
       "id": "calculation-group-time-intelligence",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.DAX"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -551,9 +563,7 @@
     {
       "id": "certify-shared-semantic-model",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.GOVERNANCE.ENDORSEMENT"
-      ],
+      "objectiveIds": ["MAINTAIN.GOVERNANCE.ENDORSEMENT"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "governance",
@@ -596,9 +606,7 @@
     {
       "id": "sensitivity-label-downstream-report",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.GOVERNANCE.SENSITIVITY"
-      ],
+      "objectiveIds": ["MAINTAIN.GOVERNANCE.SENSITIVITY"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "governance",
@@ -641,9 +649,7 @@
     {
       "id": "deployment-pipeline-stage-values",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.DEPLOYMENT"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.DEPLOYMENT"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -686,9 +692,7 @@
     {
       "id": "discover-certified-lakehouse",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.CATALOG"
-      ],
+      "objectiveIds": ["PREPARE.GET.CATALOG"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "governance",
@@ -731,9 +735,7 @@
     {
       "id": "retain-unmatched-sales-rows",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.JOIN"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.JOIN"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -776,9 +778,7 @@
     {
       "id": "shortcut-reuse-without-copy",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.ACCESS"
-      ],
+      "objectiveIds": ["PREPARE.GET.ACCESS"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -821,9 +821,7 @@
     {
       "id": "realtime-hub-stream-discovery",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.CATALOG"
-      ],
+      "objectiveIds": ["PREPARE.GET.CATALOG"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -866,9 +864,7 @@
     {
       "id": "eventhouse-onelake-availability",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.ONELAKE_INTEGRATION"
-      ],
+      "objectiveIds": ["PREPARE.GET.ONELAKE_INTEGRATION"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -911,9 +907,7 @@
     {
       "id": "visual-query-no-code-aggregation",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.VISUAL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.VISUAL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -956,10 +950,7 @@
     {
       "id": "visual-query-cannot-update-rows",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.VISUAL",
-        "PREPARE.QUERY.SQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.VISUAL", "PREPARE.QUERY.SQL"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "query",
@@ -1002,9 +993,7 @@
     {
       "id": "dimension-surrogate-key",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -1093,9 +1082,7 @@
     {
       "id": "load-dimensions-before-facts",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -1138,9 +1125,7 @@
     {
       "id": "aggregate-fact-to-required-grain",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -1183,10 +1168,7 @@
     {
       "id": "sql-editor-create-view",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.SQL_OBJECTS",
-        "PREPARE.QUERY.SQL"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.SQL_OBJECTS", "PREPARE.QUERY.SQL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -1229,9 +1211,7 @@
     {
       "id": "kql-telemetry-time-buckets",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.KQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.KQL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -1274,10 +1254,7 @@
     {
       "id": "viewer-role-for-rls-consumer",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.SECURITY.WORKSPACE",
-        "MAINTAIN.SECURITY.ROW"
-      ],
+      "objectiveIds": ["MAINTAIN.SECURITY.WORKSPACE", "MAINTAIN.SECURITY.ROW"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "security",
@@ -1320,10 +1297,7 @@
     {
       "id": "build-permission-reuse-semantic-model",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.SECURITY.ITEM",
-        "MAINTAIN.LIFECYCLE.REUSE"
-      ],
+      "objectiveIds": ["MAINTAIN.SECURITY.ITEM", "MAINTAIN.LIFECYCLE.REUSE"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "security",
@@ -1366,9 +1340,7 @@
     {
       "id": "onelake-folder-level-access",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.SECURITY.FILE"
-      ],
+      "objectiveIds": ["MAINTAIN.SECURITY.FILE"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "security",
@@ -1411,10 +1383,7 @@
     {
       "id": "onelake-row-column-cross-engine-security",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.SECURITY.ROW",
-        "MAINTAIN.SECURITY.COLUMN"
-      ],
+      "objectiveIds": ["MAINTAIN.SECURITY.ROW", "MAINTAIN.SECURITY.COLUMN"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "security",
@@ -1457,10 +1426,7 @@
     {
       "id": "ols-hide-sensitive-model-column",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.SECURITY.OBJECT",
-        "MAINTAIN.SECURITY.COLUMN"
-      ],
+      "objectiveIds": ["MAINTAIN.SECURITY.OBJECT", "MAINTAIN.SECURITY.COLUMN"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "security",
@@ -1503,9 +1469,7 @@
     {
       "id": "fabric-git-workspace-version-control",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.VERSION_CONTROL"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.VERSION_CONTROL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -1594,9 +1558,7 @@
     {
       "id": "impact-analysis-cross-workspace-downstream",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.IMPACT"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.IMPACT"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -1639,9 +1601,7 @@
     {
       "id": "xmla-readwrite-metadata-deployment",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.XMLA"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.XMLA"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -1684,9 +1644,7 @@
     {
       "id": "pbit-reusable-report-template",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.REUSE"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.REUSE"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -1729,9 +1687,7 @@
     {
       "id": "pbids-standardize-data-source-entry",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.REUSE"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.REUSE"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -1774,10 +1730,7 @@
     {
       "id": "shared-semantic-model-reuse-across-workspaces",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.REUSE",
-        "MAINTAIN.SECURITY.ITEM"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.REUSE", "MAINTAIN.SECURITY.ITEM"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -1820,9 +1773,7 @@
     {
       "id": "field-parameter-reader-switches-analysis",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.DAX"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -1865,9 +1816,7 @@
     {
       "id": "dynamic-format-string-keeps-measure-numeric",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.DAX"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -1910,9 +1859,7 @@
     {
       "id": "sumx-line-value-iterator",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.DAX"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -1955,10 +1902,7 @@
     {
       "id": "dax-variable-reuse-expensive-expression",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.DAX",
-        "MODEL.OPTIMIZE.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.DAX", "MODEL.OPTIMIZE.DAX"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "performance",
@@ -2001,9 +1945,7 @@
     {
       "id": "large-model-storage-format-growth",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.LARGE_STORAGE"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.LARGE_STORAGE"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -2046,9 +1988,7 @@
     {
       "id": "performance-analyzer-isolate-visual-delay",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.QUERY_VISUAL"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.QUERY_VISUAL"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "performance",
@@ -2091,9 +2031,7 @@
     {
       "id": "dax-filter-row-expression",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.DAX"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -2136,9 +2074,7 @@
     {
       "id": "dax-window-running-total",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.DAX"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -2181,9 +2117,7 @@
     {
       "id": "dax-info-view-measures-inventory",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.DAX"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -2226,10 +2160,7 @@
     {
       "id": "dual-dimension-with-directquery-fact",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.STORAGE",
-        "MODEL.DESIGN.COMPOSITE"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.STORAGE", "MODEL.DESIGN.COMPOSITE"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "performance",
@@ -2272,9 +2203,7 @@
     {
       "id": "composite-model-extend-shared-model",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.COMPOSITE"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.COMPOSITE"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -2317,9 +2246,7 @@
     {
       "id": "direct-lake-frame-after-etl-completes",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.DIRECT_LAKE"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.DIRECT_LAKE"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -2362,10 +2289,7 @@
     {
       "id": "choose-direct-lake-on-onelake",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.DIRECT_LAKE",
-        "MODEL.DESIGN.STORAGE"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.DIRECT_LAKE", "MODEL.DESIGN.STORAGE"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -2408,9 +2332,7 @@
     {
       "id": "lakehouse-for-spark-and-files",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.STORE_SELECTION"
-      ],
+      "objectiveIds": ["PREPARE.GET.STORE_SELECTION"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -2453,9 +2375,7 @@
     {
       "id": "eventhouse-for-high-volume-telemetry",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.STORE_SELECTION"
-      ],
+      "objectiveIds": ["PREPARE.GET.STORE_SELECTION"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -2498,9 +2418,7 @@
     {
       "id": "shortcut-reflects-source-data",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.ACCESS"
-      ],
+      "objectiveIds": ["PREPARE.GET.ACCESS"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -2543,9 +2461,7 @@
     {
       "id": "shortcut-avoid-duplicate-storage",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.ACCESS"
-      ],
+      "objectiveIds": ["PREPARE.GET.ACCESS"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -2588,9 +2504,7 @@
     {
       "id": "catalog-check-lineage-before-reuse",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.CATALOG"
-      ],
+      "objectiveIds": ["PREPARE.GET.CATALOG"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "governance",
@@ -2633,9 +2547,7 @@
     {
       "id": "realtime-hub-stream-not-batch-table",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.CATALOG"
-      ],
+      "objectiveIds": ["PREPARE.GET.CATALOG"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "governance",
@@ -2678,9 +2590,7 @@
     {
       "id": "dataflow-gen2-low-code-cleansing",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.DATA_QUALITY"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.DATA_QUALITY"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -2723,9 +2633,7 @@
     {
       "id": "notebook-for-complex-code-transformation",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.ENRICH"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.ENRICH"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -2768,10 +2676,7 @@
     {
       "id": "pipeline-orchestrates-notebook-after-ingest",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.GET.INGEST",
-        "PREPARE.TRANSFORM.ENRICH"
-      ],
+      "objectiveIds": ["PREPARE.GET.INGEST", "PREPARE.TRANSFORM.ENRICH"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -2814,9 +2719,7 @@
     {
       "id": "replace-null-category-dataflow",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.DATA_QUALITY"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.DATA_QUALITY"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -2859,9 +2762,7 @@
     {
       "id": "convert-text-amount-to-decimal",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.DATA_TYPES"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.DATA_TYPES"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -2904,9 +2805,7 @@
     {
       "id": "filter-invalid-status-before-load",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.FILTER"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.FILTER"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -2949,9 +2848,7 @@
     {
       "id": "append-monthly-files-same-schema",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.ENRICH"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.ENRICH"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -2994,9 +2891,7 @@
     {
       "id": "merge-customer-attributes-by-key",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.JOIN"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.JOIN"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -3039,9 +2934,7 @@
     {
       "id": "group-sales-by-region",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.AGGREGATE"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.AGGREGATE"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "transformation",
@@ -3130,9 +3023,7 @@
     {
       "id": "fact-order-line-grain",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "design",
@@ -3175,9 +3066,7 @@
     {
       "id": "fact-measure-not-dimension-attribute",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -3220,9 +3109,7 @@
     {
       "id": "dimension-attribute-not-fact-measure",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -3265,9 +3152,7 @@
     {
       "id": "sql-where-before-grouping",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.SQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.SQL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -3310,9 +3195,7 @@
     {
       "id": "sql-having-aggregate-filter",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.SQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.SQL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -3355,9 +3238,7 @@
     {
       "id": "sql-group-by-region",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.SQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.SQL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -3400,9 +3281,7 @@
     {
       "id": "kql-where-before-summarize",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.KQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.KQL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -3445,9 +3324,7 @@
     {
       "id": "kql-project-select-columns",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.KQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.KQL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -3490,9 +3367,7 @@
     {
       "id": "kql-summarize-by-device",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.KQL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.KQL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -3535,9 +3410,7 @@
     {
       "id": "visual-query-filter-and-group",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.VISUAL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.VISUAL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -3580,9 +3453,7 @@
     {
       "id": "visual-query-join-two-tables",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.QUERY.VISUAL"
-      ],
+      "objectiveIds": ["PREPARE.QUERY.VISUAL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "query",
@@ -3625,9 +3496,7 @@
     {
       "id": "surrogate-key-history-natural-key-reuse",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -3670,10 +3539,7 @@
     {
       "id": "aggregate-only-when-detail-not-required",
       "domain": "Prepare data",
-      "objectiveIds": [
-        "PREPARE.TRANSFORM.AGGREGATE",
-        "PREPARE.TRANSFORM.STAR"
-      ],
+      "objectiveIds": ["PREPARE.TRANSFORM.AGGREGATE", "PREPARE.TRANSFORM.STAR"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -3716,9 +3582,7 @@
     {
       "id": "workspace-member-can-grant-nonadmin-access",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.SECURITY.WORKSPACE"
-      ],
+      "objectiveIds": ["MAINTAIN.SECURITY.WORKSPACE"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "security",
@@ -3761,9 +3625,7 @@
     {
       "id": "item-permission-without-workspace-access",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.SECURITY.ITEM"
-      ],
+      "objectiveIds": ["MAINTAIN.SECURITY.ITEM"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "security",
@@ -3806,9 +3668,7 @@
     {
       "id": "sensitivity-label-not-access-grant",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.GOVERNANCE.SENSITIVITY"
-      ],
+      "objectiveIds": ["MAINTAIN.GOVERNANCE.SENSITIVITY"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "governance",
@@ -3851,9 +3711,7 @@
     {
       "id": "promoted-vs-certified-owner-recommendation",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.GOVERNANCE.ENDORSEMENT"
-      ],
+      "objectiveIds": ["MAINTAIN.GOVERNANCE.ENDORSEMENT"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "governance",
@@ -3896,9 +3754,7 @@
     {
       "id": "git-workspace-connection-requires-admin",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.VERSION_CONTROL"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.VERSION_CONTROL"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -3941,9 +3797,7 @@
     {
       "id": "git-commit-vs-update-direction",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.VERSION_CONTROL"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.VERSION_CONTROL"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -3986,9 +3840,7 @@
     {
       "id": "git-conflict-accept-incoming-overwrites-workspace",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.VERSION_CONTROL"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.VERSION_CONTROL"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -4031,9 +3883,7 @@
     {
       "id": "deployment-selective-items",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.DEPLOYMENT"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.DEPLOYMENT"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -4076,9 +3926,7 @@
     {
       "id": "deployment-target-paired-item-overwrite",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.DEPLOYMENT"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.DEPLOYMENT"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -4121,9 +3969,7 @@
     {
       "id": "impact-analysis-before-warehouse-breaking-change",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.IMPACT"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.IMPACT"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -4166,9 +4012,7 @@
     {
       "id": "xmla-read-query-vs-write-deploy",
       "domain": "Maintain a data analytics solution",
-      "objectiveIds": [
-        "MAINTAIN.LIFECYCLE.XMLA"
-      ],
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.XMLA"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -4211,9 +4055,7 @@
     {
       "id": "relationship-filter-dimension-to-fact",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.RELATIONSHIPS"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.RELATIONSHIPS"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -4256,10 +4098,7 @@
     {
       "id": "inactive-date-relationship-userelationship",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.RELATIONSHIPS",
-        "MODEL.DESIGN.DAX"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.RELATIONSHIPS", "MODEL.DESIGN.DAX"],
       "skill": "apply",
       "format": "single-choice",
       "scenarioType": "design",
@@ -4348,9 +4187,7 @@
     {
       "id": "import-mode-for-small-stable-source",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.DESIGN.STORAGE"
-      ],
+      "objectiveIds": ["MODEL.DESIGN.STORAGE"],
       "skill": "evaluate",
       "format": "single-choice",
       "scenarioType": "design",
@@ -4393,9 +4230,7 @@
     {
       "id": "incremental-refresh-reserved-parameters",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.INCREMENTAL_REFRESH"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.INCREMENTAL_REFRESH"],
       "skill": "recall",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -4438,9 +4273,7 @@
     {
       "id": "incremental-first-refresh-loads-history",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.INCREMENTAL_REFRESH"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.INCREMENTAL_REFRESH"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -4483,9 +4316,7 @@
     {
       "id": "directlakebehavior-automatic-fallback",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.DIRECT_LAKE"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.DIRECT_LAKE"],
       "skill": "interpret",
       "format": "single-choice",
       "scenarioType": "operations",
@@ -4528,9 +4359,7 @@
     {
       "id": "direct-lake-sql-view-fallback",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.DIRECT_LAKE"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.DIRECT_LAKE"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "performance",
@@ -4573,10 +4402,7 @@
     {
       "id": "performance-analyzer-copy-visual-dax",
       "domain": "Implement and manage semantic models",
-      "objectiveIds": [
-        "MODEL.OPTIMIZE.QUERY_VISUAL",
-        "MODEL.OPTIMIZE.DAX"
-      ],
+      "objectiveIds": ["MODEL.OPTIMIZE.QUERY_VISUAL", "MODEL.OPTIMIZE.DAX"],
       "skill": "troubleshoot",
       "format": "single-choice",
       "scenarioType": "performance",

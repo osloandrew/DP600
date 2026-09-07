@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { examScenarios } from './exam-practice';
+import { examEditorNotes, examScenarios } from './exam-practice';
 import { sources } from './sources';
 
 describe('exam practice content', () => {
@@ -35,6 +35,7 @@ describe('exam practice content', () => {
       expect(scenario.status).toBe('verified');
       expect(scenario.verifiedDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(scenario.sourceId).toBeTruthy();
+      expect(examEditorNotes.allowedSourceIds).toContain(scenario.sourceId);
       expect(sources[scenario.sourceId]).toBeTruthy();
       expect(scenario.remediation.href.startsWith('#')).toBe(true);
       for (const option of scenario.options) {
@@ -43,6 +44,11 @@ describe('exam practice content', () => {
         );
       }
     }
+  });
+
+  it('keeps the embedded source allowlist synchronized with the registry', () => {
+    for (const sourceId of examEditorNotes.allowedSourceIds)
+      expect(sources[sourceId]).toBeTruthy();
   });
 
   it('has useful coverage across difficulty and exam domains', () => {

@@ -44,6 +44,8 @@ export type ExamScenario = {
   remediation: { label: string; href: string };
 };
 
+export const examEditorNotes = questionData.editorNotes;
+
 export const examScenarios = questionData.questions.map((scenario) => ({
   ...scenario,
   options: scenario.options.map((option) => ({
