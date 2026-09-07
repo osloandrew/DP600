@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:live-preview && vite build",
+    "build:live-preview": "vite build --config vite.live-preview.config.ts",
     "preview": "vite preview",
     "dev:sites": "vinext dev --config vite.sites.config.ts",
     "build:sites": "vinext build --config vite.sites.config.ts",

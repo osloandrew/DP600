@@ -28,6 +28,7 @@
     "out/**",
     "build/**",
     "dist/**",
+    "live-preview/**",
     "coverage/**",
     "components/ui/**",
     "hooks/use-mobile.ts",

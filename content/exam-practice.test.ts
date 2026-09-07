@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { examScenarios } from './exam-practice';
+import { sources } from './sources';
 
 describe('exam practice content', () => {
   it('keeps every scenario answer among its plausible alternatives', () => {
@@ -9,6 +10,7 @@ describe('exam practice content', () => {
       ).toBe(true);
       expect(scenario.objectiveIds.length).toBeGreaterThan(0);
       expect(scenario.sourceId).toBeTruthy();
+      expect(sources[scenario.sourceId]).toBeTruthy();
       expect(scenario.remediation.href.startsWith('#/lab/')).toBe(true);
     }
   });
