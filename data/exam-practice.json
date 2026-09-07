@@ -21,6 +21,11 @@
         "id": "eventhouse",
         "label": "Eventhouse",
         "explanation": "Eventhouse is intended for event and telemetry analysis, which the scenario explicitly puts elsewhere."
+      },
+      {
+        "id": "semantic-model",
+        "label": "Power BI semantic model in Import mode",
+        "explanation": "A semantic model is an analytical layer, not the governed relational store requested for loading and querying the transactions."
       }
     ],
     "answerId": "warehouse",
@@ -54,6 +59,11 @@
         "id": "ols",
         "label": "Object-level security for the sales table",
         "explanation": "OLS hides a table or object entirely; Jonas still needs the sales table, filtered to Norway."
+      },
+      {
+        "id": "viewer",
+        "label": "Assign each manager the workspace Viewer role",
+        "explanation": "A workspace role controls access and capabilities, but does not filter rows for each manager in a shared semantic model."
       }
     ],
     "answerId": "rls",
@@ -87,6 +97,11 @@
         "id": "directquery",
         "label": "DirectQuery",
         "explanation": "DirectQuery is a source-query path; the OneLake Delta-table and no-traditional-Import clues point to Direct Lake."
+      },
+      {
+        "id": "live",
+        "label": "Live connection",
+        "explanation": "A live connection connects a report to an existing semantic model; it is not the storage mode for these Delta tables."
       }
     ],
     "answerId": "direct-lake",
@@ -120,6 +135,11 @@
         "id": "duplicate",
         "label": "Duplicate balance rows once for each linked customer",
         "explanation": "Duplicating facts would overstate balances when totals are calculated."
+      },
+      {
+        "id": "bidirectional",
+        "label": "Add bidirectional filters directly between Customer and Account",
+        "explanation": "Filter direction does not model the shared associations or preserve fact grain; the many-to-many relationship still needs a bridge."
       }
     ],
     "answerId": "bridge",
@@ -153,6 +173,11 @@
         "id": "merge",
         "label": "Merge queries on OrderID",
         "explanation": "Merging combines data from another query; it does not remove a row duplicated by a retried call."
+      },
+      {
+        "id": "group",
+        "label": "Group by OrderID and sum the line amounts",
+        "explanation": "Grouping only by order collapses legitimate order lines along with duplicates and changes the required row grain."
       }
     ],
     "answerId": "dedupe",
@@ -186,6 +211,11 @@
         "id": "measure",
         "label": "Turn it into a DAX measure",
         "explanation": "The rate is a stored descriptive attribute of the customer, not a calculation over filter context."
+      },
+      {
+        "id": "calculated-fact",
+        "label": "Create a calculated column in FactSales",
+        "explanation": "A calculated fact column still repeats the customer attribute on every transaction and preserves the modeling problem."
       }
     ],
     "answerId": "dimension",
@@ -219,6 +249,11 @@
         "id": "dax",
         "label": "DAX",
         "explanation": "DAX operates over a semantic model’s relationships and filter context; no semantic model exists yet in this scenario."
+      },
+      {
+        "id": "m",
+        "label": "Power Query M",
+        "explanation": "Power Query M connects to and transforms data; it is not the direct query language for aggregating a Warehouse table."
       }
     ],
     "answerId": "sql",
@@ -252,6 +287,11 @@
         "id": "reimport",
         "label": "The model silently switched to a full Import refresh",
         "explanation": "Direct Lake does not convert itself into an Import model; the documented behavior is a query-path fallback, not a refresh-mode change."
+      },
+      {
+        "id": "xmla",
+        "label": "The XMLA endpoint now handles queries because security was enabled",
+        "explanation": "The XMLA endpoint supports semantic-model management and connectivity; the documented fallback here is to the SQL analytics endpoint."
       }
     ],
     "answerId": "fallback",
@@ -285,6 +325,11 @@
         "id": "retention",
         "label": "Shorten the historical retention window to 20 days",
         "explanation": "Retention controls how much history stays in the table; it does not change whether recent late-arriving rows get refreshed."
+      },
+      {
+        "id": "realtime",
+        "label": "Enable DirectQuery for the newest partition only",
+        "explanation": "A real-time partition addresses current incoming data; it does not reprocess corrections made to imported rows 20 days old."
       }
     ],
     "answerId": "widen",
@@ -318,6 +363,11 @@
         "id": "relationship",
         "label": "Add a new relationship to a second date-table copy",
         "explanation": "An extra date-table relationship does not by itself produce YTD or Prior-Year variants."
+      },
+      {
+        "id": "visual",
+        "label": "Create YTD and Prior-Year visual calculations on every report",
+        "explanation": "Report-level visual calculations duplicate logic across visuals and do not create reusable model-wide variants for every base measure."
       }
     ],
     "answerId": "calcgroup",

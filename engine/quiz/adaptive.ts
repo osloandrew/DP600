@@ -16,12 +16,15 @@ export function selectAdaptiveQuestion(
   questions: ExamScenario[],
   ability: number,
   random = Math.random,
+  previousDomain?: string,
 ) {
   if (!questions.length) return undefined;
   const ranked = questions
     .map((question) => ({
       question,
-      distance: Math.abs(question.difficulty - ability),
+      distance:
+        Math.abs(question.difficulty - ability) +
+        (previousDomain && question.domain === previousDomain ? 0.35 : 0),
     }))
     .sort((a, b) => a.distance - b.distance);
   const nearest = ranked.filter(

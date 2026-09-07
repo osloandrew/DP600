@@ -3,6 +3,7 @@
 import { ArrowLeft, ExternalLink, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
 import type { ExamScenario } from '@/content/exam-practice';
+import type { ExamPracticeOption } from '@/content/exam-practice';
 import { examScenarios } from '@/content/exam-practice';
 import { sources } from '@/content/sources';
 import {
@@ -14,7 +15,10 @@ import {
 import { playQuizSound } from '@/engine/quiz/sounds';
 
 const ABILITY_KEY = 'dp600-quiz-ability-v1';
+const SOUND_KEY = 'dp600-quiz-sound-v1';
 type Phase = 'intro' | 'playing' | 'summary';
+
+const shuffle = <T,>(items: T[]) => [...items].sort(() => Math.random() - 0.5);
 
 function savedAbility() {
   if (typeof window === 'undefined') return DEFAULT_ABILITY;
@@ -22,11 +26,17 @@ function savedAbility() {
   return value >= 1 && value <= 4 ? value : DEFAULT_ABILITY;
 }
 
+function savedSoundPreference() {
+  if (typeof window === 'undefined') return true;
+  return window.localStorage.getItem(SOUND_KEY) !== 'off';
+}
+
 export function QuizMode() {
   const [phase, setPhase] = useState<Phase>('intro');
   const [roundSize, setRoundSize] = useState(10);
   const [ability, setAbility] = useState(savedAbility);
   const [question, setQuestion] = useState<ExamScenario>();
+  const [options, setOptions] = useState<ExamPracticeOption[]>([]);
   const [remaining, setRemaining] = useState<ExamScenario[]>([]);
   const [asked, setAsked] = useState<ExamScenario[]>([]);
   const [selectedId, setSelectedId] = useState<string>();
@@ -34,13 +44,24 @@ export function QuizMode() {
   const [correct, setCorrect] = useState(0);
   const [streak, setStreak] = useState(0);
   const [missed, setMissed] = useState<string[]>([]);
+  const [flagged, setFlagged] = useState<string[]>([]);
+  const [soundEnabled, setSoundEnabled] = useState(savedSoundPreference);
+  const reviewIds = [...new Set([...missed, ...flagged])];
 
-  const startRound = (size = roundSize) => {
-    playQuizSound('popChime');
-    const pool = [...examScenarios];
+  const playSound = (sound: Parameters<typeof playQuizSound>[0]) => {
+    if (soundEnabled) playQuizSound(sound);
+  };
+
+  const startRound = (
+    size = roundSize,
+    sourceQuestions: ExamScenario[] = examScenarios,
+  ) => {
+    playSound('popChime');
+    const pool = [...sourceQuestions];
     const first = selectAdaptiveQuestion(pool, ability)!;
     setRoundSize(Math.min(size, pool.length));
     setQuestion(first);
+    setOptions(shuffle(first.options));
     setRemaining(pool.filter((item) => item.id !== first.id));
     setAsked([first]);
     setSelectedId(undefined);
@@ -48,6 +69,7 @@ export function QuizMode() {
     setCorrect(0);
     setStreak(0);
     setMissed([]);
+    setFlagged([]);
     setPhase('playing');
   };
 
@@ -60,13 +82,13 @@ export function QuizMode() {
     setAbility(nextAbility);
     window.localStorage.setItem(ABILITY_KEY, String(nextAbility));
     if (wasCorrect) {
-      playQuizSound(
+      playSound(
         streak > 0 && (streak + 1) % 3 === 0 ? 'streakChime' : 'goodChime',
       );
       setCorrect((value) => value + 1);
       setStreak((value) => value + 1);
     } else {
-      playQuizSound('badChime');
+      playSound('badChime');
       setStreak(0);
       setMissed((value) => [...value, question.id]);
     }
@@ -74,14 +96,20 @@ export function QuizMode() {
 
   const next = () => {
     if (asked.length >= roundSize || !remaining.length) {
-      playQuizSound(
+      playSound(
         missed.length === 0 ? 'queueClearedChime' : 'roundCompleteChime',
       );
       setPhase('summary');
       return;
     }
-    const nextQuestion = selectAdaptiveQuestion(remaining, ability)!;
+    const nextQuestion = selectAdaptiveQuestion(
+      remaining,
+      ability,
+      Math.random,
+      question?.domain,
+    )!;
     setQuestion(nextQuestion);
+    setOptions(shuffle(nextQuestion.options));
     setRemaining((items) =>
       items.filter((item) => item.id !== nextQuestion.id),
     );
@@ -93,6 +121,21 @@ export function QuizMode() {
   const resetDifficulty = () => {
     setAbility(DEFAULT_ABILITY);
     window.localStorage.removeItem(ABILITY_KEY);
+  };
+
+  const toggleFlag = () => {
+    if (!question) return;
+    setFlagged((items) =>
+      items.includes(question.id)
+        ? items.filter((id) => id !== question.id)
+        : [...items, question.id],
+    );
+  };
+
+  const toggleSound = () => {
+    const nextValue = !soundEnabled;
+    setSoundEnabled(nextValue);
+    window.localStorage.setItem(SOUND_KEY, nextValue ? 'on' : 'off');
   };
 
   return (
@@ -114,7 +157,8 @@ export function QuizMode() {
           <h1 className="game-intro-heading">Ready to practice?</h1>
           <p className="game-intro-subheading">
             The round adapts after every answer, choosing the best next DP-600
-            scenario for your current level.
+            scenario for your current practice level. There is no timer. Take as
+            long as you need.
           </p>
           <section className="game-intro-card game-today-practice">
             <div className="game-today-practice-heading-row">
@@ -125,8 +169,9 @@ export function QuizMode() {
               <span className="game-today-practice-count">{roundSize}</span>
             </div>
             <p className="game-today-practice-note">
-              Starting level: <strong>{difficultyLabel(ability)}</strong>. Your
-              next question becomes harder or easier based on your answer.
+              Practice level: <strong>{difficultyLabel(ability)}</strong>. This
+              guides the next question; it is not an exam score or a judgment of
+              readiness.
             </p>
             <div className="game-today-practice-progress" aria-hidden="true">
               <span style={{ width: `${(ability / 4) * 100}%` }} />
@@ -151,6 +196,14 @@ export function QuizMode() {
               <button className="game-intro-option" onClick={resetDifficulty}>
                 <span className="game-intro-option-count">↺</span>
                 <span className="game-intro-option-label">Reset level</span>
+              </button>
+              <button className="game-intro-option" onClick={toggleSound}>
+                <span className="game-intro-option-count">
+                  {soundEnabled ? '♪' : '—'}
+                </span>
+                <span className="game-intro-option-label">
+                  Sound {soundEnabled ? 'on' : 'off'}
+                </span>
               </button>
             </div>
           </details>
@@ -177,10 +230,10 @@ export function QuizMode() {
                 <p className="game-summary-stat-label">To review</p>
               </div>
             </div>
-            {missed.length > 0 && (
+            {reviewIds.length > 0 && (
               <div className="dp-quiz-review">
-                <strong>Review these scenarios</strong>
-                {missed.map((id) => {
+                <strong>Review when you feel ready</strong>
+                {reviewIds.map((id) => {
                   const item = examScenarios.find((entry) => entry.id === id)!;
                   return (
                     <a href={item.remediation.href} key={id}>
@@ -190,8 +243,21 @@ export function QuizMode() {
                 })}
               </div>
             )}
+            {reviewIds.length > 0 && (
+              <button
+                className="game-summary-primary-btn"
+                onClick={() =>
+                  startRound(
+                    reviewIds.length,
+                    examScenarios.filter((item) => reviewIds.includes(item.id)),
+                  )
+                }
+              >
+                Practice review set
+              </button>
+            )}
             <button
-              className="game-summary-primary-btn"
+              className="game-summary-secondary-btn"
               onClick={() => startRound()}
             >
               <RotateCcw /> Play again
@@ -224,10 +290,15 @@ export function QuizMode() {
                 </div>
               </div>
               <div className="game-stats-incorrect-box">
-                <p id="review-count">{missed.length}</p>
+                <p id="review-count">{reviewIds.length}</p>
                 <p className="game-stat-label">To Review</p>
               </div>
             </div>
+            <button className="dp-quiz-flag" onClick={toggleFlag}>
+              {flagged.includes(question.id)
+                ? 'Marked for later review'
+                : 'Review this later'}
+            </button>
           </div>
           <section className="game-word-card">
             <p className="game-instruction">Choose the best answer</p>
@@ -240,7 +311,7 @@ export function QuizMode() {
             <p className="dp-quiz-context">{question.context}</p>
           </section>
           <div className="game-grid">
-            {question.options.map((option) => {
+            {options.map((option, optionIndex) => {
               const className =
                 answered && option.id === question.answerId
                   ? 'game-translation-card game-correct-card'
@@ -255,7 +326,10 @@ export function QuizMode() {
                   disabled={answered}
                   onClick={() => choose(option.id)}
                 >
-                  {option.label}
+                  <span className="dp-quiz-option-letter">
+                    {String.fromCharCode(65 + optionIndex)}
+                  </span>
+                  <span>{option.label}</span>
                 </button>
               );
             })}
@@ -271,18 +345,37 @@ export function QuizMode() {
               >
                 <strong>
                   {selectedId === question.answerId
-                    ? 'Correct.'
-                    : 'Review this one.'}
+                    ? 'That’s it.'
+                    : 'Not yet — here’s the distinction.'}
                 </strong>
-                <span>{question.decisiveClue}</span>
-                <a
-                  href={sources[question.sourceId].url}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Verified with {sources[question.sourceId].title}
-                  <ExternalLink />
-                </a>
+                <span>
+                  {
+                    question.options.find((option) => option.id === selectedId)
+                      ?.explanation
+                  }
+                </span>
+                {selectedId !== question.answerId && (
+                  <span>
+                    <strong>Best answer: </strong>
+                    {
+                      question.options.find(
+                        (option) => option.id === question.answerId,
+                      )?.explanation
+                    }
+                  </span>
+                )}
+                <details className="dp-quiz-feedback-detail">
+                  <summary>Why this is the best answer</summary>
+                  <span>{question.decisiveClue}</span>
+                  <a
+                    href={sources[question.sourceId].url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Verified with {sources[question.sourceId].title}
+                    <ExternalLink />
+                  </a>
+                </details>
               </div>
             )}
           </div>

@@ -8,6 +8,7 @@ describe('exam practice content', () => {
       expect(
         scenario.options.some((option) => option.id === scenario.answerId),
       ).toBe(true);
+      expect(scenario.options).toHaveLength(4);
       expect(scenario.objectiveIds.length).toBeGreaterThan(0);
       expect(scenario.difficulty).toBeGreaterThanOrEqual(1);
       expect(scenario.difficulty).toBeLessThanOrEqual(4);
