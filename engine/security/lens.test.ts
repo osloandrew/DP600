@@ -11,7 +11,10 @@ describe('security lens', () => {
 
   it('filters Norway sales rows for a Viewer assigned to the Norway model role', () => {
     const norway = evaluateSecurity('norway-sales');
-    expect(norway.reportRows.map((row) => row.region)).toEqual(['Norway', 'Norway']);
+    expect(norway.reportRows.map((row) => row.region)).toEqual([
+      'Norway',
+      'Norway',
+    ]);
     expect(norway.totalRevenue).toBe(1145);
     expect(norway.visibleColumns).not.toContain('Margin');
   });

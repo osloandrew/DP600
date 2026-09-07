@@ -14,8 +14,18 @@ export const directLakeColumns = [
 export type DirectLakeColumnId = (typeof directLakeColumns)[number]['id'];
 
 const queryColumns: Record<DirectLakeQuery, DirectLakeColumnId[]> = {
-  'sales-by-category': ['FactSales.Revenue', 'FactSales.ProductKey', 'DimProduct.ProductKey', 'DimProduct.Category'],
-  'sales-by-region': ['FactSales.Revenue', 'FactSales.RegionKey', 'DimRegion.RegionKey', 'DimRegion.Region'],
+  'sales-by-category': [
+    'FactSales.Revenue',
+    'FactSales.ProductKey',
+    'DimProduct.ProductKey',
+    'DimProduct.Category',
+  ],
+  'sales-by-region': [
+    'FactSales.Revenue',
+    'FactSales.RegionKey',
+    'DimRegion.RegionKey',
+    'DimRegion.Region',
+  ],
 };
 
 export type DirectLakeState = {
@@ -38,47 +48,81 @@ export type DirectLakeAction =
   | { type: 'reset' };
 
 export const initialDirectLakeState: DirectLakeState = {
-  mode: 'onelake', loadedColumns: [], newlyLoadedColumns: [], dataVersion: 1,
-  framedVersion: 1, fallbackCondition: false, servingPath: 'idle',
+  mode: 'onelake',
+  loadedColumns: [],
+  newlyLoadedColumns: [],
+  dataVersion: 1,
+  framedVersion: 1,
+  fallbackCondition: false,
+  servingPath: 'idle',
 };
 
-export function reduceDirectLake(state: DirectLakeState, action: DirectLakeAction): DirectLakeState {
-  if (action.type === 'reset') return { ...initialDirectLakeState, mode: state.mode };
-  if (action.type === 'set-mode') return { ...initialDirectLakeState, mode: action.mode };
+export function reduceDirectLake(
+  state: DirectLakeState,
+  action: DirectLakeAction,
+): DirectLakeState {
+  if (action.type === 'reset')
+    return { ...initialDirectLakeState, mode: state.mode };
+  if (action.type === 'set-mode')
+    return { ...initialDirectLakeState, mode: action.mode };
   if (action.type === 'change-data') {
-    return { ...state, dataVersion: state.dataVersion + 1, newlyLoadedColumns: [], servingPath: 'idle' };
+    return {
+      ...state,
+      dataVersion: state.dataVersion + 1,
+      newlyLoadedColumns: [],
+      servingPath: 'idle',
+    };
   }
   if (action.type === 'refresh-frame') {
     return {
       ...state,
       framedVersion: state.dataVersion,
-      loadedColumns: state.loadedColumns.filter((column) => !column.startsWith('FactSales.')),
+      loadedColumns: state.loadedColumns.filter(
+        (column) => !column.startsWith('FactSales.'),
+      ),
       newlyLoadedColumns: [],
       servingPath: 'idle',
     };
   }
   if (action.type === 'toggle-fallback-condition') {
     if (state.mode === 'onelake') return state;
-    return { ...state, fallbackCondition: !state.fallbackCondition, newlyLoadedColumns: [], servingPath: 'idle' };
+    return {
+      ...state,
+      fallbackCondition: !state.fallbackCondition,
+      newlyLoadedColumns: [],
+      servingPath: 'idle',
+    };
   }
 
   const fallsBack = state.mode === 'sql-endpoint' && state.fallbackCondition;
   const required = queryColumns[action.query];
-  const newlyLoadedColumns = fallsBack ? [] : required.filter((column) => !state.loadedColumns.includes(column));
+  const newlyLoadedColumns = fallsBack
+    ? []
+    : required.filter((column) => !state.loadedColumns.includes(column));
   return {
     ...state,
     lastQuery: action.query,
     newlyLoadedColumns,
-    loadedColumns: fallsBack ? state.loadedColumns : Array.from(new Set([...state.loadedColumns, ...required])),
+    loadedColumns: fallsBack
+      ? state.loadedColumns
+      : Array.from(new Set([...state.loadedColumns, ...required])),
     servingPath: fallsBack ? 'direct-query' : 'direct-lake',
   };
 }
 
 export function describeDirectLake(state: DirectLakeState) {
-  if (state.servingPath === 'direct-query') return 'The query bypassed the in-memory Direct Lake path and was sent to the SQL analytics endpoint.';
-  if (state.servingPath === 'direct-lake' && state.newlyLoadedColumns.length === 0) return 'Every required column was already in memory, so the query reused the column cache.';
-  if (state.servingPath === 'direct-lake') return `${state.newlyLoadedColumns.length} required columns were loaded from Delta/Parquet into memory.`;
-  if (state.dataVersion !== state.framedVersion) return 'The Delta tables changed, but this model still points to the previous framed table state.';
-  if (state.fallbackCondition) return 'SQL row-level security is present. The next query will use DirectQuery fallback.';
+  if (state.servingPath === 'direct-query')
+    return 'The query bypassed the in-memory Direct Lake path and was sent to the SQL analytics endpoint.';
+  if (
+    state.servingPath === 'direct-lake' &&
+    state.newlyLoadedColumns.length === 0
+  )
+    return 'Every required column was already in memory, so the query reused the column cache.';
+  if (state.servingPath === 'direct-lake')
+    return `${state.newlyLoadedColumns.length} required columns were loaded from Delta/Parquet into memory.`;
+  if (state.dataVersion !== state.framedVersion)
+    return 'The Delta tables changed, but this model still points to the previous framed table state.';
+  if (state.fallbackCondition)
+    return 'SQL row-level security is present. The next query will use DirectQuery fallback.';
   return 'Run a query to see which columns the semantic model needs.';
 }

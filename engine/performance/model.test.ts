@@ -3,7 +3,15 @@ import { evaluatePerformance } from './model';
 
 describe('performance lab model', () => {
   it('starts at the documented deterministic baseline', () => {
-    expect(evaluatePerformance([])).toEqual({ durationMs: 1840, rowsScanned: 12400000, modelMb: 1240, storageEngineMs: 1120, formulaEngineMs: 560, visualMs: 160, workRatio: 1 });
+    expect(evaluatePerformance([])).toEqual({
+      durationMs: 1840,
+      rowsScanned: 12400000,
+      modelMb: 1240,
+      storageEngineMs: 1120,
+      formulaEngineMs: 560,
+      visualMs: 160,
+      workRatio: 1,
+    });
   });
 
   it('reduces formula-engine work when the iterator is simplified', () => {
@@ -20,7 +28,20 @@ describe('performance lab model', () => {
   });
 
   it('combines all interventions without randomness', () => {
-    const ids = ['remove-tracking-id', 'simplify-iterator', 'aggregation-table', 'single-direction', 'category-grain', 'reduce-interactions'] as const;
-    expect(evaluatePerformance([...ids])).toMatchObject({ durationMs: 425, storageEngineMs: 160, formulaEngineMs: 160, visualMs: 105, workRatio: 0.23 });
+    const ids = [
+      'remove-tracking-id',
+      'simplify-iterator',
+      'aggregation-table',
+      'single-direction',
+      'category-grain',
+      'reduce-interactions',
+    ] as const;
+    expect(evaluatePerformance([...ids])).toMatchObject({
+      durationMs: 425,
+      storageEngineMs: 160,
+      formulaEngineMs: 160,
+      visualMs: 105,
+      workRatio: 0.23,
+    });
   });
 });

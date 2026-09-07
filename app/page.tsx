@@ -25,6 +25,7 @@ import { PerformanceLab } from '@/app/performance-lab';
 import { FieldParameterExplorer } from '@/app/field-parameter-explorer';
 import { CalculationGroupLab } from '@/app/calculation-group-lab';
 import { CompositeModelLab } from '@/app/composite-model-lab';
+import { QuizMode } from '@/app/quiz-mode';
 
 export default function Home() {
   const [route, setRoute] = useState('home');
@@ -45,6 +46,7 @@ export default function Home() {
   if (route === 'lab/dax') return <DaxMicroscope />;
   if (route === 'lab/direct-lake') return <DirectLakeLab />;
   if (route === 'exam') return <ExamPrep />;
+  if (route === 'quiz') return <QuizMode />;
   if (route === 'exam/sprint') return <ExamSprint />;
   if (route === 'map') return <ExamMap />;
   if (route === 'lab/transformation') return <TransformationWorkbench />;
@@ -59,7 +61,8 @@ export default function Home() {
   if (route === 'lab/composite-models') return <CompositeModelLab />;
   if (route === 'journeys') return <JourneyIndex />;
   if (route.startsWith('journey/')) return <JourneyStopPage key={route} />;
-  if (route === 'foundations' || route.startsWith('foundations/')) return <FoundationBridge key={route} />;
+  if (route === 'foundations' || route.startsWith('foundations/'))
+    return <FoundationBridge key={route} />;
   if (route === 'explore') return <FabricAtlas />;
 
   return <HomePage />;

@@ -6,7 +6,13 @@ import { dataTrace, getTraceStep, queryTrace } from './traces';
 
 describe('Fabric Atlas traces', () => {
   it('moves data from a source to a report through storage and the semantic model', () => {
-    expect(dataTrace).toEqual(['sources', 'onelake', 'warehouse', 'semantic-model', 'report']);
+    expect(dataTrace).toEqual([
+      'sources',
+      'onelake',
+      'warehouse',
+      'semantic-model',
+      'report',
+    ]);
   });
 
   it('traces a report query backward to the answering store', () => {
@@ -23,8 +29,12 @@ describe('content registry integrity', () => {
   it('gives every Atlas concept valid sources and exam objectives', () => {
     Object.values(concepts).forEach((concept) => {
       expect(concept.objectiveIds.length).toBeGreaterThan(0);
-      concept.sourceIds.forEach((sourceId) => expect(sources[sourceId]).toBeDefined());
-      concept.relatedConceptIds.forEach((conceptId) => expect(concepts[conceptId]).toBeDefined());
+      concept.sourceIds.forEach((sourceId) =>
+        expect(sources[sourceId]).toBeDefined(),
+      );
+      concept.relatedConceptIds.forEach((conceptId) =>
+        expect(concepts[conceptId]).toBeDefined(),
+      );
     });
   });
 });

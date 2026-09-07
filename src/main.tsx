@@ -7,4 +7,8 @@ import '@/app/globals.css';
 const root = document.getElementById('root');
 if (!root) throw new Error('Fabric Explorer root element was not found.');
 
-createRoot(root).render(<StrictMode><Home /></StrictMode>);
+createRoot(root).render(
+  <StrictMode>
+    <Home />
+  </StrictMode>,
+);

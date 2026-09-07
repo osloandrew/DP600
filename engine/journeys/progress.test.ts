@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { firstStopId, getStopIndex, isJourneyComplete, isLastStop, nextStopId, previousStopId } from '@/engine/journeys/progress';
+import {
+  firstStopId,
+  getStopIndex,
+  isJourneyComplete,
+  isLastStop,
+  nextStopId,
+  previousStopId,
+} from '@/engine/journeys/progress';
 
 const journeyId = 'from-question-to-report';
 
@@ -17,7 +24,9 @@ describe('journey progress', () => {
   });
 
   it('steps back to the previous stop', () => {
-    expect(previousStopId(journeyId, 'choose-store')).toBe('question-orientation');
+    expect(previousStopId(journeyId, 'choose-store')).toBe(
+      'question-orientation',
+    );
   });
 
   it('returns undefined before the first stop', () => {
@@ -32,9 +41,18 @@ describe('journey progress', () => {
   it('reports completion only once every stop is completed', () => {
     expect(getStopIndex(journeyId, 'add-a-measure')).toBe(5);
     expect(isJourneyComplete(journeyId, ['question-orientation'])).toBe(false);
-    expect(isJourneyComplete(journeyId, [
-      'question-orientation', 'choose-store', 'clean-and-shape', 'build-star-schema',
-      'model-relationships', 'add-a-measure', 'trace-the-query', 'control-access', 'diagnose-performance',
-    ])).toBe(true);
+    expect(
+      isJourneyComplete(journeyId, [
+        'question-orientation',
+        'choose-store',
+        'clean-and-shape',
+        'build-star-schema',
+        'model-relationships',
+        'add-a-measure',
+        'trace-the-query',
+        'control-access',
+        'diagnose-performance',
+      ]),
+    ).toBe(true);
   });
 });

@@ -2,81 +2,838 @@ export type PracticeChoice = { id: string; label: string; feedback: string };
 
 export type JourneyPractice = {
   workedExample: { title: string; instruction: string; observation: string };
-  guided: { mission: string; hint: string; choices: PracticeChoice[]; answerId: string; debrief: string };
-  independent: { mission: string; choices: PracticeChoice[]; answerId: string; debrief: string };
+  guided: {
+    mission: string;
+    hint: string;
+    choices: PracticeChoice[];
+    answerId: string;
+    debrief: string;
+  };
+  independent: {
+    mission: string;
+    choices: PracticeChoice[];
+    answerId: string;
+    debrief: string;
+  };
 };
 
-const choice = (id: string, label: string, feedback: string): PracticeChoice => ({ id, label, feedback });
+const choice = (
+  id: string,
+  label: string,
+  feedback: string,
+): PracticeChoice => ({ id, label, feedback });
 
 export const journeyPractice: Record<string, JourneyPractice> = {
   'question-orientation': {
-    workedExample: { title: 'Watch the trace', instruction: 'In the Fabric Atlas, choose “Trace order #10482” and step from the source to the report.', observation: 'The report consumes a semantic-model result; the order begins in an operational source system.' },
-    guided: { mission: 'Aurora needs the source rows available for analytics. Which description means Fabric is ingesting them?', hint: 'Look for data being copied into an analytical store, rather than queried where it currently lives.', choices: [choice('ingest', 'Copy source data into a Fabric store for analytics', 'That is ingestion: a Fabric process brings source data into its analytical environment.'), choice('access', 'Read the operational database in place without bringing its data into a Fabric store', 'That describes access in place, not ingestion.'), choice('visual', 'Add a report visual over an existing semantic model', 'That happens downstream of ingestion and does not move source data.')], answerId: 'ingest', debrief: 'The deciding distinction is whether data enters a Fabric analytical store or remains where it started.' },
-    independent: { mission: 'A new supplier API is queried only when an analyst opens a report; Aurora does not persist its data in OneLake. Which relationship to the source is this?', choices: [choice('access', 'Access the source in place', 'Yes. The source remains external and is read when needed.'), choice('ingest', 'Ingest the source into OneLake first', 'That would create a stored analytical copy, which the scenario explicitly excludes.'), choice('transform', 'Transform a stored FactSales table', 'Transformation changes data after it has been brought into the analytical flow.')], answerId: 'access', debrief: 'Ingest and access are not competing labels for the same behavior: one creates an analytical copy; the other reads an existing source.' },
+    workedExample: {
+      title: 'Watch the trace',
+      instruction:
+        'In the Fabric Atlas, choose “Trace order #10482” and step from the source to the report.',
+      observation:
+        'The report consumes a semantic-model result; the order begins in an operational source system.',
+    },
+    guided: {
+      mission:
+        'Aurora needs the source rows available for analytics. Which description means Fabric is ingesting them?',
+      hint: 'Look for data being copied into an analytical store, rather than queried where it currently lives.',
+      choices: [
+        choice(
+          'ingest',
+          'Copy source data into a Fabric store for analytics',
+          'That is ingestion: a Fabric process brings source data into its analytical environment.',
+        ),
+        choice(
+          'access',
+          'Read the operational database in place without bringing its data into a Fabric store',
+          'That describes access in place, not ingestion.',
+        ),
+        choice(
+          'visual',
+          'Add a report visual over an existing semantic model',
+          'That happens downstream of ingestion and does not move source data.',
+        ),
+      ],
+      answerId: 'ingest',
+      debrief:
+        'The deciding distinction is whether data enters a Fabric analytical store or remains where it started.',
+    },
+    independent: {
+      mission:
+        'A new supplier API is queried only when an analyst opens a report; Aurora does not persist its data in OneLake. Which relationship to the source is this?',
+      choices: [
+        choice(
+          'access',
+          'Access the source in place',
+          'Yes. The source remains external and is read when needed.',
+        ),
+        choice(
+          'ingest',
+          'Ingest the source into OneLake first',
+          'That would create a stored analytical copy, which the scenario explicitly excludes.',
+        ),
+        choice(
+          'transform',
+          'Transform a stored FactSales table',
+          'Transformation changes data after it has been brought into the analytical flow.',
+        ),
+      ],
+      answerId: 'access',
+      debrief:
+        'Ingest and access are not competing labels for the same behavior: one creates an analytical copy; the other reads an existing source.',
+    },
   },
   'choose-store': {
-    workedExample: { title: 'Watch the store fit move', instruction: 'In Data Store Lab, keep the retail-reporting workload selected, then change it to streaming telemetry with KQL.', observation: 'Warehouse fits structured T-SQL reporting; Eventhouse becomes the strong fit for high-volume event analysis.' },
-    guided: { mission: 'Priya has structured sales tables, batch loading, enterprise BI, and a T-SQL-heavy team. Where should she begin?', hint: 'Match structured relational reporting and T-SQL to the store purpose.', choices: [choice('warehouse', 'Warehouse', 'Warehouse is the strong fit for this relational, T-SQL-oriented BI workload.'), choice('eventhouse', 'Eventhouse', 'Eventhouse is aimed at event and telemetry analysis with KQL, not this reporting workload.'), choice('lakehouse', 'Lakehouse', 'Lakehouse can be useful, but the stated relational BI and T-SQL needs make Warehouse the stronger fit.')], answerId: 'warehouse', debrief: 'The workload requirements decide the fit; no store is universally best.' },
-    independent: { mission: 'Aurora now needs to aggregate millions of device events by time window with KQL and very low latency. Which store is the strongest fit?', choices: [choice('eventhouse', 'Eventhouse', 'Yes. The event shape, time-oriented analysis, low latency, and KQL all point here.'), choice('warehouse', 'Warehouse', 'Warehouse fits relational analytics, not the primary event and KQL workload described.'), choice('lakehouse', 'Lakehouse', 'Lakehouse supports broad engineering work, but it is not the strongest match for this real-time event scenario.')], answerId: 'eventhouse', debrief: 'Changing data shape, latency, and language changes the architecture recommendation.' },
+    workedExample: {
+      title: 'Watch the store fit move',
+      instruction:
+        'In Data Store Lab, keep the retail-reporting workload selected, then change it to streaming telemetry with KQL.',
+      observation:
+        'Warehouse fits structured T-SQL reporting; Eventhouse becomes the strong fit for high-volume event analysis.',
+    },
+    guided: {
+      mission:
+        'Priya has structured sales tables, batch loading, enterprise BI, and a T-SQL-heavy team. Where should she begin?',
+      hint: 'Match structured relational reporting and T-SQL to the store purpose.',
+      choices: [
+        choice(
+          'warehouse',
+          'Warehouse',
+          'Warehouse is the strong fit for this relational, T-SQL-oriented BI workload.',
+        ),
+        choice(
+          'eventhouse',
+          'Eventhouse',
+          'Eventhouse is aimed at event and telemetry analysis with KQL, not this reporting workload.',
+        ),
+        choice(
+          'lakehouse',
+          'Lakehouse',
+          'Lakehouse can be useful, but the stated relational BI and T-SQL needs make Warehouse the stronger fit.',
+        ),
+      ],
+      answerId: 'warehouse',
+      debrief:
+        'The workload requirements decide the fit; no store is universally best.',
+    },
+    independent: {
+      mission:
+        'Aurora now needs to aggregate millions of device events by time window with KQL and very low latency. Which store is the strongest fit?',
+      choices: [
+        choice(
+          'eventhouse',
+          'Eventhouse',
+          'Yes. The event shape, time-oriented analysis, low latency, and KQL all point here.',
+        ),
+        choice(
+          'warehouse',
+          'Warehouse',
+          'Warehouse fits relational analytics, not the primary event and KQL workload described.',
+        ),
+        choice(
+          'lakehouse',
+          'Lakehouse',
+          'Lakehouse supports broad engineering work, but it is not the strongest match for this real-time event scenario.',
+        ),
+      ],
+      answerId: 'eventhouse',
+      debrief:
+        'Changing data shape, latency, and language changes the architecture recommendation.',
+    },
   },
   'clean-and-shape': {
-    workedExample: { title: 'Watch the quality signals', instruction: 'In Transformation Workbench, remove the duplicate and correct the date type. Inspect the before/after preview after each step.', observation: 'Each operation addresses one data-quality issue; a duplicate and a missing value are not the same problem.' },
-    guided: { mission: 'Two rows share the same duplicated order line. Which upstream operation addresses that specific issue?', hint: 'Choose the operation that changes duplicate rows, not the operation that changes a column value.', choices: [choice('duplicates', 'Remove duplicate', 'Yes. This removes repeated records according to the defined duplicate columns.'), choice('null', 'Replace null', 'Replacing null addresses a missing value, but it leaves duplicate records intact.'), choice('type', 'Change type', 'Changing a type does not remove a repeated row.')], answerId: 'duplicates', debrief: 'Data-quality fixes are specific: identify the property that is wrong before choosing the transformation.' },
-    independent: { mission: 'OrderDate includes both dates and text values such as “03/08/26”. Before grouping sales by month, what is the appropriate first operation?', choices: [choice('type', 'Change OrderDate to a date type', 'Yes. Date grouping and comparisons need a consistent date type.'), choice('aggregate', 'Aggregate revenue immediately', 'Aggregation before resolving the date type can group inconsistent values incorrectly.'), choice('duplicate', 'Remove duplicate', 'Duplicates may be a separate issue, but they do not make date values comparable.')], answerId: 'type', debrief: 'Transform data upstream so all downstream reports receive a consistent representation.' },
+    workedExample: {
+      title: 'Watch the quality signals',
+      instruction:
+        'In Transformation Workbench, remove the duplicate and correct the date type. Inspect the before/after preview after each step.',
+      observation:
+        'Each operation addresses one data-quality issue; a duplicate and a missing value are not the same problem.',
+    },
+    guided: {
+      mission:
+        'Two rows share the same duplicated order line. Which upstream operation addresses that specific issue?',
+      hint: 'Choose the operation that changes duplicate rows, not the operation that changes a column value.',
+      choices: [
+        choice(
+          'duplicates',
+          'Remove duplicate',
+          'Yes. This removes repeated records according to the defined duplicate columns.',
+        ),
+        choice(
+          'null',
+          'Replace null',
+          'Replacing null addresses a missing value, but it leaves duplicate records intact.',
+        ),
+        choice(
+          'type',
+          'Change type',
+          'Changing a type does not remove a repeated row.',
+        ),
+      ],
+      answerId: 'duplicates',
+      debrief:
+        'Data-quality fixes are specific: identify the property that is wrong before choosing the transformation.',
+    },
+    independent: {
+      mission:
+        'OrderDate includes both dates and text values such as “03/08/26”. Before grouping sales by month, what is the appropriate first operation?',
+      choices: [
+        choice(
+          'type',
+          'Change OrderDate to a date type',
+          'Yes. Date grouping and comparisons need a consistent date type.',
+        ),
+        choice(
+          'aggregate',
+          'Aggregate revenue immediately',
+          'Aggregation before resolving the date type can group inconsistent values incorrectly.',
+        ),
+        choice(
+          'duplicate',
+          'Remove duplicate',
+          'Duplicates may be a separate issue, but they do not make date values comparable.',
+        ),
+      ],
+      answerId: 'type',
+      debrief:
+        'Transform data upstream so all downstream reports receive a consistent representation.',
+    },
   },
   'build-star-schema': {
-    workedExample: { title: 'Watch repeated detail move', instruction: 'In Schema Lab, move product and store attributes into their dimensions. Keep the order-line measures in FactSales.', observation: 'The fact table keeps its defined grain; descriptive attributes become reusable dimensions.' },
-    guided: { mission: 'ProductCategory repeats on many sales rows and is used to group revenue. Where does it belong?', hint: 'Ask whether it describes an entity or records the measured sales event.', choices: [choice('dimension', 'DimProduct', 'Yes. ProductCategory describes a product and is used to filter or group facts.'), choice('fact', 'FactSales', 'FactSales records order-line events and measures; keeping repeated product attributes there preserves the wide operational shape.'), choice('measure', 'A DAX measure', 'A category is descriptive data, not a calculation over filter context.')], answerId: 'dimension', debrief: 'Dimensions describe entities for filtering and grouping; facts record measurable events.' },
-    independent: { mission: 'Aurora adds one shipping-fee row per order to FactSales, which currently has one row per order line. What is the modeling concern?', choices: [choice('grain', 'The table now mixes grains', 'Yes. One row per order and one row per order line are different levels of detail.'), choice('cardinality', 'The table must be many-to-many', 'Cardinality is about links between tables; the issue here is the level represented by each row.'), choice('format', 'The numeric format is wrong', 'Formatting cannot resolve mixed levels of detail.')], answerId: 'grain', debrief: 'Define a fact table’s grain before adding measures, or totals can silently misstate the business.' },
+    workedExample: {
+      title: 'Watch repeated detail move',
+      instruction:
+        'In Schema Lab, move product and store attributes into their dimensions. Keep the order-line measures in FactSales.',
+      observation:
+        'The fact table keeps its defined grain; descriptive attributes become reusable dimensions.',
+    },
+    guided: {
+      mission:
+        'ProductCategory repeats on many sales rows and is used to group revenue. Where does it belong?',
+      hint: 'Ask whether it describes an entity or records the measured sales event.',
+      choices: [
+        choice(
+          'dimension',
+          'DimProduct',
+          'Yes. ProductCategory describes a product and is used to filter or group facts.',
+        ),
+        choice(
+          'fact',
+          'FactSales',
+          'FactSales records order-line events and measures; keeping repeated product attributes there preserves the wide operational shape.',
+        ),
+        choice(
+          'measure',
+          'A DAX measure',
+          'A category is descriptive data, not a calculation over filter context.',
+        ),
+      ],
+      answerId: 'dimension',
+      debrief:
+        'Dimensions describe entities for filtering and grouping; facts record measurable events.',
+    },
+    independent: {
+      mission:
+        'Aurora adds one shipping-fee row per order to FactSales, which currently has one row per order line. What is the modeling concern?',
+      choices: [
+        choice(
+          'grain',
+          'The table now mixes grains',
+          'Yes. One row per order and one row per order line are different levels of detail.',
+        ),
+        choice(
+          'cardinality',
+          'The table must be many-to-many',
+          'Cardinality is about links between tables; the issue here is the level represented by each row.',
+        ),
+        choice(
+          'format',
+          'The numeric format is wrong',
+          'Formatting cannot resolve mixed levels of detail.',
+        ),
+      ],
+      answerId: 'grain',
+      debrief:
+        'Define a fact table’s grain before adding measures, or totals can silently misstate the business.',
+    },
   },
   'model-relationships': {
-    workedExample: { title: 'Watch a filter travel', instruction: 'In Relationship Lab, filter to a region, then compare single-direction and bidirectional filtering.', observation: 'The dimension filter reaches FactSales in the allowed direction; both directions can create extra paths.' },
-    guided: { mission: 'What relationship direction should Elena start with for DimRegion → FactSales?', hint: 'Start with the least complex path that lets a descriptive dimension filter its facts.', choices: [choice('single', 'Single direction from DimRegion to FactSales', 'Yes. This is the standard, predictable star-schema path.'), choice('both', 'Both directions by default', 'Bidirectional filtering can be required in a deliberate pattern, but it adds propagation paths that are unnecessary here.'), choice('none', 'No relationship', 'Without a relationship, the region filter cannot affect sales rows.')], answerId: 'single', debrief: 'Use simple one-to-many, single-direction relationships by default; add complexity only for a specific reason.' },
-    independent: { mission: 'Several customers can use several accounts, and balances must not be duplicated. What model pattern fits?', choices: [choice('bridge', 'Customer → bridge table → Account → FactBalance', 'Yes. The bridge represents the shared associations without duplicating balance facts.'), choice('direct', 'Directly relate FactBalance to DimCustomer many-to-many', 'This hides the business association and risks ambiguous filtering.'), choice('duplicate', 'Copy each balance for every customer', 'Duplicating facts would overstate totals.')], answerId: 'bridge', debrief: 'A bridge table models a genuine many-to-many association while preserving the fact table’s values.' },
+    workedExample: {
+      title: 'Watch a filter travel',
+      instruction:
+        'In Relationship Lab, filter to a region, then compare single-direction and bidirectional filtering.',
+      observation:
+        'The dimension filter reaches FactSales in the allowed direction; both directions can create extra paths.',
+    },
+    guided: {
+      mission:
+        'What relationship direction should Elena start with for DimRegion → FactSales?',
+      hint: 'Start with the least complex path that lets a descriptive dimension filter its facts.',
+      choices: [
+        choice(
+          'single',
+          'Single direction from DimRegion to FactSales',
+          'Yes. This is the standard, predictable star-schema path.',
+        ),
+        choice(
+          'both',
+          'Both directions by default',
+          'Bidirectional filtering can be required in a deliberate pattern, but it adds propagation paths that are unnecessary here.',
+        ),
+        choice(
+          'none',
+          'No relationship',
+          'Without a relationship, the region filter cannot affect sales rows.',
+        ),
+      ],
+      answerId: 'single',
+      debrief:
+        'Use simple one-to-many, single-direction relationships by default; add complexity only for a specific reason.',
+    },
+    independent: {
+      mission:
+        'Several customers can use several accounts, and balances must not be duplicated. What model pattern fits?',
+      choices: [
+        choice(
+          'bridge',
+          'Customer → bridge table → Account → FactBalance',
+          'Yes. The bridge represents the shared associations without duplicating balance facts.',
+        ),
+        choice(
+          'direct',
+          'Directly relate FactBalance to DimCustomer many-to-many',
+          'This hides the business association and risks ambiguous filtering.',
+        ),
+        choice(
+          'duplicate',
+          'Copy each balance for every customer',
+          'Duplicating facts would overstate totals.',
+        ),
+      ],
+      answerId: 'bridge',
+      debrief:
+        'A bridge table models a genuine many-to-many association while preserving the fact table’s values.',
+    },
   },
   'add-a-measure': {
-    workedExample: { title: 'Watch context change', instruction: 'In DAX Microscope, step through the CALCULATE scenario with the Region filter visible.', observation: 'CALCULATE adds the Bike filter, then the relationship limits the fact rows; the existing Region filter remains.' },
-    guided: { mission: 'Marta filters the report to Norway. CALCULATE then adds Category = Bike. Which filter should remain?', hint: 'Only a filter CALCULATE explicitly changes is replaced or removed in this scenario.', choices: [choice('region', 'The Norway filter remains active', 'Yes. CALCULATE adds the category condition without clearing Region.'), choice('none', 'All filters are cleared', 'CALCULATE does not clear every filter by default.'), choice('category', 'Only the category filter remains', 'That would require removing Region, which the expression does not do.')], answerId: 'region', debrief: 'Trace the complete filter context after CALCULATE, rather than treating it as a reset button.' },
-    independent: { mission: 'An expression uses ALL(DimProduct) while Region = Norway is already active. What changes?', choices: [choice('product', 'Product filters are removed; Norway remains', 'Yes. ALL targets DimProduct, not every table in the model.'), choice('all', 'Every report filter is removed', 'ALL removes filters only from the table or column it is given.'), choice('region', 'Only the Norway filter is removed', 'Region is not the argument to ALL in this expression.')], answerId: 'product', debrief: 'DAX filter functions are scoped. Name the table or column they touch, then inspect what remains.' },
+    workedExample: {
+      title: 'Watch context change',
+      instruction:
+        'In DAX Microscope, step through the CALCULATE scenario with the Region filter visible.',
+      observation:
+        'CALCULATE adds the Bike filter, then the relationship limits the fact rows; the existing Region filter remains.',
+    },
+    guided: {
+      mission:
+        'Marta filters the report to Norway. CALCULATE then adds Category = Bike. Which filter should remain?',
+      hint: 'Only a filter CALCULATE explicitly changes is replaced or removed in this scenario.',
+      choices: [
+        choice(
+          'region',
+          'The Norway filter remains active',
+          'Yes. CALCULATE adds the category condition without clearing Region.',
+        ),
+        choice(
+          'none',
+          'All filters are cleared',
+          'CALCULATE does not clear every filter by default.',
+        ),
+        choice(
+          'category',
+          'Only the category filter remains',
+          'That would require removing Region, which the expression does not do.',
+        ),
+      ],
+      answerId: 'region',
+      debrief:
+        'Trace the complete filter context after CALCULATE, rather than treating it as a reset button.',
+    },
+    independent: {
+      mission:
+        'An expression uses ALL(DimProduct) while Region = Norway is already active. What changes?',
+      choices: [
+        choice(
+          'product',
+          'Product filters are removed; Norway remains',
+          'Yes. ALL targets DimProduct, not every table in the model.',
+        ),
+        choice(
+          'all',
+          'Every report filter is removed',
+          'ALL removes filters only from the table or column it is given.',
+        ),
+        choice(
+          'region',
+          'Only the Norway filter is removed',
+          'Region is not the argument to ALL in this expression.',
+        ),
+      ],
+      answerId: 'product',
+      debrief:
+        'DAX filter functions are scoped. Name the table or column they touch, then inspect what remains.',
+    },
   },
   'trace-the-query': {
-    workedExample: { title: 'Watch the route reroute', instruction: 'In Storage Mode Lab, run the same report query in Import and DirectQuery, then select Direct Lake.', observation: 'The same visual can be answered from imported memory, a source query, or required OneLake columns depending on model mode.' },
-    guided: { mission: 'Which mode uses data copied into the model during refresh, then answers report queries from that in-memory copy?', hint: 'Separate a scheduled model refresh from a live source query.', choices: [choice('import', 'Import', 'Yes. Import copies data during refresh and serves queries from the model.'), choice('directquery', 'DirectQuery', 'DirectQuery sends each request to the source rather than relying on an imported model copy.'), choice('directlake', 'Direct Lake', 'Direct Lake loads required Delta-table columns from OneLake for query execution; it is not traditional Import refresh.')], answerId: 'import', debrief: 'Storage mode is a query-path decision with freshness and performance consequences.' },
-    independent: { mission: 'Aurora has large Delta tables in OneLake and needs interactive analytics without a traditional full Import refresh. Which mode is indicated?', choices: [choice('directlake', 'Direct Lake', 'Yes. These clues point to Direct Lake over OneLake-backed Delta tables.'), choice('import', 'Import', 'Import uses a copied model refreshed on a schedule, contrary to the key requirement.'), choice('directquery', 'DirectQuery', 'DirectQuery queries a source at request time; the OneLake Delta-table requirement points to Direct Lake.')], answerId: 'directlake', debrief: 'Recognize the cluster of requirements: large Delta tables, OneLake, interactive analysis, and no traditional full import refresh.' },
+    workedExample: {
+      title: 'Watch the route reroute',
+      instruction:
+        'In Storage Mode Lab, run the same report query in Import and DirectQuery, then select Direct Lake.',
+      observation:
+        'The same visual can be answered from imported memory, a source query, or required OneLake columns depending on model mode.',
+    },
+    guided: {
+      mission:
+        'Which mode uses data copied into the model during refresh, then answers report queries from that in-memory copy?',
+      hint: 'Separate a scheduled model refresh from a live source query.',
+      choices: [
+        choice(
+          'import',
+          'Import',
+          'Yes. Import copies data during refresh and serves queries from the model.',
+        ),
+        choice(
+          'directquery',
+          'DirectQuery',
+          'DirectQuery sends each request to the source rather than relying on an imported model copy.',
+        ),
+        choice(
+          'directlake',
+          'Direct Lake',
+          'Direct Lake loads required Delta-table columns from OneLake for query execution; it is not traditional Import refresh.',
+        ),
+      ],
+      answerId: 'import',
+      debrief:
+        'Storage mode is a query-path decision with freshness and performance consequences.',
+    },
+    independent: {
+      mission:
+        'Aurora has large Delta tables in OneLake and needs interactive analytics without a traditional full Import refresh. Which mode is indicated?',
+      choices: [
+        choice(
+          'directlake',
+          'Direct Lake',
+          'Yes. These clues point to Direct Lake over OneLake-backed Delta tables.',
+        ),
+        choice(
+          'import',
+          'Import',
+          'Import uses a copied model refreshed on a schedule, contrary to the key requirement.',
+        ),
+        choice(
+          'directquery',
+          'DirectQuery',
+          'DirectQuery queries a source at request time; the OneLake Delta-table requirement points to Direct Lake.',
+        ),
+      ],
+      answerId: 'directlake',
+      debrief:
+        'Recognize the cluster of requirements: large Delta tables, OneLake, interactive analysis, and no traditional full import refresh.',
+    },
   },
   'control-access': {
-    workedExample: { title: 'Watch identity change the result', instruction: 'In Security Lens, switch from a broad-access identity to Norway Sales and inspect the visible report rows.', observation: 'The report can still open, while row-level security filters out Sweden for Jonas.' },
-    guided: { mission: 'Jonas can open the report but must never see Sweden’s sales rows. Which layer implements that restriction?', hint: 'The requirement is about which records are visible after the report opens.', choices: [choice('rls', 'Row-level security on the semantic model', 'Yes. RLS filters visible model rows for the active identity.'), choice('workspace', 'A workspace role', 'Workspace access controls capabilities and access to the container, not a region-specific subset of report rows.'), choice('item', 'An item permission', 'Item permission governs whether the report or model can be opened, not which sales rows appear.')], answerId: 'rls', debrief: 'Security names are easy to blur together; identify the layer named by the requirement.' },
-    independent: { mission: 'Leila must hide PayrollCost entirely from an analyst who can otherwise query the semantic model. Which control is appropriate?', choices: [choice('ols', 'Object-level security', 'Yes. OLS makes a table or object unavailable to the user.'), choice('rls', 'Row-level security', 'RLS keeps the object available but filters its rows.'), choice('workspace', 'Workspace role', 'Changing workspace role is broader than the object-level requirement.')], answerId: 'ols', debrief: 'RLS controls rows; OLS controls objects; item and workspace permissions control access at higher layers.' },
+    workedExample: {
+      title: 'Watch identity change the result',
+      instruction:
+        'In Security Lens, switch from a broad-access identity to Norway Sales and inspect the visible report rows.',
+      observation:
+        'The report can still open, while row-level security filters out Sweden for Jonas.',
+    },
+    guided: {
+      mission:
+        'Jonas can open the report but must never see Sweden’s sales rows. Which layer implements that restriction?',
+      hint: 'The requirement is about which records are visible after the report opens.',
+      choices: [
+        choice(
+          'rls',
+          'Row-level security on the semantic model',
+          'Yes. RLS filters visible model rows for the active identity.',
+        ),
+        choice(
+          'workspace',
+          'A workspace role',
+          'Workspace access controls capabilities and access to the container, not a region-specific subset of report rows.',
+        ),
+        choice(
+          'item',
+          'An item permission',
+          'Item permission governs whether the report or model can be opened, not which sales rows appear.',
+        ),
+      ],
+      answerId: 'rls',
+      debrief:
+        'Security names are easy to blur together; identify the layer named by the requirement.',
+    },
+    independent: {
+      mission:
+        'Leila must hide PayrollCost entirely from an analyst who can otherwise query the semantic model. Which control is appropriate?',
+      choices: [
+        choice(
+          'ols',
+          'Object-level security',
+          'Yes. OLS makes a table or object unavailable to the user.',
+        ),
+        choice(
+          'rls',
+          'Row-level security',
+          'RLS keeps the object available but filters its rows.',
+        ),
+        choice(
+          'workspace',
+          'Workspace role',
+          'Changing workspace role is broader than the object-level requirement.',
+        ),
+      ],
+      answerId: 'ols',
+      debrief:
+        'RLS controls rows; OLS controls objects; item and workspace permissions control access at higher layers.',
+    },
   },
   'diagnose-performance': {
-    workedExample: { title: 'Watch one lever at a time', instruction: 'In Performance Lab, change one recommended model decision, then compare the simulated engine work before and after.', observation: 'The simulated result identifies a causal lever; it is not a generic “make the report faster” score.' },
-    guided: { mission: 'A report model stores an unnecessary, high-cardinality customer comment column. What is the most direct improvement?', hint: 'Focus on the source of model-cardinality pressure, not a cosmetic visual adjustment.', choices: [choice('remove', 'Remove the unnecessary high-cardinality column', 'Yes. Reducing irrelevant cardinality reduces model pressure and can improve query work.'), choice('theme', 'Change the report theme', 'A visual theme does not remove cardinality from the model.'), choice('both', 'Make every relationship bidirectional', 'That can add complexity rather than addressing the high-cardinality column.')], answerId: 'remove', debrief: 'Performance symptoms usually have an upstream model, DAX, relationship, or storage cause.' },
-    independent: { mission: 'A monthly revenue visual can be answered from a small imported monthly aggregate instead of a 200M-row DirectQuery fact table. What design helps?', choices: [choice('aggregate', 'Use an aggregation table for the monthly query', 'Yes. A suitably designed aggregation can answer the higher-level request without scanning transaction detail.'), choice('detail', 'Force the visual to use transaction detail', 'That retains the expensive route even though the visual only needs monthly totals.'), choice('bidir', 'Enable bidirectional filters everywhere', 'Filter direction does not create an aggregate route and may make the model harder to reason about.')], answerId: 'aggregate', debrief: 'Match the storage and aggregation design to the detail level the query actually needs.' },
+    workedExample: {
+      title: 'Watch one lever at a time',
+      instruction:
+        'In Performance Lab, change one recommended model decision, then compare the simulated engine work before and after.',
+      observation:
+        'The simulated result identifies a causal lever; it is not a generic “make the report faster” score.',
+    },
+    guided: {
+      mission:
+        'A report model stores an unnecessary, high-cardinality customer comment column. What is the most direct improvement?',
+      hint: 'Focus on the source of model-cardinality pressure, not a cosmetic visual adjustment.',
+      choices: [
+        choice(
+          'remove',
+          'Remove the unnecessary high-cardinality column',
+          'Yes. Reducing irrelevant cardinality reduces model pressure and can improve query work.',
+        ),
+        choice(
+          'theme',
+          'Change the report theme',
+          'A visual theme does not remove cardinality from the model.',
+        ),
+        choice(
+          'both',
+          'Make every relationship bidirectional',
+          'That can add complexity rather than addressing the high-cardinality column.',
+        ),
+      ],
+      answerId: 'remove',
+      debrief:
+        'Performance symptoms usually have an upstream model, DAX, relationship, or storage cause.',
+    },
+    independent: {
+      mission:
+        'A monthly revenue visual can be answered from a small imported monthly aggregate instead of a 200M-row DirectQuery fact table. What design helps?',
+      choices: [
+        choice(
+          'aggregate',
+          'Use an aggregation table for the monthly query',
+          'Yes. A suitably designed aggregation can answer the higher-level request without scanning transaction detail.',
+        ),
+        choice(
+          'detail',
+          'Force the visual to use transaction detail',
+          'That retains the expensive route even though the visual only needs monthly totals.',
+        ),
+        choice(
+          'bidir',
+          'Enable bidirectional filters everywhere',
+          'Filter direction does not create an aggregate route and may make the model harder to reason about.',
+        ),
+      ],
+      answerId: 'aggregate',
+      debrief:
+        'Match the storage and aggregation design to the detail level the query actually needs.',
+    },
   },
   'version-history': {
-    workedExample: { title: 'Watch the versions split', instruction: 'In SCD Time Machine, choose Type 2, then process the June move and compare the February and July resolution.', observation: 'DimCustomer gains a second row with its own CustomerKey; February sales still resolve to the Oslo version, and July resolves to Bergen.' },
-    guided: { mission: 'Marta needs February’s report to keep showing Oslo even after Ava moves. Which dimension behavior keeps that true?', hint: 'Ask whether the old value needs to survive anywhere after the change is processed.', choices: [choice('type2', 'Type 2 — insert a new version', 'Yes. Type 2 inserts a new version and keeps the old one intact for historical resolution.'), choice('type1', 'Type 1 — overwrite the current row', 'Type 1 overwrites the current row, so February would incorrectly resolve to Bergen once the change is processed.'), choice('skip', 'Don’t process the change at all', 'Without processing the change, Ava’s move is never reflected anywhere, including July.')], answerId: 'type2', debrief: 'Type 2 is the default choice whenever a historical report must reflect the value that was true at the time.' },
-    independent: { mission: 'A separate scenario only needs each customer’s current phone number for support calls, never historical accuracy. Which dimension behavior fits better?', choices: [choice('type1', 'Type 1 — overwrite the current row', 'Yes. Type 1 keeps one row per customer and always reflects the latest value, matching a current-value-only requirement.'), choice('type2', 'Type 2 — insert a new version', 'Type 2 preserves history the support scenario does not need, adding rows the query would have to filter down to "current."'), choice('bridge', 'Add a bridge table', 'A bridge table solves a many-to-many association problem, not a changing-attribute problem.')], answerId: 'type1', debrief: 'Type 1 and Type 2 are both legitimate; the stated requirement decides which one fits, not a default preference.' },
+    workedExample: {
+      title: 'Watch the versions split',
+      instruction:
+        'In SCD Time Machine, choose Type 2, then process the June move and compare the February and July resolution.',
+      observation:
+        'DimCustomer gains a second row with its own CustomerKey; February sales still resolve to the Oslo version, and July resolves to Bergen.',
+    },
+    guided: {
+      mission:
+        'Marta needs February’s report to keep showing Oslo even after Ava moves. Which dimension behavior keeps that true?',
+      hint: 'Ask whether the old value needs to survive anywhere after the change is processed.',
+      choices: [
+        choice(
+          'type2',
+          'Type 2 — insert a new version',
+          'Yes. Type 2 inserts a new version and keeps the old one intact for historical resolution.',
+        ),
+        choice(
+          'type1',
+          'Type 1 — overwrite the current row',
+          'Type 1 overwrites the current row, so February would incorrectly resolve to Bergen once the change is processed.',
+        ),
+        choice(
+          'skip',
+          'Don’t process the change at all',
+          'Without processing the change, Ava’s move is never reflected anywhere, including July.',
+        ),
+      ],
+      answerId: 'type2',
+      debrief:
+        'Type 2 is the default choice whenever a historical report must reflect the value that was true at the time.',
+    },
+    independent: {
+      mission:
+        'A separate scenario only needs each customer’s current phone number for support calls, never historical accuracy. Which dimension behavior fits better?',
+      choices: [
+        choice(
+          'type1',
+          'Type 1 — overwrite the current row',
+          'Yes. Type 1 keeps one row per customer and always reflects the latest value, matching a current-value-only requirement.',
+        ),
+        choice(
+          'type2',
+          'Type 2 — insert a new version',
+          'Type 2 preserves history the support scenario does not need, adding rows the query would have to filter down to "current."',
+        ),
+        choice(
+          'bridge',
+          'Add a bridge table',
+          'A bridge table solves a many-to-many association problem, not a changing-attribute problem.',
+        ),
+      ],
+      answerId: 'type1',
+      debrief:
+        'Type 1 and Type 2 are both legitimate; the stated requirement decides which one fits, not a default preference.',
+    },
   },
   'scale-with-direct-lake': {
-    workedExample: { title: 'Watch the columns load', instruction: 'In Direct Lake Engine Room, run the first query, then change the Delta data and try the query again before refreshing framing.', observation: 'Only the columns the query needs load into memory, and the model keeps answering from the old frame until you explicitly refresh it.' },
-    guided: { mission: 'You changed the underlying Delta data, but the report still shows the old numbers. What should you do?', hint: 'Ask whether the model has been told to look at the new data yet.', choices: [choice('reframe', 'Refresh the framing', 'Yes. Framing is the operation that advances the model to the current Delta data.'), choice('wait', 'Wait — Direct Lake updates itself instantly', 'Direct Lake still needs a framing operation before it reflects newly changed Delta files.'), choice('import', 'Switch the model to Import', 'Switching modes is a bigger change than the situation calls for; a reframe solves it directly.')], answerId: 'reframe', debrief: 'Changed files in OneLake and an updated frame are two different events — Direct Lake needs both.' },
-    independent: { mission: 'A Direct Lake report over a very large table starts falling back to the SQL analytics endpoint after frequent small Spark writes. What is the most likely cause?', choices: [choice('guardrail', 'A Direct Lake guardrail, such as row-group count, has been exceeded', 'Yes. Exceeding a documented guardrail is the specific, known trigger for SQL-endpoint fallback.'), choice('rls', 'Row-level security is misconfigured', 'RLS misconfiguration is not the documented cause of a guardrail-triggered fallback.'), choice('network', 'A temporary network issue', 'A generic network issue does not explain a fallback tied to frequent small writes.')], answerId: 'guardrail', debrief: 'Recognize the pattern — frequent small updates pushing past a guardrail — rather than guessing at unrelated causes.' },
+    workedExample: {
+      title: 'Watch the columns load',
+      instruction:
+        'In Direct Lake Engine Room, run the first query, then change the Delta data and try the query again before refreshing framing.',
+      observation:
+        'Only the columns the query needs load into memory, and the model keeps answering from the old frame until you explicitly refresh it.',
+    },
+    guided: {
+      mission:
+        'You changed the underlying Delta data, but the report still shows the old numbers. What should you do?',
+      hint: 'Ask whether the model has been told to look at the new data yet.',
+      choices: [
+        choice(
+          'reframe',
+          'Refresh the framing',
+          'Yes. Framing is the operation that advances the model to the current Delta data.',
+        ),
+        choice(
+          'wait',
+          'Wait — Direct Lake updates itself instantly',
+          'Direct Lake still needs a framing operation before it reflects newly changed Delta files.',
+        ),
+        choice(
+          'import',
+          'Switch the model to Import',
+          'Switching modes is a bigger change than the situation calls for; a reframe solves it directly.',
+        ),
+      ],
+      answerId: 'reframe',
+      debrief:
+        'Changed files in OneLake and an updated frame are two different events — Direct Lake needs both.',
+    },
+    independent: {
+      mission:
+        'A Direct Lake report over a very large table starts falling back to the SQL analytics endpoint after frequent small Spark writes. What is the most likely cause?',
+      choices: [
+        choice(
+          'guardrail',
+          'A Direct Lake guardrail, such as row-group count, has been exceeded',
+          'Yes. Exceeding a documented guardrail is the specific, known trigger for SQL-endpoint fallback.',
+        ),
+        choice(
+          'rls',
+          'Row-level security is misconfigured',
+          'RLS misconfiguration is not the documented cause of a guardrail-triggered fallback.',
+        ),
+        choice(
+          'network',
+          'A temporary network issue',
+          'A generic network issue does not explain a fallback tied to frequent small writes.',
+        ),
+      ],
+      answerId: 'guardrail',
+      debrief:
+        'Recognize the pattern — frequent small updates pushing past a guardrail — rather than guessing at unrelated causes.',
+    },
   },
   'reusable-time-intelligence': {
-    workedExample: { title: 'Watch the grid collapse', instruction: 'In Calculation Group Lab, introduce the calculation group, then apply each time-intelligence item to a different base measure.', observation: 'The calculation item’s expression stays the same; only the explicit measure SELECTEDMEASURE() resolves to changes.' },
-    guided: { mission: 'Marta wants a Prior-Year version of Margin in addition to Sales. What is required to get it once the calculation group exists?', hint: 'Ask whether the calculation group needs new DAX, or just a different selection.', choices: [choice('select', 'Select Margin as the base measure with the existing Prior-Year item', 'Yes. The existing calculation item already applies to any explicit measure, including Margin.'), choice('newitem', 'Author a new Prior-Year calculation item for Margin', 'A calculation group is built so one item serves every base measure; a new item per measure defeats that purpose.'), choice('newmeasure', 'Write a new explicit DAX measure for Margin Prior-Year', 'That is exactly the repetition the calculation group was introduced to remove.')], answerId: 'select', debrief: 'One calculation item, applied to a different explicit measure, is the entire point of the pattern.' },
-    independent: { mission: 'Aurora adds a thirteenth base measure, Refunds. What has to be authored so it also gets YTD and Prior-Year?', choices: [choice('nothing', 'Nothing new in the calculation group itself', 'Yes. The existing calculation items already work against any explicit measure, including a newly added one.'), choice('twoitems', 'Two new calculation items, one per variant, scoped to Refunds', 'Calculation items are not scoped to one base measure; new items would duplicate what already exists.'), choice('twomeasures', 'Two new explicit DAX measures wrapping Refunds in time-intelligence functions', 'That reintroduces the per-measure duplication the calculation group was built to avoid.')], answerId: 'nothing', debrief: 'A calculation group’s reuse advantage grows precisely because new base measures need no new time-intelligence DAX.' },
+    workedExample: {
+      title: 'Watch the grid collapse',
+      instruction:
+        'In Calculation Group Lab, introduce the calculation group, then apply each time-intelligence item to a different base measure.',
+      observation:
+        'The calculation item’s expression stays the same; only the explicit measure SELECTEDMEASURE() resolves to changes.',
+    },
+    guided: {
+      mission:
+        'Marta wants a Prior-Year version of Margin in addition to Sales. What is required to get it once the calculation group exists?',
+      hint: 'Ask whether the calculation group needs new DAX, or just a different selection.',
+      choices: [
+        choice(
+          'select',
+          'Select Margin as the base measure with the existing Prior-Year item',
+          'Yes. The existing calculation item already applies to any explicit measure, including Margin.',
+        ),
+        choice(
+          'newitem',
+          'Author a new Prior-Year calculation item for Margin',
+          'A calculation group is built so one item serves every base measure; a new item per measure defeats that purpose.',
+        ),
+        choice(
+          'newmeasure',
+          'Write a new explicit DAX measure for Margin Prior-Year',
+          'That is exactly the repetition the calculation group was introduced to remove.',
+        ),
+      ],
+      answerId: 'select',
+      debrief:
+        'One calculation item, applied to a different explicit measure, is the entire point of the pattern.',
+    },
+    independent: {
+      mission:
+        'Aurora adds a thirteenth base measure, Refunds. What has to be authored so it also gets YTD and Prior-Year?',
+      choices: [
+        choice(
+          'nothing',
+          'Nothing new in the calculation group itself',
+          'Yes. The existing calculation items already work against any explicit measure, including a newly added one.',
+        ),
+        choice(
+          'twoitems',
+          'Two new calculation items, one per variant, scoped to Refunds',
+          'Calculation items are not scoped to one base measure; new items would duplicate what already exists.',
+        ),
+        choice(
+          'twomeasures',
+          'Two new explicit DAX measures wrapping Refunds in time-intelligence functions',
+          'That reintroduces the per-measure duplication the calculation group was built to avoid.',
+        ),
+      ],
+      answerId: 'nothing',
+      debrief:
+        'A calculation group’s reuse advantage grows precisely because new base measures need no new time-intelligence DAX.',
+    },
   },
   'flexible-report-views': {
-    workedExample: { title: 'Watch the field wells change', instruction: 'In Field Parameter Explorer, change the Group by parameter, then the Measure parameter, and watch the field wells update.', observation: 'The chart type and its position stay the same; only the field reference sitting in each well changes.' },
-    guided: { mission: 'Marta wants readers to switch a chart between Category, Brand, Region, and Store without adding pages. What should Elena add?', hint: 'Distinguish switching which field feeds a visual from filtering values inside one fixed field.', choices: [choice('parameter', 'A field parameter for the axis', 'Yes. A field parameter lets a report reader swap which field occupies a visual property, matching the requirement exactly.'), choice('slicer', 'A slicer on a Category column', 'A slicer filters values within one fixed field; it cannot swap the field itself for Brand, Region, or Store.'), choice('pages', 'A separate report page for each dimension', 'This works but is exactly the duplicated-page effort the field parameter is meant to avoid.')], answerId: 'parameter', debrief: 'Field parameters and slicers solve different problems: which field versus which values.' },
-    independent: { mission: 'A different report needs readers to filter the Region column to specific regions, not change which column the chart groups by. What fits?', choices: [choice('slicer', 'A slicer on the Region column', 'Yes. Filtering values inside one fixed field is exactly what a slicer does.'), choice('parameter', 'A field parameter for Region', 'A field parameter swaps which field is used; it is not the mechanism for filtering values within one field.'), choice('measure', 'A new DAX measure for Region', 'A measure calculates a value; it does not filter which regions appear.')], answerId: 'slicer', debrief: 'Match the mechanism to the requirement: field parameters swap fields, slicers filter values.' },
+    workedExample: {
+      title: 'Watch the field wells change',
+      instruction:
+        'In Field Parameter Explorer, change the Group by parameter, then the Measure parameter, and watch the field wells update.',
+      observation:
+        'The chart type and its position stay the same; only the field reference sitting in each well changes.',
+    },
+    guided: {
+      mission:
+        'Marta wants readers to switch a chart between Category, Brand, Region, and Store without adding pages. What should Elena add?',
+      hint: 'Distinguish switching which field feeds a visual from filtering values inside one fixed field.',
+      choices: [
+        choice(
+          'parameter',
+          'A field parameter for the axis',
+          'Yes. A field parameter lets a report reader swap which field occupies a visual property, matching the requirement exactly.',
+        ),
+        choice(
+          'slicer',
+          'A slicer on a Category column',
+          'A slicer filters values within one fixed field; it cannot swap the field itself for Brand, Region, or Store.',
+        ),
+        choice(
+          'pages',
+          'A separate report page for each dimension',
+          'This works but is exactly the duplicated-page effort the field parameter is meant to avoid.',
+        ),
+      ],
+      answerId: 'parameter',
+      debrief:
+        'Field parameters and slicers solve different problems: which field versus which values.',
+    },
+    independent: {
+      mission:
+        'A different report needs readers to filter the Region column to specific regions, not change which column the chart groups by. What fits?',
+      choices: [
+        choice(
+          'slicer',
+          'A slicer on the Region column',
+          'Yes. Filtering values inside one fixed field is exactly what a slicer does.',
+        ),
+        choice(
+          'parameter',
+          'A field parameter for Region',
+          'A field parameter swaps which field is used; it is not the mechanism for filtering values within one field.',
+        ),
+        choice(
+          'measure',
+          'A new DAX measure for Region',
+          'A measure calculates a value; it does not filter which regions appear.',
+        ),
+      ],
+      answerId: 'slicer',
+      debrief:
+        'Match the mechanism to the requirement: field parameters swap fields, slicers filter values.',
+    },
   },
   'blend-external-data': {
-    workedExample: { title: 'Watch the source groups light up', instruction: 'In Composite Model Lab, run the product-only query, then the sales-versus-target query, and compare which tables activate.', observation: 'The product-only query touches just the cached DimProduct table; the sales-versus-target query reaches both the model cache and a native Warehouse query.' },
-    guided: { mission: 'The relationship between the imported Targets table and the DirectQuery FactSales table behaves as limited. What single change addresses that?', hint: 'Ask which storage mode lets an Import-side table participate normally with a DirectQuery table.', choices: [choice('dual', 'Switch the shared dimension to Dual storage mode', 'Yes. Dual mode lets the table act as either cached or DirectQuery depending on the query, resolving the cross-group limitation.'), choice('directquery', 'Switch Targets to DirectQuery against the spreadsheet', 'Spreadsheets are not queried live like a Warehouse; this does not resolve the limitation as directly as Dual mode.'), choice('duplicate', 'Duplicate FactSales as an imported copy', 'This abandons the live DirectQuery requirement rather than fixing the relationship.')], answerId: 'dual', debrief: 'A relationship crossing source groups is limited by default; Dual mode is the documented way to relax that.' },
-    independent: { mission: 'A new report only ever needs DimProduct on its own, never joined to the DirectQuery fact table. Does it matter which source group DimProduct is in for that report?', choices: [choice('no', 'No — a query touching only DimProduct does not cross source groups', 'Yes. Without a cross-group relationship in play, the source-group limitation does not apply to this query.'), choice('yes', 'Yes — it will always be a limited relationship', 'A limited relationship only matters when a query actually crosses source groups; this one does not.'), choice('dual-required', 'Dual mode is required for any table in a composite model', 'Dual mode addresses a specific cross-group relationship limitation, not every table in a composite model.')], answerId: 'no', debrief: 'Source-group limitations are triggered by the query and relationship actually used, not by a table’s mode in isolation.' },
+    workedExample: {
+      title: 'Watch the source groups light up',
+      instruction:
+        'In Composite Model Lab, run the product-only query, then the sales-versus-target query, and compare which tables activate.',
+      observation:
+        'The product-only query touches just the cached DimProduct table; the sales-versus-target query reaches both the model cache and a native Warehouse query.',
+    },
+    guided: {
+      mission:
+        'The relationship between the imported Targets table and the DirectQuery FactSales table behaves as limited. What single change addresses that?',
+      hint: 'Ask which storage mode lets an Import-side table participate normally with a DirectQuery table.',
+      choices: [
+        choice(
+          'dual',
+          'Switch the shared dimension to Dual storage mode',
+          'Yes. Dual mode lets the table act as either cached or DirectQuery depending on the query, resolving the cross-group limitation.',
+        ),
+        choice(
+          'directquery',
+          'Switch Targets to DirectQuery against the spreadsheet',
+          'Spreadsheets are not queried live like a Warehouse; this does not resolve the limitation as directly as Dual mode.',
+        ),
+        choice(
+          'duplicate',
+          'Duplicate FactSales as an imported copy',
+          'This abandons the live DirectQuery requirement rather than fixing the relationship.',
+        ),
+      ],
+      answerId: 'dual',
+      debrief:
+        'A relationship crossing source groups is limited by default; Dual mode is the documented way to relax that.',
+    },
+    independent: {
+      mission:
+        'A new report only ever needs DimProduct on its own, never joined to the DirectQuery fact table. Does it matter which source group DimProduct is in for that report?',
+      choices: [
+        choice(
+          'no',
+          'No — a query touching only DimProduct does not cross source groups',
+          'Yes. Without a cross-group relationship in play, the source-group limitation does not apply to this query.',
+        ),
+        choice(
+          'yes',
+          'Yes — it will always be a limited relationship',
+          'A limited relationship only matters when a query actually crosses source groups; this one does not.',
+        ),
+        choice(
+          'dual-required',
+          'Dual mode is required for any table in a composite model',
+          'Dual mode addresses a specific cross-group relationship limitation, not every table in a composite model.',
+        ),
+      ],
+      answerId: 'no',
+      debrief:
+        'Source-group limitations are triggered by the query and relationship actually used, not by a table’s mode in isolation.',
+    },
   },
 };

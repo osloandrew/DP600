@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import './quiz-mode.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -14,7 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Fabric Explorer · DP-600 systems lab',
-  description: 'An interactive systems laboratory for understanding Microsoft Fabric analytics and DP-600 concepts.',
+  description:
+    'An interactive systems laboratory for understanding Microsoft Fabric analytics and DP-600 concepts.',
 };
 
 export default function RootLayout({

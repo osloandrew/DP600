@@ -1,4 +1,5 @@
 # CODEX BUILD BRIEF
+
 # DP-600 Fabric Explorer
 
 ## 0. Read this before writing code
@@ -103,27 +104,27 @@ Store this metadata centrally rather than hardcoding it into components:
 
 ```ts
 exam = {
-  code: "DP-600",
-  blueprintEffectiveDate: "2026-07-21",
-  verifiedDate: "2026-08-31",
+  code: 'DP-600',
+  blueprintEffectiveDate: '2026-07-21',
+  verifiedDate: '2026-08-31',
   domains: [
     {
-      id: "maintain",
-      title: "Maintain a data analytics solution",
-      weight: "25–30%"
+      id: 'maintain',
+      title: 'Maintain a data analytics solution',
+      weight: '25–30%',
     },
     {
-      id: "prepare",
-      title: "Prepare data",
-      weight: "45–50%"
+      id: 'prepare',
+      title: 'Prepare data',
+      weight: '45–50%',
     },
     {
-      id: "models",
-      title: "Implement and manage semantic models",
-      weight: "25–30%"
-    }
-  ]
-}
+      id: 'models',
+      title: 'Implement and manage semantic models',
+      weight: '25–30%',
+    },
+  ],
+};
 ```
 
 Do not bake assumptions about those percentages into layout logic. The exam changes. Content should be updateable separately from the application.
@@ -3006,7 +3007,7 @@ Discouraged:
 Respect:
 
 ```css
-@media (prefers-reduced-motion: reduce)
+@media (prefers-reduced-motion: reduce);
 ```
 
 When reduced motion is requested, replace movement with:
@@ -3317,8 +3318,8 @@ Example:
 ```ts
 function applyRelationshipDirection(
   model: ModelState,
-  direction: RelationshipDirection
-): ModelState
+  direction: RelationshipDirection,
+): ModelState;
 ```
 
 This makes:
@@ -3415,7 +3416,7 @@ Example:
 type Source = {
   id: string;
   title: string;
-  publisher: "Microsoft Learn" | "GitHub Docs" | "web.dev" | "W3C";
+  publisher: 'Microsoft Learn' | 'GitHub Docs' | 'web.dev' | 'W3C';
   url: string;
   accessed: string;
   appliesTo: string[];
@@ -3972,8 +3973,8 @@ Do not turn current implementation details into timeless truth.
 Content objects may include:
 
 ```ts
-status: "stable" | "preview" | "changing";
-verifiedDate: "2026-08-31";
+status: 'stable' | 'preview' | 'changing';
+verifiedDate: '2026-08-31';
 ```
 
 If documentation changes later, content should be editable without refactoring the lab architecture.
@@ -4272,6 +4273,7 @@ Free exploration should recommend only highly related concepts.
 After Direct Lake:
 
 **Related**
+
 - Storage modes
 - OneLake
 - Semantic model performance
@@ -4279,6 +4281,7 @@ After Direct Lake:
 After many-to-many:
 
 **Related**
+
 - Bridge tables
 - Star schema
 - Filter direction

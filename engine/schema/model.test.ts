@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { activeRelationships, buildSuggestedSchema, initialSchema, moveField } from './model';
+import {
+  activeRelationships,
+  buildSuggestedSchema,
+  initialSchema,
+  moveField,
+} from './model';
 
 describe('Schema Lab model', () => {
   it('retains a foreign key in FactSales when extracting a dimension key', () => {

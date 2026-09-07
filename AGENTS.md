@@ -3,6 +3,7 @@
 Read `CODEX BUILD BRIEF.md` in full before substantial planning, implementation, or redesign work.
 
 `CODEX BUILD BRIEF.md` is the authoritative specification for this project's:
+
 - product goals
 - DP-600 scope
 - pedagogical approach

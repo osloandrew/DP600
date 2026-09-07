@@ -14,13 +14,28 @@ export default defineConfig(async () => {
   const { cloudflare } = await import('@cloudflare/vite-plugin');
   return {
     css: { postcss: { plugins: [tailwindcss()] } },
-    plugins: [vinext(), sites(), cloudflare({
-      viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },
-      config: {
-        main: 'vinext/server/fetch-handler', compatibility_flags: ['nodejs_compat'],
-        d1_databases: d1 ? [{ binding: d1, database_name: 'site-creator-d1', database_id: DATABASE_ID }] : [],
-        r2_buckets: r2 ? [{ binding: r2, bucket_name: 'site-creator-r2' }] : [],
-      },
-    })],
+    plugins: [
+      vinext(),
+      sites(),
+      cloudflare({
+        viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },
+        config: {
+          main: 'vinext/server/fetch-handler',
+          compatibility_flags: ['nodejs_compat'],
+          d1_databases: d1
+            ? [
+                {
+                  binding: d1,
+                  database_name: 'site-creator-d1',
+                  database_id: DATABASE_ID,
+                },
+              ]
+            : [],
+          r2_buckets: r2
+            ? [{ binding: r2, bucket_name: 'site-creator-r2' }]
+            : [],
+        },
+      }),
+    ],
   };
 });
