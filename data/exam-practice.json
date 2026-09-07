@@ -29,7 +29,8 @@
     "remediation": {
       "label": "Revisit Data Store Lab",
       "href": "#/lab/data-stores"
-    }
+    },
+    "difficulty": 1
   },
   {
     "id": "region-row-security",
@@ -61,7 +62,8 @@
     "remediation": {
       "label": "Revisit Security Lens",
       "href": "#/lab/security"
-    }
+    },
+    "difficulty": 1
   },
   {
     "id": "direct-lake-onelake",
@@ -93,7 +95,8 @@
     "remediation": {
       "label": "Revisit Storage Mode Lab",
       "href": "#/lab/storage-modes"
-    }
+    },
+    "difficulty": 2
   },
   {
     "id": "bridge-for-shared-accounts",
@@ -125,7 +128,8 @@
     "remediation": {
       "label": "Revisit Relationship Lab",
       "href": "#/lab/relationships"
-    }
+    },
+    "difficulty": 3
   },
   {
     "id": "transform-duplicate-order-lines",
@@ -157,7 +161,8 @@
     "remediation": {
       "label": "Revisit Transformation Workbench",
       "href": "#/lab/transformation"
-    }
+    },
+    "difficulty": 1
   },
   {
     "id": "schema-loyalty-rate-placement",
@@ -189,7 +194,8 @@
     "remediation": {
       "label": "Revisit Schema Lab",
       "href": "#/lab/schema"
-    }
+    },
+    "difficulty": 2
   },
   {
     "id": "query-engine-for-warehouse-table",
@@ -221,7 +227,8 @@
     "remediation": {
       "label": "Revisit Query Rosetta",
       "href": "#/lab/query"
-    }
+    },
+    "difficulty": 1
   },
   {
     "id": "direct-lake-endpoint-security-fallback",
@@ -253,7 +260,8 @@
     "remediation": {
       "label": "Revisit Direct Lake Engine Room",
       "href": "#/lab/direct-lake"
-    }
+    },
+    "difficulty": 4
   },
   {
     "id": "incremental-refresh-late-arrivals",
@@ -285,7 +293,8 @@
     "remediation": {
       "label": "Revisit Incremental Refresh Time Machine",
       "href": "#/lab/incremental-refresh"
-    }
+    },
+    "difficulty": 3
   },
   {
     "id": "calculation-group-time-intelligence",
@@ -317,6 +326,7 @@
     "remediation": {
       "label": "Revisit Calculation Group Lab",
       "href": "#/lab/calculation-groups"
-    }
+    },
+    "difficulty": 3
   }
 ]

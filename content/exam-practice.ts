@@ -8,6 +8,7 @@ export type ExamPracticeOption = {
 
 export type ExamScenario = {
   id: string;
+  difficulty: 1 | 2 | 3 | 4;
   domain: string;
   objectiveIds: string[];
   title: string;

@@ -70,8 +70,7 @@ export function HomePage() {
           </a>
           <a href="#/foundations">Foundations</a>
           <a href="#/map">Map</a>
-          <a href="#/exam">Exam</a>
-          <a href="#/quiz">Quiz</a>
+          <a href="#/exam">Adaptive Quiz</a>
           <a href="#/exam/sprint">Sprint</a>
         </nav>
         <Button
@@ -112,10 +111,7 @@ export function HomePage() {
               Map
             </a>
             <a href="#/exam" onClick={() => setNavOpen(false)}>
-              Exam
-            </a>
-            <a href="#/quiz" onClick={() => setNavOpen(false)}>
-              Quiz
+              Adaptive Quiz
             </a>
             <a href="#/exam/sprint" onClick={() => setNavOpen(false)}>
               Sprint

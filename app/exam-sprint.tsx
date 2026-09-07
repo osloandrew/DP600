@@ -43,7 +43,7 @@ export function ExamSprint() {
       <header className="lab-topbar">
         <a href="#/exam" className="lab-back">
           <ArrowLeft />
-          Exam Prep
+          Adaptive Quiz
         </a>
         <div>
           <strong>Exam Sprint</strong>
@@ -129,7 +129,7 @@ export function ExamSprint() {
               You can still explore freely or use scenario practice without one.
             </p>
             <a href="#/exam">
-              Open Exam Prep <ArrowRight />
+              Open Adaptive Quiz <ArrowRight />
             </a>
           </section>
         )}

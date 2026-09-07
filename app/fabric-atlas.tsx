@@ -166,7 +166,7 @@ export function FabricAtlas() {
           </a>
           <a href="#/foundations">Foundations</a>
           <a href="#/map">Map</a>
-          <a href="#/exam">Exam</a>
+          <a href="#/exam">Adaptive Quiz</a>
           <a href="#/exam/sprint">Sprint</a>
         </nav>
         <Button

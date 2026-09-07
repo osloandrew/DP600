@@ -1091,6 +1091,8 @@ Exam Prep can include:
 - explanations of why plausible alternatives do not fit
 - direct remediation links back to the exact lab or foundation concept
 
+The primary `#/exam` experience is an adaptive scenario quiz modeled on the Norwegian word-game round flow: a calm pre-round setup, live streak/progress/review statistics, a fixed question-and-answer stage, immediate evidence-backed feedback, and a round summary. It replaces the earlier linear Exam quiz rather than appearing as a competing quiz destination. Question content remains external to application code so it can be reviewed and updated independently. Each question carries a reviewed difficulty level, and the next unseen question is selected near the learner's continuously updated ability estimate. Correct answers raise that estimate; incorrect answers lower it. This adaptation guides practice difficulty and must not be described as mastery or a probability of passing.
+
 Do not build an exam dump or giant trivia bank.
 
 The purpose is **transfer**: can the learner recognize and apply the same concept when the friendly interactive representation is removed or the scenario wording changes?

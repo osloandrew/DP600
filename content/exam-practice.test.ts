@@ -9,6 +9,8 @@ describe('exam practice content', () => {
         scenario.options.some((option) => option.id === scenario.answerId),
       ).toBe(true);
       expect(scenario.objectiveIds.length).toBeGreaterThan(0);
+      expect(scenario.difficulty).toBeGreaterThanOrEqual(1);
+      expect(scenario.difficulty).toBeLessThanOrEqual(4);
       expect(scenario.sourceId).toBeTruthy();
       expect(sources[scenario.sourceId]).toBeTruthy();
       expect(scenario.remediation.href.startsWith('#/lab/')).toBe(true);
