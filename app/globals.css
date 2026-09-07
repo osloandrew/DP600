@@ -24,11 +24,13 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-source-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 :root {
+  --font-source-sans: 'Source Sans 3', system-ui, sans-serif;
+  --font-source-serif: 'Source Serif 4', Georgia, serif;
   --bg-page: #f4f6f5;
   --bg-surface: #ffffff;
   --bg-elevated: #edf1ef;
@@ -74,7 +76,7 @@ body {
   margin: 0;
   background: var(--bg-page);
   color: var(--text-primary);
-  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-family: var(--font-source-sans), Arial, sans-serif;
 }
 button,
 a {

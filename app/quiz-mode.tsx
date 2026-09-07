@@ -1,6 +1,17 @@
 'use client';
 
-import { ArrowLeft, ExternalLink, RotateCcw } from 'lucide-react';
+import {
+  ArrowLeft,
+  Bookmark,
+  BookmarkCheck,
+  Check,
+  CheckCircle2,
+  ExternalLink,
+  RotateCcw,
+  Volume2,
+  VolumeX,
+  XCircle,
+} from 'lucide-react';
 import { useState } from 'react';
 import type { ExamScenario } from '@/content/exam-practice';
 import type { ExamPracticeOption } from '@/content/exam-practice';
@@ -43,6 +54,7 @@ export function QuizMode() {
   const [answered, setAnswered] = useState(false);
   const [correct, setCorrect] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [outcomes, setOutcomes] = useState<boolean[]>([]);
   const [missed, setMissed] = useState<string[]>([]);
   const [flagged, setFlagged] = useState<string[]>([]);
   const [soundEnabled, setSoundEnabled] = useState(savedSoundPreference);
@@ -68,6 +80,7 @@ export function QuizMode() {
     setAnswered(false);
     setCorrect(0);
     setStreak(0);
+    setOutcomes([]);
     setMissed([]);
     setFlagged([]);
     setPhase('playing');
@@ -80,6 +93,7 @@ export function QuizMode() {
     setSelectedId(id);
     setAnswered(true);
     setAbility(nextAbility);
+    setOutcomes((value) => [...value, wasCorrect]);
     window.localStorage.setItem(ABILITY_KEY, String(nextAbility));
     if (wasCorrect) {
       playSound(
@@ -144,90 +158,103 @@ export function QuizMode() {
         <a href="#/">
           <ArrowLeft /> Fabric Explorer
         </a>
-        <strong>DP-600 Quiz</strong>
-        <span>
-          {phase === 'playing' && question
-            ? question.domain
-            : 'Adaptive practice'}
-        </span>
+        <strong>Scenario Lab</strong>
+        <button
+          type="button"
+          className="dp-quiz-sound"
+          aria-label={`Turn sound ${soundEnabled ? 'off' : 'on'}`}
+          aria-pressed={soundEnabled}
+          onClick={toggleSound}
+        >
+          {soundEnabled ? <Volume2 /> : <VolumeX />}
+          <span>Sound {soundEnabled ? 'on' : 'off'}</span>
+        </button>
       </header>
 
       {phase === 'intro' ? (
-        <main className="dp-quiz-shell game-intro-screen">
-          <h1 className="game-intro-heading">Ready to practice?</h1>
-          <p className="game-intro-subheading">
+        <main className="dp-quiz-shell dp-quiz-intro">
+          <p className="dp-quiz-kicker">Adaptive scenario practice</p>
+          <h1>Make the call. Inspect the why.</h1>
+          <p className="dp-quiz-intro-copy">
             The round adapts after every answer, choosing the best next DP-600
             scenario for your current practice level. There is no timer. Take as
             long as you need.
           </p>
-          <section className="game-intro-card game-today-practice">
-            <div className="game-today-practice-heading-row">
+          <section className="dp-quiz-intro-card">
+            <div className="dp-quiz-intro-card-heading">
               <div>
-                <p className="game-today-practice-eyebrow">Today’s practice</p>
+                <p className="dp-quiz-eyebrow">Today’s practice</p>
                 <h2>Adaptive DP-600 round</h2>
               </div>
-              <span className="game-today-practice-count">{roundSize}</span>
+              <span className="dp-quiz-round-count">
+                <strong>{roundSize}</strong>
+                <small>questions</small>
+              </span>
             </div>
-            <p className="game-today-practice-note">
+            <div className="dp-quiz-round-facts" aria-label="Round details">
+              <span>Untimed</span>
+              <span>Four choices</span>
+              <span>Immediate feedback</span>
+            </div>
+            <p className="dp-quiz-level-note">
               Practice level: <strong>{difficultyLabel(ability)}</strong>. This
               guides the next question; it is not an exam score or a judgment of
               readiness.
             </p>
-            <div className="game-today-practice-progress" aria-hidden="true">
-              <span style={{ width: `${(ability / 4) * 100}%` }} />
-            </div>
             <button
-              className="game-today-practice-btn"
+              className="dp-quiz-primary-button"
               onClick={() => startRound()}
             >
               Start practice
             </button>
           </section>
-          <details className="game-more-practice">
+          <details className="dp-quiz-more-options">
             <summary>More practice options</summary>
-            <div className="game-intro-options">
-              <button
-                className="game-intro-option"
-                onClick={() => startRound(5)}
-              >
-                <span className="game-intro-option-count">5</span>
-                <span className="game-intro-option-label">Quick round</span>
+            <div className="dp-quiz-option-grid">
+              <button className="dp-quiz-setting" onClick={() => startRound(5)}>
+                <span className="dp-quiz-setting-value">5</span>
+                <span>Quick round</span>
               </button>
-              <button className="game-intro-option" onClick={resetDifficulty}>
-                <span className="game-intro-option-count">↺</span>
-                <span className="game-intro-option-label">Reset level</span>
-              </button>
-              <button className="game-intro-option" onClick={toggleSound}>
-                <span className="game-intro-option-count">
-                  {soundEnabled ? '♪' : '—'}
-                </span>
-                <span className="game-intro-option-label">
-                  Sound {soundEnabled ? 'on' : 'off'}
-                </span>
+              <button className="dp-quiz-setting" onClick={resetDifficulty}>
+                <RotateCcw />
+                <span>Reset level</span>
               </button>
             </div>
           </details>
         </main>
       ) : phase === 'summary' ? (
         <main className="dp-quiz-shell">
-          <section className="game-summary-card">
-            <div className="game-summary-hero">
-              <span className="game-summary-check">✓</span>
-              <h1 className="game-summary-heading">Round complete</h1>
+          <section className="dp-quiz-summary">
+            <div className="dp-quiz-summary-hero">
+              <span className="dp-quiz-summary-check">
+                <Check />
+              </span>
+              <p className="dp-quiz-kicker">Round complete</p>
+              <h1>Nice work. Keep the useful misses.</h1>
               <p>
                 Your next round will begin at {difficultyLabel(ability)} level.
               </p>
             </div>
-            <div className="game-summary-stats">
-              <div className="game-summary-stat">
-                <p className="game-summary-stat-value">{correct}</p>
-                <p className="game-summary-stat-label">Correct</p>
+            <div
+              className="dp-quiz-result-trail"
+              aria-label={`${correct} correct out of ${asked.length}`}
+            >
+              {outcomes.map((wasCorrect, index) => (
+                <span
+                  className={wasCorrect ? 'is-correct' : 'is-review'}
+                  key={asked[index]?.id ?? index}
+                  title={wasCorrect ? 'Correct' : 'Review'}
+                />
+              ))}
+            </div>
+            <div className="dp-quiz-summary-stats">
+              <div>
+                <p>{correct}</p>
+                <span>Correct</span>
               </div>
-              <div className="game-summary-stat">
-                <p className="game-summary-stat-value">
-                  {asked.length - correct}
-                </p>
-                <p className="game-summary-stat-label">To review</p>
+              <div>
+                <p>{asked.length - correct}</p>
+                <span>To review</span>
               </div>
             </div>
             {reviewIds.length > 0 && (
@@ -245,7 +272,7 @@ export function QuizMode() {
             )}
             {reviewIds.length > 0 && (
               <button
-                className="game-summary-primary-btn"
+                className="dp-quiz-primary-button"
                 onClick={() =>
                   startRound(
                     reviewIds.length,
@@ -257,13 +284,13 @@ export function QuizMode() {
               </button>
             )}
             <button
-              className="game-summary-secondary-btn"
+              className="dp-quiz-secondary-button"
               onClick={() => startRound()}
             >
               <RotateCcw /> Play again
             </button>
-            <div className="game-summary-actions">
-              <a className="game-summary-secondary-btn" href="#/">
+            <div className="dp-quiz-summary-actions">
+              <a className="dp-quiz-secondary-button" href="#/">
                 Return to Fabric Explorer
               </a>
             </div>
@@ -271,20 +298,20 @@ export function QuizMode() {
         </main>
       ) : question ? (
         <main className="dp-quiz-shell">
-          <div className="game-stats-wrapper">
-            <div className="game-stats-content">
-              <div className="game-stats-progress-wrapper">
-                <p className="game-progress-heading">
+          <div className="dp-quiz-status">
+            <div className="dp-quiz-status-row">
+              <div className="dp-quiz-progress">
+                <p>
                   Question {asked.length} of {roundSize}
                 </p>
-                <div className="game-session-progress-bg">
+                <div className="dp-quiz-progress-track" aria-hidden="true">
                   <div
-                    className="game-session-progress-fill"
+                    className="dp-quiz-progress-fill"
                     style={{ width: `${(asked.length / roundSize) * 100}%` }}
                   />
                 </div>
               </div>
-              <div className="game-stat-pills" aria-label="Round status">
+              <div className="dp-quiz-stat-pills" aria-label="Round status">
                 <span>
                   <strong>{streak}</strong> in a row
                 </span>
@@ -293,33 +320,38 @@ export function QuizMode() {
                 </span>
               </div>
             </div>
-            <button className="dp-quiz-flag" onClick={toggleFlag}>
+            <button
+              className="dp-quiz-flag"
+              aria-pressed={flagged.includes(question.id)}
+              onClick={toggleFlag}
+            >
+              {flagged.includes(question.id) ? <BookmarkCheck /> : <Bookmark />}
               {flagged.includes(question.id)
-                ? 'Marked for later review'
-                : 'Review this later'}
+                ? 'Marked for review'
+                : 'Review later'}
             </button>
           </div>
-          <section className="game-word-card">
+          <section className="dp-quiz-question-card">
             <div className="dp-quiz-question-meta">
               <span>{question.domain}</span>
               <span>Choose one answer</span>
             </div>
             <div className="dp-quiz-scenario">
-              <p className="game-instruction">Scenario</p>
+              <p className="dp-quiz-eyebrow">Scenario</p>
               <p className="dp-quiz-context">{question.context}</p>
             </div>
-            <div className="game-word game-prompt-extra-long">
+            <div className="dp-quiz-prompt">
               <h2>{question.question}</h2>
             </div>
           </section>
-          <div className="game-grid">
+          <div className="dp-quiz-answer-grid">
             {options.map((option, optionIndex) => {
               const className =
                 answered && option.id === question.answerId
-                  ? 'game-translation-card game-correct-card'
+                  ? 'dp-quiz-answer is-correct'
                   : answered && option.id === selectedId
-                    ? 'game-translation-card game-incorrect-card'
-                    : 'game-translation-card';
+                    ? 'dp-quiz-answer is-incorrect'
+                    : 'dp-quiz-answer';
               return (
                 <button
                   type="button"
@@ -336,7 +368,7 @@ export function QuizMode() {
               );
             })}
           </div>
-          <div className="game-answer-status" aria-live="polite">
+          <div className="dp-quiz-feedback" aria-live="polite">
             {answered && (
               <div
                 className={
@@ -345,11 +377,18 @@ export function QuizMode() {
                     : 'is-incorrect'
                 }
               >
-                <strong>
-                  {selectedId === question.answerId
-                    ? 'That’s it.'
-                    : 'Not yet — here’s the distinction.'}
-                </strong>
+                <div className="dp-quiz-feedback-heading">
+                  {selectedId === question.answerId ? (
+                    <CheckCircle2 />
+                  ) : (
+                    <XCircle />
+                  )}
+                  <strong>
+                    {selectedId === question.answerId
+                      ? 'That’s it.'
+                      : 'Not yet — here’s the distinction.'}
+                  </strong>
+                </div>
                 <span>
                   {
                     question.options.find((option) => option.id === selectedId)
@@ -381,10 +420,10 @@ export function QuizMode() {
               </div>
             )}
           </div>
-          <div className="game-next-button-container">
+          <div className="dp-quiz-next">
             <button
               type="button"
-              id="game-next-word-button"
+              className="dp-quiz-primary-button"
               disabled={!answered}
               onClick={next}
             >
