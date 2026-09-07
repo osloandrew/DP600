@@ -273,14 +273,9 @@ export function QuizMode() {
         <main className="dp-quiz-shell">
           <div className="game-stats-wrapper">
             <div className="game-stats-content">
-              <div className="game-stats-correct-box">
-                <p id="streak-count">{streak}</p>
-                <p className="game-stat-label">Correct in a row</p>
-              </div>
               <div className="game-stats-progress-wrapper">
                 <p className="game-progress-heading">
-                  Question {asked.length} of {roundSize} ·{' '}
-                  {difficultyLabel(ability)}
+                  Question {asked.length} of {roundSize}
                 </p>
                 <div className="game-session-progress-bg">
                   <div
@@ -289,9 +284,13 @@ export function QuizMode() {
                   />
                 </div>
               </div>
-              <div className="game-stats-incorrect-box">
-                <p id="review-count">{reviewIds.length}</p>
-                <p className="game-stat-label">To Review</p>
+              <div className="game-stat-pills" aria-label="Round status">
+                <span>
+                  <strong>{streak}</strong> in a row
+                </span>
+                <span>
+                  <strong>{reviewIds.length}</strong> to review
+                </span>
               </div>
             </div>
             <button className="dp-quiz-flag" onClick={toggleFlag}>
@@ -301,14 +300,17 @@ export function QuizMode() {
             </button>
           </div>
           <section className="game-word-card">
-            <p className="game-instruction">Choose the best answer</p>
-            <span className="game-cefr-label medium">
-              {question.objectiveIds[0]}
-            </span>
+            <div className="dp-quiz-question-meta">
+              <span>{question.domain}</span>
+              <span>Choose one answer</span>
+            </div>
+            <div className="dp-quiz-scenario">
+              <p className="game-instruction">Scenario</p>
+              <p className="dp-quiz-context">{question.context}</p>
+            </div>
             <div className="game-word game-prompt-extra-long">
               <h2>{question.question}</h2>
             </div>
-            <p className="dp-quiz-context">{question.context}</p>
           </section>
           <div className="game-grid">
             {options.map((option, optionIndex) => {

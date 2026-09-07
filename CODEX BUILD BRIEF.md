@@ -1095,6 +1095,8 @@ The primary `#/exam` experience is an adaptive scenario quiz modeled on the Norw
 
 Every single-answer multiple-choice item must contain exactly four shuffled alternatives: one best answer and three plausible, homogeneous, unambiguously incorrect distractors. Provide immediate corrective explanation, learner-controlled deeper detail, official-source links, and an end-of-round queue combining missed and learner-flagged items. Keep learning mode untimed. Use predictable placement, plain language, restrained motion, one question at a time, and a persistent sound control to reduce cognitive load for learners who are autistic, low in confidence, or easily overwhelmed.
 
+Within each question, preserve a stable instructional sequence: progress and review state, scenario context, the decision prompt, four answers, corrective feedback, then the continue action. Present context before asking for a decision. Keep closely related information spatially grouped, reserve space for feedback to avoid layout shifts, remove nonessential animation, and hide secondary rationale until the learner requests it.
+
 Do not build an exam dump or giant trivia bank.
 
 The purpose is **transfer**: can the learner recognize and apply the same concept when the friendly interactive representation is removed or the scenario wording changes?
