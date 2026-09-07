@@ -11,6 +11,7 @@ import {
   selectAdaptiveQuestion,
   updateAbility,
 } from '@/engine/quiz/adaptive';
+import { playQuizSound } from '@/engine/quiz/sounds';
 
 const ABILITY_KEY = 'dp600-quiz-ability-v1';
 type Phase = 'intro' | 'playing' | 'summary';
@@ -35,6 +36,7 @@ export function QuizMode() {
   const [missed, setMissed] = useState<string[]>([]);
 
   const startRound = (size = roundSize) => {
+    playQuizSound('popChime');
     const pool = [...examScenarios];
     const first = selectAdaptiveQuestion(pool, ability)!;
     setRoundSize(Math.min(size, pool.length));
@@ -58,9 +60,13 @@ export function QuizMode() {
     setAbility(nextAbility);
     window.localStorage.setItem(ABILITY_KEY, String(nextAbility));
     if (wasCorrect) {
+      playQuizSound(
+        streak > 0 && (streak + 1) % 3 === 0 ? 'streakChime' : 'goodChime',
+      );
       setCorrect((value) => value + 1);
       setStreak((value) => value + 1);
     } else {
+      playQuizSound('badChime');
       setStreak(0);
       setMissed((value) => [...value, question.id]);
     }
@@ -68,6 +74,9 @@ export function QuizMode() {
 
   const next = () => {
     if (asked.length >= roundSize || !remaining.length) {
+      playQuizSound(
+        missed.length === 0 ? 'queueClearedChime' : 'roundCompleteChime',
+      );
       setPhase('summary');
       return;
     }
