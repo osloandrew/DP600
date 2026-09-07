@@ -1,382 +1,724 @@
-[
-  {
-    "id": "warehouse-for-relational-reporting",
-    "domain": "Prepare data",
-    "objectiveIds": ["PREPARE.GET.STORE_SELECTION"],
-    "title": "A governed retail reporting store",
-    "context": "Aurora needs to load structured sales transactions in batches. Finance analysts use T-SQL heavily and need governed enterprise BI reporting. Device telemetry is handled by another team.",
-    "question": "Where should Priya begin for this reporting workload?",
-    "options": [
-      {
-        "id": "warehouse",
-        "label": "Warehouse",
-        "explanation": "Warehouse best matches structured relational data, T-SQL, and enterprise BI requirements."
-      },
-      {
-        "id": "lakehouse",
-        "label": "Lakehouse",
-        "explanation": "Lakehouse can support analytics and engineering, but the stated relational T-SQL reporting requirements make Warehouse the stronger fit."
-      },
-      {
-        "id": "eventhouse",
-        "label": "Eventhouse",
-        "explanation": "Eventhouse is intended for event and telemetry analysis, which the scenario explicitly puts elsewhere."
-      },
-      {
-        "id": "semantic-model",
-        "label": "Power BI semantic model in Import mode",
-        "explanation": "A semantic model is an analytical layer, not the governed relational store requested for loading and querying the transactions."
-      }
+{
+  "editorNotes": {
+    "purpose": "Instructions for an LLM or human editing this question bank. Keep this object when creating, editing, or deleting questions.",
+    "schemaVersion": 1,
+    "questionBankRules": [
+      "Questions are stored in the questions array. Do not place question objects beside editorNotes.",
+      "Every question id must be unique, stable, lowercase kebab-case, and descriptive. Do not reuse an id from a deleted question for a different concept.",
+      "Every question must have exactly four plausible options and exactly one correct answer.",
+      "answerId must exactly match one option id. Option ids must be unique within their question and use lowercase kebab-case.",
+      "Explain every option independently. A learner should understand why each choice is right or wrong without comparing option positions.",
+      "Do not encode correctness through option order, wording length, certainty, grammar, or repeated phrases. The application shuffles options.",
+      "decisiveClue should name the minimum scenario evidence that makes the best answer defensible; do not merely repeat the answer.",
+      "Use realistic Aurora Outfitters work scenarios and assess transfer or judgment rather than isolated trivia whenever possible.",
+      "Avoid trick questions, double negatives, subjective wording, and distractors that are wrong only because of an unstated assumption.",
+      "Keep terminology aligned with current Microsoft Fabric and DP-600 documentation.",
+      "sourceId must match a key in content/sources.ts. Add or update that source registry when a question needs a new authoritative Microsoft Learn source.",
+      "objectiveIds must use the domain prefixes MAINTAIN, PREPARE, or MODEL and identify the smallest applicable DP-600 objectives.",
+      "remediation.href must be an internal hash route beginning with # and should lead to the closest relevant lesson or lab.",
+      "Set verifiedDate to the ISO date YYYY-MM-DD on which the answer was checked against the cited source.",
+      "status may be draft or reviewed during editing, but only verified questions should be shipped in the application.",
+      "Do not add misconceptionId to option objects. The application derives each incorrect option's misconception id from its option id and assigns null to the correct option.",
+      "When deleting a question, remove the complete question object and preserve valid JSON. Recheck coverage before deleting the only question for a difficulty, domain, or objective."
     ],
-    "answerId": "warehouse",
-    "decisiveClue": "Structured transactions + T-SQL + governed BI are the requirements that matter; the telemetry detail is not part of this workload.",
-    "sourceId": "fabric-storage-options",
-    "remediation": {
-      "label": "Revisit Data Store Lab",
-      "href": "#/lab/data-stores"
+    "difficultyRubric": {
+      "1": "Foundation: one direct concept or clearly stated requirement; little or no competing evidence.",
+      "2": "Core: apply one concept in a realistic scenario and distinguish it from plausible neighboring concepts.",
+      "3": "Applied: combine multiple clues, preserve grain or context, or diagnose a consequence with credible distractors.",
+      "4": "Advanced: reason through interacting Fabric behaviors, lifecycle constraints, security effects, fallback behavior, or non-obvious tradeoffs. Do not make a question advanced merely by using obscure terminology."
     },
-    "difficulty": 1
+    "allowedValues": {
+      "difficulty": [1, 2, 3, 4],
+      "domain": [
+        "Maintain a data analytics solution",
+        "Prepare data",
+        "Implement and manage semantic models"
+      ],
+      "skill": ["recall", "interpret", "apply", "troubleshoot", "evaluate"],
+      "format": ["single-choice"],
+      "scenarioType": [
+        "design",
+        "security",
+        "governance",
+        "transformation",
+        "query",
+        "performance",
+        "operations"
+      ],
+      "status": ["draft", "reviewed", "verified"]
+    },
+    "coverageGuidance": [
+      "Maintain a reasonable spread across all four difficulty values; keep at least two verified questions at each difficulty.",
+      "Approximate the DP-600 blueprint over a larger bank: Maintain 25-30%, Prepare 45-50%, and Semantic models 25-30%.",
+      "Avoid repeatedly assessing the same objective just to satisfy domain totals. Prefer objectives with no or little coverage.",
+      "Difficulty is not learner ability. It describes the reasoning demand of this individual question."
+    ],
+    "requiredQuestionFields": [
+      "id",
+      "domain",
+      "objectiveIds",
+      "skill",
+      "format",
+      "scenarioType",
+      "status",
+      "verifiedDate",
+      "title",
+      "context",
+      "question",
+      "options",
+      "answerId",
+      "decisiveClue",
+      "sourceId",
+      "remediation",
+      "difficulty"
+    ],
+    "requiredOptionFields": ["id", "label", "explanation"]
   },
-  {
-    "id": "region-row-security",
-    "domain": "Maintain a data analytics solution",
-    "objectiveIds": ["MAINTAIN.SECURITY.ROW"],
-    "title": "One report, different regional views",
-    "context": "Jonas can open Aurora’s Sales report. He must see only Norway rows while Sweden managers use the same report and semantic model to see Sweden rows.",
-    "question": "Which control should Leila configure?",
-    "options": [
-      {
-        "id": "rls",
-        "label": "Row-level security on the semantic model",
-        "explanation": "RLS filters model rows for the signed-in identity while allowing users to open the same report."
+  "questions": [
+    {
+      "id": "warehouse-for-relational-reporting",
+      "domain": "Prepare data",
+      "objectiveIds": ["PREPARE.GET.STORE_SELECTION"],
+      "skill": "evaluate",
+      "format": "single-choice",
+      "scenarioType": "design",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "A governed retail reporting store",
+      "context": "Aurora needs to load structured sales transactions in batches. Finance analysts use T-SQL heavily and need governed enterprise BI reporting. Device telemetry is handled by another team.",
+      "question": "Where should Priya begin for this reporting workload?",
+      "options": [
+        {
+          "id": "warehouse",
+          "label": "Warehouse",
+          "explanation": "Warehouse best matches structured relational data, T-SQL, and enterprise BI requirements."
+        },
+        {
+          "id": "lakehouse",
+          "label": "Lakehouse",
+          "explanation": "Lakehouse can support analytics and engineering, but the stated relational T-SQL reporting requirements make Warehouse the stronger fit."
+        },
+        {
+          "id": "eventhouse",
+          "label": "Eventhouse",
+          "explanation": "Eventhouse is intended for event and telemetry analysis, which the scenario explicitly puts elsewhere."
+        },
+        {
+          "id": "semantic-model",
+          "label": "Power BI semantic model in Import mode",
+          "explanation": "A semantic model is an analytical layer, not the governed relational store requested for loading and querying the transactions."
+        }
+      ],
+      "answerId": "warehouse",
+      "decisiveClue": "Structured transactions + T-SQL + governed BI are the requirements that matter; the telemetry detail is not part of this workload.",
+      "sourceId": "fabric-storage-options",
+      "remediation": {
+        "label": "Revisit Data Store Lab",
+        "href": "#/lab/data-stores"
       },
-      {
-        "id": "item",
-        "label": "A separate item permission for each region",
-        "explanation": "Item permission determines access to an item, not which subset of rows appears after it opens."
-      },
-      {
-        "id": "ols",
-        "label": "Object-level security for the sales table",
-        "explanation": "OLS hides a table or object entirely; Jonas still needs the sales table, filtered to Norway."
-      },
-      {
-        "id": "viewer",
-        "label": "Assign each manager the workspace Viewer role",
-        "explanation": "A workspace role controls access and capabilities, but does not filter rows for each manager in a shared semantic model."
-      }
-    ],
-    "answerId": "rls",
-    "decisiveClue": "The requirement is about a different subset of rows after the report opens, which points specifically to RLS.",
-    "sourceId": "fabric-permission-model",
-    "remediation": {
-      "label": "Revisit Security Lens",
-      "href": "#/lab/security"
+      "difficulty": 1
     },
-    "difficulty": 1
-  },
-  {
-    "id": "direct-lake-onelake",
-    "domain": "Implement and manage semantic models",
-    "objectiveIds": ["MODEL.DESIGN.STORAGE", "MODEL.OPTIMIZE.DIRECT_LAKE"],
-    "title": "Fresh analysis over large Delta tables",
-    "context": "Aurora stores large sales tables as Delta tables in OneLake. Marta wants interactive analytics without relying on a traditional full Import refresh before report queries run.",
-    "question": "Which storage mode most directly fits the scenario?",
-    "options": [
-      {
-        "id": "direct-lake",
-        "label": "Direct Lake",
-        "explanation": "Direct Lake is designed to query required Delta-table columns from OneLake for interactive analytics without the traditional full Import-copy path."
+    {
+      "id": "region-row-security",
+      "domain": "Maintain a data analytics solution",
+      "objectiveIds": ["MAINTAIN.SECURITY.ROW"],
+      "skill": "apply",
+      "format": "single-choice",
+      "scenarioType": "security",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "One report, different regional views",
+      "context": "Jonas can open Aurora’s Sales report. He must see only Norway rows while Sweden managers use the same report and semantic model to see Sweden rows.",
+      "question": "Which control should Leila configure?",
+      "options": [
+        {
+          "id": "rls",
+          "label": "Row-level security on the semantic model",
+          "explanation": "RLS filters model rows for the signed-in identity while allowing users to open the same report."
+        },
+        {
+          "id": "item",
+          "label": "A separate item permission for each region",
+          "explanation": "Item permission determines access to an item, not which subset of rows appears after it opens."
+        },
+        {
+          "id": "ols",
+          "label": "Object-level security for the sales table",
+          "explanation": "OLS hides a table or object entirely; Jonas still needs the sales table, filtered to Norway."
+        },
+        {
+          "id": "viewer",
+          "label": "Assign each manager the workspace Viewer role",
+          "explanation": "A workspace role controls access and capabilities, but does not filter rows for each manager in a shared semantic model."
+        }
+      ],
+      "answerId": "rls",
+      "decisiveClue": "The requirement is about a different subset of rows after the report opens, which points specifically to RLS.",
+      "sourceId": "fabric-permission-model",
+      "remediation": {
+        "label": "Revisit Security Lens",
+        "href": "#/lab/security"
       },
-      {
-        "id": "import",
-        "label": "Import",
-        "explanation": "Import depends on a copied in-memory model refreshed on a schedule, which conflicts with the stated requirement."
-      },
-      {
-        "id": "directquery",
-        "label": "DirectQuery",
-        "explanation": "DirectQuery is a source-query path; the OneLake Delta-table and no-traditional-Import clues point to Direct Lake."
-      },
-      {
-        "id": "live",
-        "label": "Live connection",
-        "explanation": "A live connection connects a report to an existing semantic model; it is not the storage mode for these Delta tables."
-      }
-    ],
-    "answerId": "direct-lake",
-    "decisiveClue": "The combination of Delta tables in OneLake, interactive analytics, and avoiding a traditional full Import refresh is decisive.",
-    "sourceId": "direct-lake-how",
-    "remediation": {
-      "label": "Revisit Storage Mode Lab",
-      "href": "#/lab/storage-modes"
+      "difficulty": 1
     },
-    "difficulty": 2
-  },
-  {
-    "id": "bridge-for-shared-accounts",
-    "domain": "Implement and manage semantic models",
-    "objectiveIds": ["MODEL.DESIGN.RELATIONSHIPS"],
-    "title": "Shared customer accounts",
-    "context": "Some Aurora customers hold several purchasing accounts. Some accounts are shared by several customer entities. Finance needs balances by customer without duplicating balance facts.",
-    "question": "Which model design fits this requirement?",
-    "options": [
-      {
-        "id": "bridge",
-        "label": "Use a CustomerAccount bridge table between Customer and Account",
-        "explanation": "A bridge records the shared associations while preserving each balance fact once."
+    {
+      "id": "direct-lake-onelake",
+      "domain": "Implement and manage semantic models",
+      "objectiveIds": ["MODEL.DESIGN.STORAGE", "MODEL.OPTIMIZE.DIRECT_LAKE"],
+      "skill": "evaluate",
+      "format": "single-choice",
+      "scenarioType": "design",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Fresh analysis over large Delta tables",
+      "context": "Aurora stores large sales tables as Delta tables in OneLake. Marta wants interactive analytics without relying on a traditional full Import refresh before report queries run.",
+      "question": "Which storage mode most directly fits the scenario?",
+      "options": [
+        {
+          "id": "direct-lake",
+          "label": "Direct Lake",
+          "explanation": "Direct Lake is designed to query required Delta-table columns from OneLake for interactive analytics without the traditional full Import-copy path."
+        },
+        {
+          "id": "import",
+          "label": "Import",
+          "explanation": "Import depends on a copied in-memory model refreshed on a schedule, which conflicts with the stated requirement."
+        },
+        {
+          "id": "directquery",
+          "label": "DirectQuery",
+          "explanation": "DirectQuery is a source-query path; the OneLake Delta-table and no-traditional-Import clues point to Direct Lake."
+        },
+        {
+          "id": "live",
+          "label": "Live connection",
+          "explanation": "A live connection connects a report to an existing semantic model; it is not the storage mode for these Delta tables."
+        }
+      ],
+      "answerId": "direct-lake",
+      "decisiveClue": "The combination of Delta tables in OneLake, interactive analytics, and avoiding a traditional full Import refresh is decisive.",
+      "sourceId": "direct-lake-how",
+      "remediation": {
+        "label": "Revisit Storage Mode Lab",
+        "href": "#/lab/storage-modes"
       },
-      {
-        "id": "many-to-many",
-        "label": "Create a direct many-to-many relationship from Customer to FactBalance",
-        "explanation": "This skips the account association and makes filtering harder to reason about."
-      },
-      {
-        "id": "duplicate",
-        "label": "Duplicate balance rows once for each linked customer",
-        "explanation": "Duplicating facts would overstate balances when totals are calculated."
-      },
-      {
-        "id": "bidirectional",
-        "label": "Add bidirectional filters directly between Customer and Account",
-        "explanation": "Filter direction does not model the shared associations or preserve fact grain; the many-to-many relationship still needs a bridge."
-      }
-    ],
-    "answerId": "bridge",
-    "decisiveClue": "Both sides can have several associations, but the facts must not be duplicated: that is the bridge-table pattern.",
-    "sourceId": "star-schema-guidance",
-    "remediation": {
-      "label": "Revisit Relationship Lab",
-      "href": "#/lab/relationships"
+      "difficulty": 2
     },
-    "difficulty": 3
-  },
-  {
-    "id": "transform-duplicate-order-lines",
-    "domain": "Prepare data",
-    "objectiveIds": ["PREPARE.TRANSFORM.DATA_QUALITY"],
-    "title": "A retried API call duplicates order lines",
-    "context": "Aurora’s daily order export occasionally lands the same order line twice because a retried API call resubmitted it. Separately, OrderDate arrives as inconsistent text such as “2026-03-08” and “03/08/2026”.",
-    "question": "Which operation fixes the retried-call problem specifically, without touching OrderDate values?",
-    "options": [
-      {
-        "id": "dedupe",
-        "label": "Remove duplicate rows using the order line key",
-        "explanation": "Yes. This removes the repeated record introduced by the retry while leaving other columns untouched."
+    {
+      "id": "bridge-for-shared-accounts",
+      "domain": "Implement and manage semantic models",
+      "objectiveIds": ["MODEL.DESIGN.RELATIONSHIPS"],
+      "skill": "apply",
+      "format": "single-choice",
+      "scenarioType": "design",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Shared customer accounts",
+      "context": "Some Aurora customers hold several purchasing accounts. Some accounts are shared by several customer entities. Finance needs balances by customer without duplicating balance facts.",
+      "question": "Which model design fits this requirement?",
+      "options": [
+        {
+          "id": "bridge",
+          "label": "Use a CustomerAccount bridge table between Customer and Account",
+          "explanation": "A bridge records the shared associations while preserving each balance fact once."
+        },
+        {
+          "id": "many-to-many",
+          "label": "Create a direct many-to-many relationship from Customer to FactBalance",
+          "explanation": "This skips the account association and makes filtering harder to reason about."
+        },
+        {
+          "id": "duplicate",
+          "label": "Duplicate balance rows once for each linked customer",
+          "explanation": "Duplicating facts would overstate balances when totals are calculated."
+        },
+        {
+          "id": "bidirectional",
+          "label": "Add bidirectional filters directly between Customer and Account",
+          "explanation": "Filter direction does not model the shared associations or preserve fact grain; the many-to-many relationship still needs a bridge."
+        }
+      ],
+      "answerId": "bridge",
+      "decisiveClue": "Both sides can have several associations, but the facts must not be duplicated: that is the bridge-table pattern.",
+      "sourceId": "star-schema-guidance",
+      "remediation": {
+        "label": "Revisit Relationship Lab",
+        "href": "#/lab/relationships"
       },
-      {
-        "id": "type",
-        "label": "Change OrderDate to a date type",
-        "explanation": "This resolves the inconsistent date text, not the duplicated order line."
-      },
-      {
-        "id": "merge",
-        "label": "Merge queries on OrderID",
-        "explanation": "Merging combines data from another query; it does not remove a row duplicated by a retried call."
-      },
-      {
-        "id": "group",
-        "label": "Group by OrderID and sum the line amounts",
-        "explanation": "Grouping only by order collapses legitimate order lines along with duplicates and changes the required row grain."
-      }
-    ],
-    "answerId": "dedupe",
-    "decisiveClue": "A row repeated because of a retried call is a duplicate-row problem, distinct from the separate date-format issue in the same scenario.",
-    "sourceId": "prepare-transform-data",
-    "remediation": {
-      "label": "Revisit Transformation Workbench",
-      "href": "#/lab/transformation"
+      "difficulty": 3
     },
-    "difficulty": 1
-  },
-  {
-    "id": "schema-loyalty-rate-placement",
-    "domain": "Prepare data",
-    "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
-    "title": "A repeating loyalty rate is not a fact",
-    "context": "Aurora’s raw sales export includes a loyalty-tier discount rate on every order line. The same rate repeats across every row for a given customer, and Marta wants to group revenue by loyalty tier.",
-    "question": "Where should the loyalty discount rate live in the star schema?",
-    "options": [
-      {
-        "id": "dimension",
-        "label": "Move it into DimCustomer as a loyalty-tier attribute",
-        "explanation": "Yes. A value that describes a customer and repeats across many rows belongs in the customer dimension."
+    {
+      "id": "transform-duplicate-order-lines",
+      "domain": "Prepare data",
+      "objectiveIds": ["PREPARE.TRANSFORM.DATA_QUALITY"],
+      "skill": "troubleshoot",
+      "format": "single-choice",
+      "scenarioType": "transformation",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "A retried API call duplicates order lines",
+      "context": "Aurora’s daily order export occasionally lands the same order line twice because a retried API call resubmitted it. Separately, OrderDate arrives as inconsistent text such as “2026-03-08” and “03/08/2026”.",
+      "question": "Which operation fixes the retried-call problem specifically, without touching OrderDate values?",
+      "options": [
+        {
+          "id": "dedupe",
+          "label": "Remove duplicate rows using the order line key",
+          "explanation": "Yes. This removes the repeated record introduced by the retry while leaving other columns untouched."
+        },
+        {
+          "id": "type",
+          "label": "Change OrderDate to a date type",
+          "explanation": "This resolves the inconsistent date text, not the duplicated order line."
+        },
+        {
+          "id": "merge",
+          "label": "Merge queries on OrderID",
+          "explanation": "Merging combines data from another query; it does not remove a row duplicated by a retried call."
+        },
+        {
+          "id": "group",
+          "label": "Group by OrderID and sum the line amounts",
+          "explanation": "Grouping only by order collapses legitimate order lines along with duplicates and changes the required row grain."
+        }
+      ],
+      "answerId": "dedupe",
+      "decisiveClue": "A row repeated because of a retried call is a duplicate-row problem, distinct from the separate date-format issue in the same scenario.",
+      "sourceId": "prepare-transform-data",
+      "remediation": {
+        "label": "Revisit Transformation Workbench",
+        "href": "#/lab/transformation"
       },
-      {
-        "id": "fact",
-        "label": "Keep it in FactSales next to Revenue",
-        "explanation": "Keeping a repeating descriptive attribute in the fact table duplicates it onto every event row and makes grouping harder to reuse."
-      },
-      {
-        "id": "measure",
-        "label": "Turn it into a DAX measure",
-        "explanation": "The rate is a stored descriptive attribute of the customer, not a calculation over filter context."
-      },
-      {
-        "id": "calculated-fact",
-        "label": "Create a calculated column in FactSales",
-        "explanation": "A calculated fact column still repeats the customer attribute on every transaction and preserves the modeling problem."
-      }
-    ],
-    "answerId": "dimension",
-    "decisiveClue": "A value that describes an entity and repeats across many transaction rows belongs in a dimension, not duplicated onto every fact row.",
-    "sourceId": "star-schema-guidance",
-    "remediation": {
-      "label": "Revisit Schema Lab",
-      "href": "#/lab/schema"
+      "difficulty": 1
     },
-    "difficulty": 2
-  },
-  {
-    "id": "query-engine-for-warehouse-table",
-    "domain": "Prepare data",
-    "objectiveIds": ["PREPARE.QUERY.SQL", "PREPARE.QUERY.KQL"],
-    "title": "Same question, three engines",
-    "context": "An analyst wants total revenue by region for the last 30 days. The rows live in a Warehouse table. A separate Eventhouse holds device ping counts for the same period, and a semantic model has not been built over either yet.",
-    "question": "Which language is the closest fit for filtering and aggregating the Warehouse table directly?",
-    "options": [
-      {
-        "id": "sql",
-        "label": "T-SQL",
-        "explanation": "Yes. Warehouse exposes a relational T-SQL endpoint suited to filtering and aggregating its tables directly."
+    {
+      "id": "schema-loyalty-rate-placement",
+      "domain": "Prepare data",
+      "objectiveIds": ["PREPARE.TRANSFORM.STAR"],
+      "skill": "apply",
+      "format": "single-choice",
+      "scenarioType": "design",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "A repeating loyalty rate is not a fact",
+      "context": "Aurora’s raw sales export includes a loyalty-tier discount rate on every order line. The same rate repeats across every row for a given customer, and Marta wants to group revenue by loyalty tier.",
+      "question": "Where should the loyalty discount rate live in the star schema?",
+      "options": [
+        {
+          "id": "dimension",
+          "label": "Move it into DimCustomer as a loyalty-tier attribute",
+          "explanation": "Yes. A value that describes a customer and repeats across many rows belongs in the customer dimension."
+        },
+        {
+          "id": "fact",
+          "label": "Keep it in FactSales next to Revenue",
+          "explanation": "Keeping a repeating descriptive attribute in the fact table duplicates it onto every event row and makes grouping harder to reuse."
+        },
+        {
+          "id": "measure",
+          "label": "Turn it into a DAX measure",
+          "explanation": "The rate is a stored descriptive attribute of the customer, not a calculation over filter context."
+        },
+        {
+          "id": "calculated-fact",
+          "label": "Create a calculated column in FactSales",
+          "explanation": "A calculated fact column still repeats the customer attribute on every transaction and preserves the modeling problem."
+        }
+      ],
+      "answerId": "dimension",
+      "decisiveClue": "A value that describes an entity and repeats across many transaction rows belongs in a dimension, not duplicated onto every fact row.",
+      "sourceId": "star-schema-guidance",
+      "remediation": {
+        "label": "Revisit Schema Lab",
+        "href": "#/lab/schema"
       },
-      {
-        "id": "kql",
-        "label": "KQL",
-        "explanation": "KQL is the query language for Eventhouse and Real-Time Intelligence, not the Warehouse’s relational tables."
-      },
-      {
-        "id": "dax",
-        "label": "DAX",
-        "explanation": "DAX operates over a semantic model’s relationships and filter context; no semantic model exists yet in this scenario."
-      },
-      {
-        "id": "m",
-        "label": "Power Query M",
-        "explanation": "Power Query M connects to and transforms data; it is not the direct query language for aggregating a Warehouse table."
-      }
-    ],
-    "answerId": "sql",
-    "decisiveClue": "The question asks about querying the Warehouse table directly, before any semantic model or event store is involved.",
-    "sourceId": "query-warehouse",
-    "remediation": {
-      "label": "Revisit Query Rosetta",
-      "href": "#/lab/query"
+      "difficulty": 2
     },
-    "difficulty": 1
-  },
-  {
-    "id": "direct-lake-endpoint-security-fallback",
-    "domain": "Implement and manage semantic models",
-    "objectiveIds": ["MODEL.OPTIMIZE.DIRECT_LAKE"],
-    "title": "A Direct Lake report starts routing through the SQL endpoint",
-    "context": "Aurora’s Direct Lake model over FactSales normally serves report queries straight from OneLake columns. A security engineer then defines row-level security directly on the SQL analytics endpoint for FactSales. The same report queries now come back through the SQL analytics endpoint instead.",
-    "question": "What is the most direct explanation for the shift?",
-    "options": [
-      {
-        "id": "fallback",
-        "label": "The model falls back to the SQL analytics endpoint because row-level security is defined there",
-        "explanation": "Yes. Row-level security defined at the SQL analytics endpoint is a documented Direct Lake fallback trigger to DirectQuery through that endpoint."
+    {
+      "id": "query-engine-for-warehouse-table",
+      "domain": "Prepare data",
+      "objectiveIds": ["PREPARE.QUERY.SQL", "PREPARE.QUERY.KQL"],
+      "skill": "interpret",
+      "format": "single-choice",
+      "scenarioType": "query",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Same question, three engines",
+      "context": "An analyst wants total revenue by region for the last 30 days. The rows live in a Warehouse table. A separate Eventhouse holds device ping counts for the same period, and a semantic model has not been built over either yet.",
+      "question": "Which language is the closest fit for filtering and aggregating the Warehouse table directly?",
+      "options": [
+        {
+          "id": "sql",
+          "label": "T-SQL",
+          "explanation": "Yes. Warehouse exposes a relational T-SQL endpoint suited to filtering and aggregating its tables directly."
+        },
+        {
+          "id": "kql",
+          "label": "KQL",
+          "explanation": "KQL is the query language for Eventhouse and Real-Time Intelligence, not the Warehouse’s relational tables."
+        },
+        {
+          "id": "dax",
+          "label": "DAX",
+          "explanation": "DAX operates over a semantic model’s relationships and filter context; no semantic model exists yet in this scenario."
+        },
+        {
+          "id": "m",
+          "label": "Power Query M",
+          "explanation": "Power Query M connects to and transforms data; it is not the direct query language for aggregating a Warehouse table."
+        }
+      ],
+      "answerId": "sql",
+      "decisiveClue": "The question asks about querying the Warehouse table directly, before any semantic model or event store is involved.",
+      "sourceId": "query-warehouse",
+      "remediation": {
+        "label": "Revisit Query Rosetta",
+        "href": "#/lab/query"
       },
-      {
-        "id": "broken",
-        "label": "Direct Lake is broken and needs to be rebuilt",
-        "explanation": "This is documented fallback behavior, not a failure — nothing about the model needs rebuilding."
-      },
-      {
-        "id": "reimport",
-        "label": "The model silently switched to a full Import refresh",
-        "explanation": "Direct Lake does not convert itself into an Import model; the documented behavior is a query-path fallback, not a refresh-mode change."
-      },
-      {
-        "id": "xmla",
-        "label": "The XMLA endpoint now handles queries because security was enabled",
-        "explanation": "The XMLA endpoint supports semantic-model management and connectivity; the documented fallback here is to the SQL analytics endpoint."
-      }
-    ],
-    "answerId": "fallback",
-    "decisiveClue": "Row-level security applied at the SQL analytics endpoint is the specific, documented condition that routes Direct Lake queries through DirectQuery instead.",
-    "sourceId": "direct-lake-security",
-    "remediation": {
-      "label": "Revisit Direct Lake Engine Room",
-      "href": "#/lab/direct-lake"
+      "difficulty": 1
     },
-    "difficulty": 4
-  },
-  {
-    "id": "incremental-refresh-late-arrivals",
-    "domain": "Implement and manage semantic models",
-    "objectiveIds": ["MODEL.OPTIMIZE.INCREMENTAL_REFRESH"],
-    "title": "Late-arriving orders in a rolling window",
-    "context": "Aurora’s FactSales incremental refresh policy keeps 5 years of history and refreshes only the last 10 days. A distribution partner occasionally reports order corrections up to 20 days after the original sale.",
-    "question": "What should Priya change so those late corrections are captured without reprocessing all 5 years?",
-    "options": [
-      {
-        "id": "widen",
-        "label": "Increase the refresh (incremental) range to cover at least 20 days",
-        "explanation": "Yes. The refresh range must cover the realistic lateness window, independent of how much history is retained."
+    {
+      "id": "direct-lake-endpoint-security-fallback",
+      "domain": "Implement and manage semantic models",
+      "objectiveIds": ["MODEL.OPTIMIZE.DIRECT_LAKE"],
+      "skill": "troubleshoot",
+      "format": "single-choice",
+      "scenarioType": "security",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "A Direct Lake report starts routing through the SQL endpoint",
+      "context": "Aurora’s Direct Lake model over FactSales normally serves report queries straight from OneLake columns. A security engineer then defines row-level security directly on the SQL analytics endpoint for FactSales. The same report queries now come back through the SQL analytics endpoint instead.",
+      "question": "What is the most direct explanation for the shift?",
+      "options": [
+        {
+          "id": "fallback",
+          "label": "The model falls back to the SQL analytics endpoint because row-level security is defined there",
+          "explanation": "Yes. Row-level security defined at the SQL analytics endpoint is a documented Direct Lake fallback trigger to DirectQuery through that endpoint."
+        },
+        {
+          "id": "broken",
+          "label": "Direct Lake is broken and needs to be rebuilt",
+          "explanation": "This is documented fallback behavior, not a failure — nothing about the model needs rebuilding."
+        },
+        {
+          "id": "reimport",
+          "label": "The model silently switched to a full Import refresh",
+          "explanation": "Direct Lake does not convert itself into an Import model; the documented behavior is a query-path fallback, not a refresh-mode change."
+        },
+        {
+          "id": "xmla",
+          "label": "The XMLA endpoint now handles queries because security was enabled",
+          "explanation": "The XMLA endpoint supports semantic-model management and connectivity; the documented fallback here is to the SQL analytics endpoint."
+        }
+      ],
+      "answerId": "fallback",
+      "decisiveClue": "Row-level security applied at the SQL analytics endpoint is the specific, documented condition that routes Direct Lake queries through DirectQuery instead.",
+      "sourceId": "direct-lake-security",
+      "remediation": {
+        "label": "Revisit Direct Lake Engine Room",
+        "href": "#/lab/direct-lake"
       },
-      {
-        "id": "full",
-        "label": "Switch to a full refresh of the whole table on every run",
-        "explanation": "This reprocesses far more than necessary and undermines the purpose of incremental refresh."
-      },
-      {
-        "id": "retention",
-        "label": "Shorten the historical retention window to 20 days",
-        "explanation": "Retention controls how much history stays in the table; it does not change whether recent late-arriving rows get refreshed."
-      },
-      {
-        "id": "realtime",
-        "label": "Enable DirectQuery for the newest partition only",
-        "explanation": "A real-time partition addresses current incoming data; it does not reprocess corrections made to imported rows 20 days old."
-      }
-    ],
-    "answerId": "widen",
-    "decisiveClue": "The refresh range must cover the realistic lateness window, which is a separate policy from historical retention.",
-    "sourceId": "incremental-refresh",
-    "remediation": {
-      "label": "Revisit Incremental Refresh Time Machine",
-      "href": "#/lab/incremental-refresh"
+      "difficulty": 4
     },
-    "difficulty": 3
-  },
-  {
-    "id": "calculation-group-time-intelligence",
-    "domain": "Implement and manage semantic models",
-    "objectiveIds": ["MODEL.DESIGN.DAX"],
-    "title": "Ten measures, repeated time intelligence",
-    "context": "Aurora’s model already defines ten base measures, including Total Sales and Total Cost. Marta now wants a Year-to-Date and Prior-Year version of every one of them, and the modeler wants to avoid writing twenty nearly identical DAX measures.",
-    "question": "What is the most direct way to add YTD and Prior-Year variants for every base measure?",
-    "options": [
-      {
-        "id": "calcgroup",
-        "label": "Build a calculation group with YTD and Prior-Year calculation items",
-        "explanation": "Yes. A calculation group applies the same time-intelligence pattern across every existing and future base measure without duplicating DAX."
+    {
+      "id": "incremental-refresh-late-arrivals",
+      "domain": "Implement and manage semantic models",
+      "objectiveIds": ["MODEL.OPTIMIZE.INCREMENTAL_REFRESH"],
+      "skill": "troubleshoot",
+      "format": "single-choice",
+      "scenarioType": "operations",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Late-arriving orders in a rolling window",
+      "context": "Aurora’s FactSales incremental refresh policy keeps 5 years of history and refreshes only the last 10 days. A distribution partner occasionally reports order corrections up to 20 days after the original sale.",
+      "question": "What should Priya change so those late corrections are captured without reprocessing all 5 years?",
+      "options": [
+        {
+          "id": "widen",
+          "label": "Increase the refresh (incremental) range to cover at least 20 days",
+          "explanation": "Yes. The refresh range must cover the realistic lateness window, independent of how much history is retained."
+        },
+        {
+          "id": "full",
+          "label": "Switch to a full refresh of the whole table on every run",
+          "explanation": "This reprocesses far more than necessary and undermines the purpose of incremental refresh."
+        },
+        {
+          "id": "retention",
+          "label": "Shorten the historical retention window to 20 days",
+          "explanation": "Retention controls how much history stays in the table; it does not change whether recent late-arriving rows get refreshed."
+        },
+        {
+          "id": "realtime",
+          "label": "Enable DirectQuery for the newest partition only",
+          "explanation": "A real-time partition addresses current incoming data; it does not reprocess corrections made to imported rows 20 days old."
+        }
+      ],
+      "answerId": "widen",
+      "decisiveClue": "The refresh range must cover the realistic lateness window, which is a separate policy from historical retention.",
+      "sourceId": "incremental-refresh",
+      "remediation": {
+        "label": "Revisit Incremental Refresh Time Machine",
+        "href": "#/lab/incremental-refresh"
       },
-      {
-        "id": "duplicate",
-        "label": "Duplicate each measure and wrap it in the matching time-intelligence function",
-        "explanation": "This works but multiplies maintenance for every future base measure, which a calculation group is designed to avoid."
-      },
-      {
-        "id": "relationship",
-        "label": "Add a new relationship to a second date-table copy",
-        "explanation": "An extra date-table relationship does not by itself produce YTD or Prior-Year variants."
-      },
-      {
-        "id": "visual",
-        "label": "Create YTD and Prior-Year visual calculations on every report",
-        "explanation": "Report-level visual calculations duplicate logic across visuals and do not create reusable model-wide variants for every base measure."
-      }
-    ],
-    "answerId": "calcgroup",
-    "decisiveClue": "Reusing one time-intelligence pattern across many existing measures without duplicating DAX per measure is the calculation-group scenario.",
-    "sourceId": "calculation-groups",
-    "remediation": {
-      "label": "Revisit Calculation Group Lab",
-      "href": "#/lab/calculation-groups"
+      "difficulty": 3
     },
-    "difficulty": 3
-  }
-]
+    {
+      "id": "calculation-group-time-intelligence",
+      "domain": "Implement and manage semantic models",
+      "objectiveIds": ["MODEL.DESIGN.DAX"],
+      "skill": "evaluate",
+      "format": "single-choice",
+      "scenarioType": "design",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Ten measures, repeated time intelligence",
+      "context": "Aurora’s model already defines ten base measures, including Total Sales and Total Cost. Marta now wants a Year-to-Date and Prior-Year version of every one of them, and the modeler wants to avoid writing twenty nearly identical DAX measures.",
+      "question": "What is the most direct way to add YTD and Prior-Year variants for every base measure?",
+      "options": [
+        {
+          "id": "calcgroup",
+          "label": "Build a calculation group with YTD and Prior-Year calculation items",
+          "explanation": "Yes. A calculation group applies the same time-intelligence pattern across every existing and future base measure without duplicating DAX."
+        },
+        {
+          "id": "duplicate",
+          "label": "Duplicate each measure and wrap it in the matching time-intelligence function",
+          "explanation": "This works but multiplies maintenance for every future base measure, which a calculation group is designed to avoid."
+        },
+        {
+          "id": "relationship",
+          "label": "Add a new relationship to a second date-table copy",
+          "explanation": "An extra date-table relationship does not by itself produce YTD or Prior-Year variants."
+        },
+        {
+          "id": "visual",
+          "label": "Create YTD and Prior-Year visual calculations on every report",
+          "explanation": "Report-level visual calculations duplicate logic across visuals and do not create reusable model-wide variants for every base measure."
+        }
+      ],
+      "answerId": "calcgroup",
+      "decisiveClue": "Reusing one time-intelligence pattern across many existing measures without duplicating DAX per measure is the calculation-group scenario.",
+      "sourceId": "calculation-groups",
+      "remediation": {
+        "label": "Revisit Calculation Group Lab",
+        "href": "#/lab/calculation-groups"
+      },
+      "difficulty": 3
+    },
+    {
+      "id": "certify-shared-semantic-model",
+      "domain": "Maintain a data analytics solution",
+      "objectiveIds": ["MAINTAIN.GOVERNANCE.ENDORSEMENT"],
+      "skill": "apply",
+      "format": "single-choice",
+      "scenarioType": "governance",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "A trusted model for organization-wide reuse",
+      "context": "Aurora has tested a semantic model against finance controls. The governance team wants people across the organization to recognize it as reliable and authoritative, and only authorized reviewers may grant that status.",
+      "question": "Which endorsement should the authorized reviewer apply?",
+      "options": [
+        {
+          "id": "certified",
+          "label": "Certified",
+          "explanation": "Certified identifies content that an organization-authorized reviewer has confirmed meets organizational quality standards."
+        },
+        {
+          "id": "promoted",
+          "label": "Promoted",
+          "explanation": "Promotion indicates that an item owner believes content is ready to share, but it does not carry the authorized organizational review described here."
+        },
+        {
+          "id": "sensitive",
+          "label": "Apply a sensitivity label",
+          "explanation": "A sensitivity label classifies and protects information; it is not a trust endorsement for quality and reuse."
+        },
+        {
+          "id": "discoverable",
+          "label": "Make the model discoverable",
+          "explanation": "Discoverability helps users find metadata, but it does not assert that an authorized reviewer has approved the model's quality."
+        }
+      ],
+      "answerId": "certified",
+      "decisiveClue": "The requirement for an organization-authorized reviewer to confirm reliability and quality points to Certified rather than Promoted.",
+      "sourceId": "fabric-endorsement",
+      "remediation": {
+        "label": "Revisit Security Lens",
+        "href": "#/lab/security"
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "sensitivity-label-downstream-report",
+      "domain": "Maintain a data analytics solution",
+      "objectiveIds": ["MAINTAIN.GOVERNANCE.SENSITIVITY"],
+      "skill": "interpret",
+      "format": "single-choice",
+      "scenarioType": "governance",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Protection follows sensitive finance data",
+      "context": "Aurora applies a Microsoft Purview sensitivity label to a supported semantic model containing confidential margin data. A report is then created downstream from that model through a supported path.",
+      "question": "What behavior should the governance team expect?",
+      "options": [
+        {
+          "id": "inherit",
+          "label": "The downstream report inherits the sensitivity label",
+          "explanation": "Supported downstream inheritance propagates a sensitivity label to dependent items so protection follows the data."
+        },
+        {
+          "id": "endorse",
+          "label": "The report is automatically certified",
+          "explanation": "Sensitivity labels protect information; certification is a separate governance decision about trust and quality."
+        },
+        {
+          "id": "permissions",
+          "label": "The label grants report access to finance users",
+          "explanation": "A sensitivity label does not replace workspace, item, or semantic-model permissions."
+        },
+        {
+          "id": "remove",
+          "label": "The label is removed when the report is created",
+          "explanation": "The expected supported behavior is downstream inheritance, not removal at the next item in the lineage."
+        }
+      ],
+      "answerId": "inherit",
+      "decisiveClue": "The scenario explicitly describes a supported downstream dependency, which is where label inheritance applies.",
+      "sourceId": "fabric-information-protection",
+      "remediation": {
+        "label": "Revisit Security Lens",
+        "href": "#/lab/security"
+      },
+      "difficulty": 3
+    },
+    {
+      "id": "deployment-pipeline-stage-values",
+      "domain": "Maintain a data analytics solution",
+      "objectiveIds": ["MAINTAIN.LIFECYCLE.DEPLOYMENT"],
+      "skill": "evaluate",
+      "format": "single-choice",
+      "scenarioType": "operations",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Promote content without carrying development settings",
+      "context": "Aurora promotes Fabric content from Development to Test and Production. The item definition should remain consistent, but each stage must use its own connection and configuration values.",
+      "question": "Which lifecycle design most directly meets the requirement?",
+      "options": [
+        {
+          "id": "pipeline-rules",
+          "label": "Use a deployment pipeline with stage-specific configuration rules or values",
+          "explanation": "Deployment pipelines promote content between stages while stage-specific configuration keeps environment values separate."
+        },
+        {
+          "id": "manual-copy",
+          "label": "Manually recreate every item in each workspace",
+          "explanation": "Manual recreation makes definitions drift and does not provide a controlled promotion path."
+        },
+        {
+          "id": "production-values",
+          "label": "Store Production connection values in the Development item",
+          "explanation": "Embedding Production settings in Development defeats stage isolation and risks connecting development work to production data."
+        },
+        {
+          "id": "workspace-role",
+          "label": "Use workspace roles to rewrite connections during deployment",
+          "explanation": "Workspace roles govern access and capabilities; they do not substitute stage-specific item configuration."
+        }
+      ],
+      "answerId": "pipeline-rules",
+      "decisiveClue": "The same content must move through controlled stages while environment-specific values change independently.",
+      "sourceId": "fabric-cicd",
+      "remediation": {
+        "label": "Review lifecycle coverage",
+        "href": "#explore"
+      },
+      "difficulty": 4
+    },
+    {
+      "id": "discover-certified-lakehouse",
+      "domain": "Prepare data",
+      "objectiveIds": ["PREPARE.GET.CATALOG"],
+      "skill": "apply",
+      "format": "single-choice",
+      "scenarioType": "governance",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Find trusted data before creating another copy",
+      "context": "Marta needs an existing customer-data item but does not know which workspace owns it. She wants to search Fabric items, inspect metadata and lineage, and use endorsement signals before requesting access.",
+      "question": "Where should Marta start?",
+      "options": [
+        {
+          "id": "catalog",
+          "label": "OneLake catalog",
+          "explanation": "The OneLake catalog provides centralized discovery, item details, lineage, and governance signals across Fabric items."
+        },
+        {
+          "id": "realtime-hub",
+          "label": "Real-Time hub",
+          "explanation": "Real-Time hub is oriented toward discovering and working with streaming data, not general catalog discovery across Fabric items."
+        },
+        {
+          "id": "monitor",
+          "label": "Monitor hub",
+          "explanation": "Monitor hub tracks job and activity status; it is not the central inventory for discovering reusable data items."
+        },
+        {
+          "id": "new-lakehouse",
+          "label": "Create a new lakehouse and copy the customer data",
+          "explanation": "Creating another copy before discovering existing governed items increases duplication and bypasses the stated metadata and lineage needs."
+        }
+      ],
+      "answerId": "catalog",
+      "decisiveClue": "Searching across workspaces while inspecting metadata, lineage, and trust signals is the OneLake catalog use case.",
+      "sourceId": "onelake-catalog",
+      "remediation": {
+        "label": "Revisit Fabric Atlas",
+        "href": "#explore"
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "retain-unmatched-sales-rows",
+      "domain": "Prepare data",
+      "objectiveIds": ["PREPARE.TRANSFORM.JOIN"],
+      "skill": "troubleshoot",
+      "format": "single-choice",
+      "scenarioType": "transformation",
+      "status": "verified",
+      "verifiedDate": "2026-09-07",
+      "title": "Enrich sales without losing unknown customers",
+      "context": "Aurora is enriching FactSales with customer attributes. Some valid sales rows have a CustomerKey that is not yet present in DimCustomer, and finance must retain every sales row while data quality is investigated.",
+      "question": "Starting from FactSales, which join behavior preserves the required rows?",
+      "options": [
+        {
+          "id": "left-outer",
+          "label": "Left outer join from FactSales to DimCustomer",
+          "explanation": "A left outer join retains every FactSales row and adds matching customer attributes when they exist."
+        },
+        {
+          "id": "inner",
+          "label": "Inner join",
+          "explanation": "An inner join drops sales rows whose customer key has no matching dimension row, violating the retention requirement."
+        },
+        {
+          "id": "right-outer",
+          "label": "Right outer join from FactSales to DimCustomer",
+          "explanation": "A right outer join prioritizes retaining all customer rows rather than all sales rows."
+        },
+        {
+          "id": "anti",
+          "label": "Left anti join",
+          "explanation": "A left anti join returns only unmatched sales rows, which is useful for investigation but not for producing the complete enriched result."
+        }
+      ],
+      "answerId": "left-outer",
+      "decisiveClue": "FactSales is the starting table and every one of its rows must survive whether or not a customer match exists.",
+      "sourceId": "prepare-transform-data",
+      "remediation": {
+        "label": "Revisit Transformation Workbench",
+        "href": "#/lab/transformation"
+      },
+      "difficulty": 3
+    }
+  ]
+}
